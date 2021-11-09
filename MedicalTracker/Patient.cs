@@ -10,9 +10,9 @@ namespace MedicalTracker
     {
         //A lot of information needs an input, look into how to obtain data from EHR(Electronic Health Records)
         //Hospitals use different types of EHR registries, look into the UofL hospitals in local area.
-        public string Name { get; set; }//firstname and lastname ?
+        public Name Name { get; set; }
         public int PhoneNumber { get; set; }
-        public string Address { get; set; } //Its own separate class
+        public Address Address { get; set; } 
         public string Allergies { get; set; }//Its own separate class
         public string EmergencyContacts { get; set; }//Its own separate class
         public string DailyMedication { get; set; }//Its own separate class, history of past medicine
