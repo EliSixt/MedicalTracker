@@ -8,15 +8,17 @@ namespace MedicalTracker
 {
     public class Patient
     {
-        //A lot of information needs an input, look into how to obtain data from EHR(Electronic Health Records)
-        //Hospitals use different types of EHR registries, look into the UofL hospitals in local area.
+        //Todo: A lot of information needs an input, look into how to obtain data from EHR(Electronic Health Records)
+        //Hospitals use different types of EHR registries, look into just the UofL hospitals in local area.
+        //Todo: realtime medicine recall tracking? 
+        // history of past medicine?
         public Name Name { get; set; }
         public int PhoneNumber { get; set; }
-        public Address Address { get; set; } 
-        public string Allergies { get; set; }//Its own separate class
-        public string EmergencyContacts { get; set; }//Its own separate class
-        public string DailyMedication { get; set; }//Its own separate class, history of past medicine
-        public string EmergencyMedication { get; set; }//Its own separate class
+        public Address Address { get; set; }
+        public List<Allergies> Allergies { get; set; }
+        public EmergencyMedication EmergMedication { get; set; }
+        public string DailyMedication { get; set; }//Its own separate class, history of past medicine?
+        public string EmergContacts { get; set; }//Its own separate class
         public string Appointments { get; set; }//Its own separate class
         public string MedicalCondition { get; set; }//Its own separate class
         public string Symptoms { get; set; }//Its own separate class

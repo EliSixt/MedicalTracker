@@ -9,7 +9,7 @@ namespace MedicalTracker
     public class Address
     {
         public int BuildingNumber { get; set; }
-        public int ApptNumber { get; set; } //Optional
+        public int ApptNumber { get; set; }
         public string StreetName { get; set; }
         public string City { get; set; }
         public string State { get; set; }

@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace MedicalTracker
 {
-    public class Name
+    public class EmergencyMedication
     {
-        //Middle?
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public List<Medicine> EmergencyMedications { get; set; }
     }
 }
