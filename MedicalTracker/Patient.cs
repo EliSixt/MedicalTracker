@@ -15,9 +15,9 @@ namespace MedicalTracker
         public ContactInfo PatientInfo { get; set; }
         public List<Allergies> Allergies { get; set; }
         public EmergencyMedication EmergMedication { get; set; }
-        public DailyMedicine DailyMedication { get; set; }
-        public string EmergContacts { get; set; }//Its own separate class
-        public string Appointments { get; set; }//Its own separate class
+        public List<DailyMedicine> DailyMedication { get; set; }
+        public EmergencyContacts EmergContacts { get; set; }
+        public List<Appointments> Appointments { get; set; }
         public string MedicalCondition { get; set; }//Its own separate class
         public string Symptoms { get; set; }//Its own separate class
         public string SpecialNeeds { get; set; }//Its own separate class
