@@ -8,6 +8,6 @@ namespace MedicalTracker
 {
     public class EmergencyMedication
     {
-        public List<Medicine> EmergencyMedications { get; set; }
+        public List<Medicine> EmergencyMedications { get; set; }//like an epipen
     }
 }

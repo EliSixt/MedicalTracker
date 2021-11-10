@@ -11,7 +11,7 @@ namespace MedicalTracker
         public string FoodAlgy { get; set; }
         public string DrugAlgy { get; set; }
         public string InsectAlgy { get; set; }
-        public string LatexAlgy { get; set; }
+        public bool LatexAlgy { get; set; }
         public string MoldAlgy { get; set; }
         public string PetAlgy { get; set; }
         public string PollenAlgy { get; set; }

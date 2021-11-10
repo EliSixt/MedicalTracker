@@ -10,8 +10,8 @@ namespace MedicalTracker
     {
         //generic name and brand name??
         //warning, use, dose, 
-        public string GenericName { get; set; }
         public string BrandName { get; set; }
+        public string GenericName { get; set; }
         public string Description { get; set; } //looks
         public string Warnings { get; set; }
         public string Uses { get; set; }
