@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace MedicalTracker
 {
-    public class Appointments
+    public class Appointment
     {
         public DateTime DateTime { get; set; }
-
+        //todo: Track upcoming appointments with 
         //DateTime today = DateTime.Now;
-        //TimeSpan duration = new TimeSpan(48, 0, 0, 0);
-        //DateTime answer = today.Add(duration);
+        //using TimeSpan. 
         
         public ContactInfo ContactInfo { get; set; }
         public string BriefDiscription { get; set; }

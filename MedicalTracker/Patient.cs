@@ -12,16 +12,17 @@ namespace MedicalTracker
         //Hospitals use different types of EHR registries, look into just the UofL hospitals in local area.
         //Todo: realtime medicine recall tracking? 
         // history of past medicine?
+        //Appointment Alerts?
         public ContactInfo PatientInfo { get; set; }
         public List<Allergies> Allergies { get; set; }
         public EmergencyMedication EmergMedication { get; set; }
         public List<DailyMedicine> DailyMedication { get; set; }
         public EmergencyContacts EmergContacts { get; set; }
-        public List<Appointments> Appointments { get; set; }
-        public List<MedicalCondition> MedicalCondition { get; set; }
-        public string Symptoms { get; set; }//Its own separate class
-        public string SpecialNeeds { get; set; }//Its own separate class
-        public string Caretakers { get; set; }//Its own separate class
+        public List<Appointment> Appointments { get; set; }
+        public MedicalConditions MedicalCondition { get; set; }
+        public MedicalSymptoms Symptoms { get; set; }
+        public List<AdditionalNeeds> SpecialNeeds { get; set; }
+        public CareGivers Caretakers { get; set; }
 
     }
 }
