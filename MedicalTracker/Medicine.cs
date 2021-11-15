@@ -14,9 +14,11 @@ namespace MedicalTracker
         public string GenericName { get; set; }
         public string Description { get; set; } //looks
         public string Warnings { get; set; }
+        public string SideEffects { get; set; }
         public string Uses { get; set; }
         public string Purpose { get; set; }
         public string Directions { get; set; } //int?
         public string AllergyAlerts { get; set; }//run a check with allergies?
+
     }
 }
