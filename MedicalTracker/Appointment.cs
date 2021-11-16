@@ -8,12 +8,12 @@ namespace MedicalTracker
 {
     public class Appointment
     {
-        public DateTime DateTime { get; set; }
         //todo: Track upcoming appointments with 
         //DateTime today = DateTime.Now;
         //using TimeSpan. 
-        
-        public ContactInfo ContactInfo { get; set; }
+
+        public DateTime DateTime { get; set; }  = new DateTime();
+        public ContactInfo PlaceOfAppointment { get; set; } = new ContactInfo();
         public string BriefDiscription { get; set; }
     }
 }

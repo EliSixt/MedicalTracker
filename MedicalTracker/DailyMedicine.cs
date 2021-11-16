@@ -8,7 +8,7 @@ namespace MedicalTracker
 {
     public class DailyMedicine
     {
-        public Medicine Medicine { get; set; }
+        public Medicine Medicine { get; set; } = new Medicine();
         public int DoseMg { get; set; }//medication taken at one time
         public int FrequencyOfDose { get; set; }//frequency of doses daily
         public int TimeOfDose { get; set; }

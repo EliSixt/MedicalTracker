@@ -13,16 +13,16 @@ namespace MedicalTracker
         //Todo: realtime medicine recall tracking? 
         // history of past medicine?
         //Appointment Alerts?
-        public ContactInfo PatientInfo { get; set; }
-        public List<Allergies> Allergies { get; set; }
-        public EmergencyMedication EmergMedication { get; set; }
-        public List<DailyMedicine> DailyMedication { get; set; }
-        public EmergencyContacts EmergContacts { get; set; }
-        public List<Appointment> Appointments { get; set; }
-        public MedicalConditions MedicalCondition { get; set; }
-        public MedicalSymptoms Symptoms { get; set; }
-        public List<AdditionalNeeds> SpecialNeeds { get; set; }
-        public CareGivers Caretakers { get; set; }
+        public ContactInfo PatientInfo { get; set; } = new ContactInfo();
+        public List<ContactInfo> EmergencyContacts { get; set; } = new();
+        public List<ContactInfo> Caretakers { get; set; } = new();
+        public List<Allergies> Allergies { get; set; } = new();
+        public List<Medicine> EmergencyMedications { get; set; } = new();//like an epipen
+        public List<DailyMedicine> DailyMedication { get; set; } = new();
+        public List<Appointment> Appointments { get; set; } = new();
+        public MedicalConditions MedicalCondition { get; set; } = new();
+        public MedicalSymptoms Symptoms { get; set; } = new();
+        public List<AdditionalNeeds> SpecialNeeds { get; set; } = new();
 
     }
 }
