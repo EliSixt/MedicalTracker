@@ -79,7 +79,8 @@ namespace MedicalTracker
                     ConfirmedTestedAlgyType = true,
                     BriefDescriptionOfReactions = "Rashes, hives, itchy eyes, and swollen lips, tongue, or face. Within an hour.",
                     IslifeThreatening = true,
-                    SymptomsLeadingToLifeThreatening = "Tightening of the airways and throat, causing trouble breathing, Nausea or abdominal cramps, Vomiting or diarrhea, Dizziness or lightheadedness, Weak, rapid pulse, Drop in blood pressure, Seizures, Loss of consciousness",
+                    SymptomsLeadingToLifeThreatening = "Tightening of the airways and throat, causing trouble breathing, Nausea or abdominal cramps, Vomiting or diarrhea, Dizziness or lightheadedness," +
+                    " Weak, rapid pulse, Drop in blood pressure, Seizures, Loss of consciousness",
                     EpiPenRequired = false,
                     CPRRequired = true,
                     Call911 = true,
@@ -100,10 +101,62 @@ namespace MedicalTracker
                             Directions = "Take this medicine by mouth. Chew it completely before swallowing. Follow the directions on the prescription label. " +
                             "Take your doses at regular intervals. Do not take your medicine more often than directed.",
                             Purposes = "Ask healthcare provider",
-                            AllergyAlerts = null
+                            AllergyAlerts = null,
+                            WarningsBeforeUse = null,
+                            OtherDrugsThatMayCauseAReaction = null
                         }
                     }
                 });
+
+                //Emergency medicine
+                practicePatient.EmergencyMedications.Add(new Medicine()
+                {
+                    BrandName = "EpiPen 2-Pak, EpiPen JR 2-Pak",
+                    GenericName = "epinephrine injection (EP i NEF rin)",
+                    Description = "EpiPen is an injection containing epinephrine, a chemical that narrows blood vessels and opens airways in the lungs. " +
+                    "These effects can reverse severe low blood pressure, wheezing, severe skin itching, hives, and other symptoms of an allergic reaction",
+                    Warnings = "Seek emergency medical attention even after you use EpiPen to treat a severe allergic reaction. The effects may wear off after 10 or 20 minutes." +
+                    " You will need to receive further treatment and observation." +
+                    "Before using EpiPen a second time, tell your doctor if your first injection caused a serious side effect such as increased breathing difficulty, or dangerously high blood pressure(severe headache," +
+                    " blurred vision, buzzing in your ears, anxiety, confusion, chest pain, shortness of breath, uneven heartbeats, seizure)",
+                    WorriesomeSideEffects = "increased breathing difficulty, or dangerously high blood pressure(severe headache," +
+                    " blurred vision, buzzing in your ears, anxiety, confusion, chest pain, shortness of breath, uneven heartbeats, seizure.",
+                    CommmonSideEffects = "breathing problems; fast, irregular, or pounding heartbeats; pale skin, sweating; nausea and vomiting;" +
+                    " dizziness; weakness or tremors; headache; orfeeling restless, fearful, nervous, anxious, or excited",
+                    Uses = "To treat allergic reactions",
+                    Directions = "Form a fist around the Auto-Injector with the black tip pointing down. Pull off the safety cap. " +
+                    "Place the black tip against the fleshy portion of the outer thigh.You may give the injection directly through your clothing.Do not put your thumb over the end of the unit.Hold the leg firmly when giving this injection to a child or infant." +
+                    "With a quick motion, push the Auto - Injector firmly against the thigh.This will release the spring - loaded needle that injects the dose of epinephrine.Hold the Auto - Injector in place for a few seconds after activation. " +
+                    "Remove the Auto - Injector from the thigh.Carefully re - insert the used device needle - first into the carrying tube. " +
+                    "Re- cap the tube and take it with you to the emergency room so that anyone who treats you will know how much epinephrine you have received.",
+                    Purposes = "To treat allergic reaction",
+                    AllergyAlerts = "Notify doctor of past reactions",
+                    WarningsBeforeUse = "Before using EpiPen, tell your doctor if any past use has caused an allergic reaction to get worse. " +
+                    "To make sure this medicine is safe for you, tell your doctor if you have ever had: heart disease or high blood pressure;" +
+                    " asthma; Parkinson's disease; depression or mental illness; a thyroid disorder; or diabetes. Having an allergic reaction while pregnant or nursing could harm both mother and baby. " +
+                    "You may need to use EpiPen during pregnancy or while you are breastfeeding. Seek emergency medical attention right away after using the injection." +
+                    " If possible during an emergency, tell your medical caregivers if you are pregnant or breastfeeding.",
+                    OtherDrugsThatMayCauseAReaction = "asthma medicine; an antidepressant; cold or allergy medicine(Benadryl and others); heart or blood pressure medicine; " +
+                    "thyroid medication; or ergot medicine - dihydroergotamine, ergotamine, ergonovine, methylergonovine."
+                });
+
+                //daily medicine
+                practicePatient.DailyMedication.Add(new DailyMedicine()
+                {
+                    Medicine = new Medicine()
+                    {
+                        BrandName = "Dabigatran",
+                        GenericName = "Pradaxa",
+                        Description = "Blood thinners",
+                        Purposes = "It can treat and prevent blood clots, reducing the risk of stroke.",
+                        Warnings = "Premature discontinuation of any oral anticoagulant, including dabigatran, increases the risk of thrombotic events." +
+                        "If anticoagulation with dabigatran must be discontinued for a reason other than pathological bleeding, consider coverage with another anticoagulant."
+                    },
+                    DoseMg = "150 mg",
+                    FrequencyOfDose = "Orally Twice Daily",
+                    TimeSpanOfDose = new TimeSpan(12, 00,00) //every 12 hours
+                });
+
                 return practicePatient;
             }
         }
