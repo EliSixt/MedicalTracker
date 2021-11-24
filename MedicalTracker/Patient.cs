@@ -20,9 +20,9 @@ namespace MedicalTracker
         public List<Medicine> EmergencyMedications { get; set; } = new();//like an epipen
         public List<DailyMedicine> DailyMedication { get; set; } = new();
         public List<Appointment> Appointments { get; set; } = new();
-        public MedicalConditions MedicalCondition { get; set; }
-        public MedicalSymptoms Symptoms { get; set; }
-        public List<AdditionalNeeds> SpecialNeeds { get; set; } = new();
+        public List<MedicalHistory> MedicalCondition { get; set; } = new();
+        public List<UnusualSymptoms> UnusualSymptoms { get; set; } = new();
+        public List<AdditionalNeeds> AdditionalNeeds { get; set; } = new();//Maybe something timed?
 
     }
 }

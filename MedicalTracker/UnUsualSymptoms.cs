@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace MedicalTracker
 {
-    public class MedicalSymptoms
+    public class UnusualSymptoms
     {
-        public List<string> Symptoms { get; set; }
+        public string Symptom { get; set; }
     }
 }

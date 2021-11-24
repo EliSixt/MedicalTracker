@@ -154,8 +154,30 @@ namespace MedicalTracker
                     },
                     DoseMg = "150 mg",
                     FrequencyOfDose = "Orally Twice Daily",
-                    TimeSpanOfDose = new TimeSpan(12, 00,00) //every 12 hours
+                    TimeSpanOfDose = new TimeSpan(12, 00, 00) //every 12 hours
                 });
+
+                //appointments
+                practicePatient.Appointments.Add(new Appointment()
+                {
+                    BriefDiscription = "Getting blood pressure checked",
+                    Date = new DateTime(2022, 12, 01),
+                    Time = new TimeSpan(08, 00, 00)
+                });
+                //Medical history
+                practicePatient.MedicalCondition.Add(new MedicalHistory()
+                {
+                    MedicalCondition = "Diabietes",
+                    CounterMeasures = "Dont eat sugars",
+                    Symptoms = null,
+                    Treatment = "Take medication on time and excercise",
+                    Medicine = new Medicine() { BrandName = "insulin", Description = "To treat diabietes", Directions = "Administer by injection" }
+                });
+                //UnUsual symtoms list
+                practicePatient.UnusualSymptoms.Add(new UnusualSymptoms() { Symptom = "Lots of unusal burping" });
+                practicePatient.UnusualSymptoms.Add(new UnusualSymptoms { Symptom = "Lack of sleep from burping" });
+                //additional needs
+                practicePatient.AdditionalNeeds.Add(new AdditionalNeeds() { Needs = "Needs to be turned over to prevent bedsores" });
 
                 return practicePatient;
             }

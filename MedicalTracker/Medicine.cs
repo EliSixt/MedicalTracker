@@ -21,7 +21,7 @@ namespace MedicalTracker
         public string Purposes { get; set; }
         public string AllergyAlerts { get; set; }//run a check with allergies?
         public string WarningsBeforeUse { get; set; }
-        public string  OtherDrugsThatMayCauseAReaction { get; set; }
+        public string OtherDrugsThatMayCauseAReaction { get; set; }
 
 
     }

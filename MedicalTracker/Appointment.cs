@@ -8,11 +8,15 @@ namespace MedicalTracker
 {
     public class Appointment
     {
+        private DateTime date = new();
+
         //todo: Track upcoming appointments with 
         //DateTime today = DateTime.Now;
         //using TimeSpan. 
 
-        public DateTime DateTime { get; set; }  = new DateTime();
+        //You can use the DateTime.Add() method to add the time to the date.
+        public TimeSpan Time { get; set; } = new();
+        public DateTime Date { get => date; set => date = value.Add(Time); }
         public ContactInfo PlaceOfAppointment { get; set; } = new ContactInfo();
         public string BriefDiscription { get; set; }
     }
