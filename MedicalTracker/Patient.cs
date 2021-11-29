@@ -16,7 +16,7 @@ namespace MedicalTracker
         public ContactInfo PatientInfo { get; set; } = new();
         public List<ContactInfo> EmergencyContacts { get; set; } = new();
         public List<ContactInfo> Caretakers { get; set; } = new();
-        public List<Allergies> Allergies { get; set; } = new();
+        public List<Allergy> Allergies { get; set; } = new();
         public List<Medicine> EmergencyMedications { get; set; } = new();//like an epipen
         public List<DailyMedicine> DailyMedication { get; set; } = new();
         public List<Appointment> Appointments { get; set; } = new();

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MedicalTracker
 {
-    public class Allergies
+    public class Allergy
     {
         public bool IngestionOnly { get; set; }
         public string AlgyType { get; set; }//food,drug,latex,insect,mold,pet,pollen,other..

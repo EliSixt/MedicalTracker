@@ -16,9 +16,11 @@ namespace MedicalTracker
             {
                 if (app.Date > DateTime.Now)
                 {
-                    Console.WriteLine(app.BriefDiscription + app.Date + app.PlaceOfAppointment); //ContactInfo needs a tostring method
+                    Console.WriteLine(app.BriefDiscription + app.Date + app.PlaceOfAppointment.Address); //ContactInfo needs a tostring method
                 }
             }
+
+            //functinality to add appointment (
 
             //alert on upcoming routine
             //alert/Get the next daily medicines
@@ -84,7 +86,7 @@ namespace MedicalTracker
             });
 
             //allergies
-            practicePatient.Allergies.Add(new Allergies
+            practicePatient.Allergies.Add(new Allergy
             {
                 IngestionOnly = true,
                 AlgyType = "peanuts",
@@ -96,7 +98,7 @@ namespace MedicalTracker
                 CPRRequired = false,
                 TreatmentRequired = "Administer EpiPen"
             });
-            practicePatient.Allergies.Add(new Allergies
+            practicePatient.Allergies.Add(new Allergy
             {
                 IngestionOnly = true,
                 AlgyType = "Penicillin",
