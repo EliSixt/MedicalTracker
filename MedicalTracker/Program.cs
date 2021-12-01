@@ -89,7 +89,7 @@ namespace MedicalTracker
             practicePatient.Allergies.Add(new Allergy
             {
                 IngestionOnly = true,
-                AlgyType = "peanuts",
+                AlgyName = "peanuts",
                 ConfirmedTestedAlgyType = true,
                 BriefDescriptionOfReactions = "Swelling of face and neck",
                 IslifeThreatening = true,
@@ -101,7 +101,7 @@ namespace MedicalTracker
             practicePatient.Allergies.Add(new Allergy
             {
                 IngestionOnly = true,
-                AlgyType = "Penicillin",
+                AlgyName = "Penicillin",
                 ConfirmedTestedAlgyType = true,
                 BriefDescriptionOfReactions = "Rashes, hives, itchy eyes, and swollen lips, tongue, or face. Within an hour.",
                 IslifeThreatening = true,

@@ -14,5 +14,10 @@ namespace MedicalTracker
         public string Treatment { get; set; }
         public Medicine Medicine { get; set; }//Should it be a list?
         public string NeededSupport { get; set; }
+
+        public override string ToString()
+        {
+            return $"Medical Condition: {MedicalCondition}";
+        }
     }
 }

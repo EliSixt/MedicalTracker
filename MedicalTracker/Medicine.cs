@@ -23,6 +23,9 @@ namespace MedicalTracker
         public string WarningsBeforeUse { get; set; }
         public string OtherDrugsThatMayCauseAReaction { get; set; }
 
-
+        public override string ToString()
+        {
+            return $"Brand name:{BrandName}, Generic name{GenericName}";
+        }
     }
 }

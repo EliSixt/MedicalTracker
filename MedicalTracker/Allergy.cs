@@ -9,7 +9,7 @@ namespace MedicalTracker
     public class Allergy
     {
         public bool IngestionOnly { get; set; }
-        public string AlgyType { get; set; }//food,drug,latex,insect,mold,pet,pollen,other..
+        public string AlgyName { get; set; }//food,drug,latex,insect,mold,pet,pollen,other..
         public bool ConfirmedTestedAlgyType { get; set; }
         public string BriefDescriptionOfReactions { get; set; }
         //life threatening?? action plan..
@@ -25,6 +25,9 @@ namespace MedicalTracker
         public string TreatmentRequired { get; set; }
         public List<Medicine> AlgyTreatmentMedication { get; set; } = new();
 
-
+        public override string ToString()
+        {
+            return $"Allergy: {AlgyName}";
+        }
     }
 }

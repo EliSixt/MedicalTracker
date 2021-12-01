@@ -8,6 +8,8 @@ namespace MedicalTracker
 {
     public class Appointment
     {
+        public string Title { get; set; }
+
         private DateTime date = new();
 
         //todo: Track upcoming appointments with 
@@ -19,5 +21,10 @@ namespace MedicalTracker
         public DateTime Date { get => date; set => date = value.Add(Time); }
         public ContactInfo PlaceOfAppointment { get; set; } = new ContactInfo();
         public string BriefDiscription { get; set; }
+
+        public override string ToString()
+        {
+            return $"Appointment: {Title}";
+        }
     }
 }

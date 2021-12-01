@@ -14,5 +14,10 @@ namespace MedicalTracker
         public string City { get; set; }
         public string State { get; set; }
         public int ZIPCode { get; set; }
+
+        public override string ToString()
+        {
+            return $"{BuildingNumber} {ApptNumber} {StreetName} {City} {State} {ZIPCode}";
+        }
     }
 }
