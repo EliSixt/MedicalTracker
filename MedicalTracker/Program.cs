@@ -37,21 +37,30 @@ namespace MedicalTracker
         /// Parsing a string (user input) into an int.
         /// </summary>
         /// <returns>Int</returns>
-        public static int IntParseString()
+        public static int UserInputToInt(string message)
         {
+            Console.WriteLine(message);
             int num = 0;
             num = Convert.ToInt32(Console.ReadLine());//need to get rid of this console.readline later
             return num;
         }
-        //public static Address AddAddress()
-        //{
-        //    Address address = new Address()
-        //    {
-        //        BuildingNumber = int.Parse(Console.ReadLine()),//throws an ArgumentNullException if put a null value
+        /// <summary>
+        /// Gets Address items from the user.
+        /// </summary>
+        /// <returns>Filled in Address object.</returns>
+        public static Address GetAddress()
+        {
+            Address address = new Address()
+            {
+                BuildingNumber = UserInputToInt("Enter building number."),
+                StreetName = (string)Console.ReadLine(),
+                City = (string)Console.ReadLine(),
+                State = (string)Console.ReadLine(),
+                ZIPCode = UserInputToInt("Enter Zipcode.")
 
-        //    };
-        //    return address;
-        //}
+            };
+            return address;
+        }
         //public static Patient AddAppointment(Patient Currentpatient, string DateAndTime)
         //{
         //    //string value = "12/15/2024 12:30 pm";  assign a value through UI https://docs.microsoft.com/en-us/dotnet/api/system.datetime.parse?view=net-6.0
@@ -73,7 +82,7 @@ namespace MedicalTracker
         //        {
 
         //        }
-                
+
         //    });
         //    return Currentpatient;
         //}

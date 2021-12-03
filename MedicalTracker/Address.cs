@@ -17,7 +17,7 @@ namespace MedicalTracker
 
         public override string ToString()
         {
-            return $" {BuildingNumber} {StreetName} {City} {State} {ZIPCode}";
+            return $" {BuildingNumber} {StreetName}, {City}, {State}, {ZIPCode}";
         }
     }
 }
