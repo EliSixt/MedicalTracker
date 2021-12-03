@@ -61,10 +61,20 @@ namespace MedicalTracker
             };
             return address;
         }
+        /// <summary>
+        /// Parse a string into datetime format, from the user input.
+        /// </summary>
+        /// <returns>A Datetime from the user.</returns>
+        public static DateTime GetDateTime()
+        {
+            //This should help.https://docs.microsoft.com/en-us/dotnet/api/system.datetime.parse?view=net-6.0
+            DateTime dateTime = new DateTime();
+            Console.WriteLine("Enter date and time. Ex: '12/30/2022 7:30am'");
+            dateTime = DateTime.Parse(Console.ReadLine());//try to make a loop until it passes
+            return dateTime;
+        }
         //public static Patient AddAppointment(Patient Currentpatient, string DateAndTime)
         //{
-        //    //string value = "12/15/2024 12:30 pm";  assign a value through UI https://docs.microsoft.com/en-us/dotnet/api/system.datetime.parse?view=net-6.0
-
         //    Currentpatient.Appointments.Add(new Appointment()
         //    {
         //        //BriefDiscription = "Getting blood pressure checked",
