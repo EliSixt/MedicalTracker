@@ -17,6 +17,7 @@ namespace MedicalTracker
         //using TimeSpan. 
 
         //You can use the DateTime.Add() method to add the time to the date.
+        //instead of the above, do DateTime.Parse and you can add the date and time in one swoop. Check for proper formating
         public TimeSpan Time { get; set; } = new();
         public DateTime Date { get => date; set => date = value.Add(Time); }
         public ContactInfo PlaceOfAppointment { get; set; } = new ContactInfo();

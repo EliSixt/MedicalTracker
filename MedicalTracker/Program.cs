@@ -16,23 +16,67 @@ namespace MedicalTracker
             {
                 if (app.Date > DateTime.Now)
                 {
-                    Console.WriteLine(app.BriefDiscription + app.Date + app.PlaceOfAppointment.Address); //ContactInfo needs a tostring method
+                    Console.WriteLine($"{app.BriefDiscription} {app.Date} {app.PlaceOfAppointment.Address}"); //ContactInfo needs a tostring method
                 }
             }
 
-            //functinality to add appointment (
 
+
+            //TODO list:
+            //functinality to add appointment
             //alert on upcoming routine
             //alert/Get the next daily medicines
-            //foreach (var item in p.DailyMedication)
-            //{
-            //    if (item.TimeSpanOfDose)
-            //    {
-
-            //    }
-            //}
+            //method to parse datetime string
+            //method to Address
+            //method to ContactInfo
+            //method to parse a string to an int. int.parse?
+            //
 
         }
+        /// <summary>
+        /// Parsing a string (user input) into an int.
+        /// </summary>
+        /// <returns>Int</returns>
+        public static int IntParseString()
+        {
+            int num = 0;
+            num = Convert.ToInt32(Console.ReadLine());//need to get rid of this console.readline later
+            return num;
+        }
+        //public static Address AddAddress()
+        //{
+        //    Address address = new Address()
+        //    {
+        //        BuildingNumber = int.Parse(Console.ReadLine()),//throws an ArgumentNullException if put a null value
+
+        //    };
+        //    return address;
+        //}
+        //public static Patient AddAppointment(Patient Currentpatient, string DateAndTime)
+        //{
+        //    //string value = "12/15/2024 12:30 pm";  assign a value through UI https://docs.microsoft.com/en-us/dotnet/api/system.datetime.parse?view=net-6.0
+
+        //    Currentpatient.Appointments.Add(new Appointment()
+        //    {
+        //        //BriefDiscription = "Getting blood pressure checked",
+        //        //Date = new DateTime(2022, 12, 01),
+        //        //Time = new TimeSpan(08, 00, 00),
+        //        //PlaceOfAppointment = new ContactInfo()
+        //        //{
+        //        //    Address = new Address() { City = "louisville", StreetName = "streeeat", BuildingNumber = 8989 },
+        //        //    Name = new Name() { FirstName = "Dr.Gray", LastName = "Shady" },
+        //        //    Email = "Gray_shade@yahoo.com",
+        //        //    WorkPhoneNum = "502-777-8888"
+
+        //        Date = DateTime.Parse(DateAndTime),
+        //        PlaceOfAppointment = new ContactInfo()
+        //        {
+
+        //        }
+                
+        //    });
+        //    return Currentpatient;
+        //}
         static Patient TestPatient()
         {
             Patient practicePatient = new Patient();
@@ -180,15 +224,15 @@ namespace MedicalTracker
                 },
                 DoseMg = "150 mg",
                 FrequencyOfDose = "Orally Twice Daily",
-                TimeSpanOfDose = new TimeSpan(12, 00, 00) //every 12 hours
+                TimeSpanOfDose = new TimeSpan(12, 33, 00) //every 12 hours
             });
 
             //appointments
             practicePatient.Appointments.Add(new Appointment()
             {
                 BriefDiscription = "Getting blood pressure checked",
+                Time = new TimeSpan(08, 34, 00),
                 Date = new DateTime(2022, 12, 01),
-                Time = new TimeSpan(08, 00, 00),
                 PlaceOfAppointment = new ContactInfo()
                 {
                     Address = new Address() { City = "louisville", StreetName = "streeeat", BuildingNumber = 8989 },
