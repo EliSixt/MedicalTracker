@@ -73,6 +73,30 @@ namespace MedicalTracker
             return address;
         }
         /// <summary>
+        /// Gets the ContactInfo items from the user and returns a filled ContactInfo object.
+        /// </summary>
+        /// <returns>Filled out new ContactInfo.</returns>
+        public static ContactInfo GetContactInfo()
+        {
+            ContactInfo contactInfo = new()
+            {
+                Address = GetAddress(),
+                TitleOrRelationship = GetString("Enter title and/or relationship."),
+                Name = new Name()
+                {
+                    FirstName = GetString("Enter first name."),
+                    LastName = GetString("Enter last name."),
+                    MiddleName = GetString("Enter middle name.")
+                },
+                Email = GetString("Enter email."),
+                MobilePhoneNum = GetString("Enter mobile phone number."),
+                HomePhoneNum = GetString("Enter home phone number."),
+                WorkPhoneNum = GetString("Enter work phone number.")
+            };
+
+            return contactInfo;
+        }
+        /// <summary>
         /// Parse a string into datetime format, from the user input.
         /// </summary>
         /// <returns>A Datetime from the user.</returns>
