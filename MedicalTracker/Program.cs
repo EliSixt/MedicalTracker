@@ -36,13 +36,24 @@ namespace MedicalTracker
         /// <summary>
         /// Parsing a string (user input) into an int.
         /// </summary>
+        /// <param name="message">A message describing what is needed from the user.</param>
         /// <returns>Int</returns>
         public static int UserInputToInt(string message)
         {
             Console.WriteLine(message);
-            int num = 0;
-            num = Convert.ToInt32(Console.ReadLine());//need to get rid of this console.readline later
+            int num = int.Parse(Console.ReadLine());//need to get rid of this console.readline later
             return num;
+        }
+        /// <summary>
+        /// Gets a string from the user with a descriptive message.
+        /// </summary>
+        /// <param name="message">A message describing what is needed from the user.</param>
+        /// <returns>String</returns>
+        public static string GetString(string message)
+        {
+            Console.WriteLine(message);
+            string input = Console.ReadLine();
+            return input;
         }
         /// <summary>
         /// Gets Address items from the user.
@@ -50,12 +61,12 @@ namespace MedicalTracker
         /// <returns>Filled in Address object.</returns>
         public static Address GetAddress()
         {
-            Address address = new Address()
+            Address address = new()
             {
                 BuildingNumber = UserInputToInt("Enter building number."),
-                StreetName = (string)Console.ReadLine(),
-                City = (string)Console.ReadLine(),
-                State = (string)Console.ReadLine(),
+                StreetName = GetString("Enter street name."),
+                City = GetString("Enter city."),
+                State = GetString("Enter state."),
                 ZIPCode = UserInputToInt("Enter Zipcode.")
 
             };
@@ -68,11 +79,12 @@ namespace MedicalTracker
         public static DateTime GetDateTime()
         {
             //This should help.https://docs.microsoft.com/en-us/dotnet/api/system.datetime.parse?view=net-6.0
-            DateTime dateTime = new DateTime();
+            DateTime dateTime = new();
             Console.WriteLine("Enter date and time. Ex: '12/30/2022 7:30am'");
             dateTime = DateTime.Parse(Console.ReadLine());//try to make a loop until it passes
             return dateTime;
         }
+       
         //public static Patient AddAppointment(Patient Currentpatient, string DateAndTime)
         //{
         //    Currentpatient.Appointments.Add(new Appointment()
@@ -87,10 +99,11 @@ namespace MedicalTracker
         //        //    Email = "Gray_shade@yahoo.com",
         //        //    WorkPhoneNum = "502-777-8888"
 
-        //        Date = DateTime.Parse(DateAndTime),
+        //        Date = GetDateTime(),
         //        PlaceOfAppointment = new ContactInfo()
         //        {
-
+        //            Address = GetAddress(),
+        //            Name = 
         //        }
 
         //    });
@@ -101,7 +114,7 @@ namespace MedicalTracker
             Patient practicePatient = new Patient();
 
             practicePatient.PatientInfo.Name.FirstName = "Larry";
-            practicePatient.PatientInfo.Name.MiddleInitial = 'Z';
+            practicePatient.PatientInfo.Name.MiddleName = "zoomy";
             practicePatient.PatientInfo.Name.LastName = "Quincey";
 
             practicePatient.PatientInfo.MobilePhoneNum = "502-800-8080";
@@ -115,7 +128,7 @@ namespace MedicalTracker
             //emergency contacts
             practicePatient.EmergencyContacts.Add(new ContactInfo
             {
-                Name = new Name { FirstName = "Jose", LastName = "Swaln", MiddleInitial = 'R' },
+                Name = new Name { FirstName = "Jose", LastName = "Swaln", MiddleName = "R" },
                 Address = new Address { City = "louisville", State = "kentucky", StreetName = "Lincoln", BuildingNumber = 89999, ZIPCode = 44444 },
                 Email = "something@gmail.com",
                 MobilePhoneNum = "5048790990",
@@ -123,7 +136,7 @@ namespace MedicalTracker
             });
             practicePatient.EmergencyContacts.Add(new ContactInfo
             {
-                Name = new Name { FirstName = "Frank", LastName = "Dogs", MiddleInitial = 'R' },
+                Name = new Name { FirstName = "Frank", LastName = "Dogs", MiddleName = "R" },
                 Address = new Address { City = "louisville", State = "kentucky", StreetName = "Hotdog", BuildingNumber = 1234, ZIPCode = 12345 },
                 Email = "HotDogs@gmail.com",
                 MobilePhoneNum = "5001231234",
@@ -133,7 +146,7 @@ namespace MedicalTracker
             //caretakers
             practicePatient.EmergencyContacts.Add(new ContactInfo
             {
-                Name = new Name { FirstName = "John", LastName = "Smith", MiddleInitial = 'U' },
+                Name = new Name { FirstName = "John", LastName = "Smith", MiddleName = "umbrela" },
                 Address = new Address { City = "louisville", State = "kentucky", StreetName = "Lindon", BuildingNumber = 89923, ZIPCode = 44454 },
                 Email = "JohnSmith@gmail.com",
                 MobilePhoneNum = "5048791234",
@@ -141,7 +154,7 @@ namespace MedicalTracker
             });
             practicePatient.EmergencyContacts.Add(new ContactInfo
             {
-                Name = new Name { FirstName = "Mike", LastName = "Mouse", MiddleInitial = 'E' },
+                Name = new Name { FirstName = "Mike", LastName = "Mouse", MiddleName = "Emph" },
                 Address = new Address { City = "louisville", State = "kentucky", StreetName = "Hills", BuildingNumber = 8888, ZIPCode = 47767 },
                 Email = "Disneyy@gmail.com",
                 MobilePhoneNum = "502-345-7777",
