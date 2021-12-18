@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Office.Interop.Excel;
+using Range = Microsoft.Office.Interop.Excel.Range;
 
 namespace MedicalTracker
 {
@@ -7,6 +9,55 @@ namespace MedicalTracker
     {
         static void Main(string[] args)
         {
+
+            var ConditionList = new List<Condition>();
+
+            //Create COM Objects.
+            Application excelApp = new Application();
+
+            if (excelApp == null)
+            {
+                Console.WriteLine("Excel is not installed!!");
+                return;
+            }
+
+            Workbook excelBook = excelApp.Workbooks.Open(@"C:\Users\elias\OneDrive\Documents\PeoplewithSymptomsAndConditions.xlsx");
+            _Worksheet excelSheet = excelBook.Sheets[1];
+            Range excelRange = excelSheet.UsedRange;
+
+            int rowCount = excelRange.Rows.Count;
+            int colCount = excelRange.Columns.Count;
+
+
+            for (int i = 2; i <= rowCount; i++)
+            {
+                if (excelRange.Cells[i, 7].Value2 == "Condition")
+                {
+
+                    Condition condition = new Condition();
+
+                    condition.UserID = excelRange.Cells[i, 1].Value2.ToString();
+                    if(excelRange.Cells[i, 2].Value2 != null)
+                        condition.Age = excelRange.Cells[i, 2].Value2;
+
+                    ConditionList.Add(condition);
+                }
+                //create new line
+                Console.Write("\r\n");
+                //for (int j = 1; j <= colCount; j++)
+                //{
+
+                //    //write the console
+                //    if (excelRange.Cells[i, j] != null && excelRange.Cells[i, j].Value2 != null)
+                //        Console.Write(excelRange.Cells[i, j].Value2.ToString() + "\t");
+                //}
+            }
+            //after reading, relaase the excel project
+            excelApp.Quit();
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(excelApp);
+            Console.ReadLine();
+
+
             Patient p = TestPatient();
 
             //BIG TODO: generate methods for common usages of the app
@@ -21,7 +72,6 @@ namespace MedicalTracker
             }
 
 
-
             //TODO list:
             //functinality to add appointment
             //alert on upcoming routine
@@ -33,28 +83,7 @@ namespace MedicalTracker
             //
 
         }
-        /// <summary>
-        /// Parsing a string (user input) into an int.
-        /// </summary>
-        /// <param name="message">A message describing what is needed from the user.</param>
-        /// <returns>Int</returns>
-        public static int UserInputToInt(string message)
-        {
-            Console.WriteLine(message);
-            int num = int.Parse(Console.ReadLine());//need to get rid of this console.readline later
-            return num;
-        }
-        /// <summary>
-        /// Gets a string from the user with a descriptive message.
-        /// </summary>
-        /// <param name="message">A message describing what is needed from the user.</param>
-        /// <returns>String</returns>
-        public static string GetString(string message)
-        {
-            Console.WriteLine(message);
-            string input = Console.ReadLine();
-            return input;
-        }
+
         /// <summary>
         /// Gets Address items from the user.
         /// </summary>
@@ -63,14 +92,27 @@ namespace MedicalTracker
         {
             Address address = new()
             {
-                BuildingNumber = UserInputToInt("Enter building number."),
-                StreetName = GetString("Enter street name."),
-                City = GetString("Enter city."),
-                State = GetString("Enter state."),
-                ZIPCode = UserInputToInt("Enter Zipcode.")
-
+                BuildingNumber = UI.UserInputToInt("Enter building number."),
+                StreetName = UI.GetString("Enter street name."),
+                City = UI.GetString("Enter city."),
+                State = UI.GetString("Enter state."),
+                ZIPCode = UI.UserInputToInt("Enter Zipcode.")
             };
             return address;
+        }
+        /// <summary>
+        /// Uses UI method to enter specific fields within Name.
+        /// </summary>
+        /// <returns>Filled new Name class.</returns>
+        public static Name GetName()
+        {
+            Name name = new()
+            {
+                FirstName = UI.GetString("Enter first name."),
+                LastName = UI.GetString("Enter last name."),
+                MiddleName = UI.GetString("Enter middle name.")
+            };
+            return name;
         }
         /// <summary>
         /// Gets the ContactInfo items from the user and returns a filled ContactInfo object.
@@ -81,17 +123,12 @@ namespace MedicalTracker
             ContactInfo contactInfo = new()
             {
                 Address = GetAddress(),
-                TitleOrRelationship = GetString("Enter title and/or relationship."),
-                Name = new Name()
-                {
-                    FirstName = GetString("Enter first name."),
-                    LastName = GetString("Enter last name."),
-                    MiddleName = GetString("Enter middle name.")
-                },
-                Email = GetString("Enter email."),
-                MobilePhoneNum = GetString("Enter mobile phone number."),
-                HomePhoneNum = GetString("Enter home phone number."),
-                WorkPhoneNum = GetString("Enter work phone number.")
+                TitleOrRelationship = UI.GetString("Enter title and/or relationship."),
+                Name = GetName(),
+                Email = UI.GetString("Enter email."),
+                MobilePhoneNum = UI.GetString("Enter mobile phone number."),
+                HomePhoneNum = UI.GetString("Enter home phone number."),
+                WorkPhoneNum = UI.GetString("Enter work phone number.")
             };
 
             return contactInfo;
@@ -108,31 +145,32 @@ namespace MedicalTracker
             dateTime = DateTime.Parse(Console.ReadLine());//try to make a loop until it passes
             return dateTime;
         }
-       
-        //public static Patient AddAppointment(Patient Currentpatient, string DateAndTime)
-        //{
-        //    Currentpatient.Appointments.Add(new Appointment()
-        //    {
-        //        //BriefDiscription = "Getting blood pressure checked",
-        //        //Date = new DateTime(2022, 12, 01),
-        //        //Time = new TimeSpan(08, 00, 00),
-        //        //PlaceOfAppointment = new ContactInfo()
-        //        //{
-        //        //    Address = new Address() { City = "louisville", StreetName = "streeeat", BuildingNumber = 8989 },
-        //        //    Name = new Name() { FirstName = "Dr.Gray", LastName = "Shady" },
-        //        //    Email = "Gray_shade@yahoo.com",
-        //        //    WorkPhoneNum = "502-777-8888"
 
-        //        Date = GetDateTime(),
-        //        PlaceOfAppointment = new ContactInfo()
-        //        {
-        //            Address = GetAddress(),
-        //            Name = 
-        //        }
+        public static Patient AddAppointment(Patient Currentpatient, string DateAndTime)
+        {
+            Currentpatient.Appointments.Add(new Appointment()
+            {
+                //BriefDiscription = "Getting blood pressure checked",
+                //Date = new DateTime(2022, 12, 01),
+                //Time = new TimeSpan(08, 00, 00),
+                //PlaceOfAppointment = new ContactInfo()
+                //{
+                //    Address = new Address() { City = "louisville", StreetName = "streeeat", BuildingNumber = 8989 },
+                //    Name = new Name() { FirstName = "Dr.Gray", LastName = "Shady" },
+                //    Email = "Gray_shade@yahoo.com",
+                //    WorkPhoneNum = "502-777-8888"
 
-        //    });
-        //    return Currentpatient;
-        //}
+                Date = GetDateTime(),
+                PlaceOfAppointment = new ContactInfo()
+                {
+                    Address = GetAddress(),
+                    Name = GetName(),
+
+                }
+
+            });
+            return Currentpatient;
+        }
         static Patient TestPatient()
         {
             Patient practicePatient = new Patient();
