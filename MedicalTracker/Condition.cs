@@ -8,10 +8,13 @@ namespace MedicalTracker
 {
     internal class Condition
     {
-        public string Name { get; set; }
+        public string UserID { get; set; }
         public string Sex { get; set; }
         public double Age { get; set; }
         public string Country { get; set; }
-        public string UserID { get; set; }
+        public string Severity { get; set; }
+        public double Date { get; set; }
+        //public string TrackableType { get; set; }
+        public string Name { get; set; }
     }
 }

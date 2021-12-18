@@ -37,9 +37,31 @@ namespace MedicalTracker
                     Condition condition = new Condition();
 
                     condition.UserID = excelRange.Cells[i, 1].Value2.ToString();
-                    if(excelRange.Cells[i, 2].Value2 != null)
+                    if (excelRange.Cells[i, 2].Value2 != null)
+                    {
                         condition.Age = excelRange.Cells[i, 2].Value2;
-
+                    }
+                    if (excelRange.Cells[i, 3].Value2 != null)
+                    {
+                        condition.Sex = excelRange.Cells[i, 3].Value2.ToString();
+                    }
+                    if (excelRange.Cells[i, 5].Value2 != null)
+                    {
+                        condition.Date = excelRange.Cells[i, 5].Value2;
+                    }
+                    //condition.TrackableType = excelRange.Cells[i, 7].Value2.ToString();
+                    if (excelRange.Cells[i, 8].Value2 != null)
+                    {
+                        condition.Name = excelRange.Cells[i, 8].Value2.ToString();
+                    }
+                    if (excelRange.Cells[i, 9].Value2 != null)
+                    {
+                        condition.Severity = excelRange.Cells[i, 9].Value2.ToString();
+                    }
+                    if (excelRange.Cells[i, 4].Value2 != null)
+                    {
+                        condition.Country = excelRange.Cells[i, 4].Value2.ToString();//this has null exception
+                    }
                     ConditionList.Add(condition);
                 }
                 //create new line
