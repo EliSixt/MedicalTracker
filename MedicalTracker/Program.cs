@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml.Serialization;
 using Microsoft.Office.Interop.Excel;
 using Range = Microsoft.Office.Interop.Excel.Range;
 
@@ -80,6 +82,7 @@ namespace MedicalTracker
             Console.ReadLine();
 
 
+
             Patient p = TestPatient();
 
             //BIG TODO: generate methods for common usages of the app
@@ -105,7 +108,35 @@ namespace MedicalTracker
             //
 
         }
+        /// <summary>
+        /// Method that serializes a list<Object>.
+        /// </summary>
+        /// <paramref name="aFilePath">The path of the stored xml file.</paramref>
+        /// <param name="listToStore">The list to serialize.</param>
+        public static void XmlWriter<T>(List<T> listToStore, string aFilePath)
+        {
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<T>));
+            using (TextWriter tx = new StreamWriter(aFilePath))
+            {
+                xmlSerializer.Serialize(tx, listToStore);
+            }
 
+        }
+
+        /// <summary>
+        /// Method that deserializes a list<object>.
+        /// </summary>
+        /// <paramref name="aFilePath">The path of the stored xml file.</paramref>
+        /// <typeparam name="T">The type of object of the list.</typeparam>
+        /// <returns>A deserialized list object.</returns>
+        public static T XmlReader<T>(string aFilePath)
+        {
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
+            using (TextReader tx = new StreamReader(aFilePath))
+            {
+                return (T)xmlSerializer.Deserialize(tx);
+            }
+        }
         /// <summary>
         /// Gets Address items from the user.
         /// </summary>
