@@ -11,8 +11,17 @@ namespace MedicalTracker
     {
         static void Main(string[] args)
         {
+            string filePath = @"C:\TMP\conditionsData.xml";
+            string testFilePath = @"C:\TMP\testFile.xml";
+            var conditionList = new List<Condition>();
 
-            var ConditionList = new List<Condition>();
+            //This a test for serializing to a local file
+            Directory.CreateDirectory(@"C:\TMP");
+            List<string> testFile = new List<string>();
+            testFile.Add("This is a test to make sure i dont get a directory access denied exception.");
+            XmlWriter(testFile, testFilePath);
+
+
 
             //Create COM Objects.
             Application excelApp = new Application();
@@ -64,7 +73,10 @@ namespace MedicalTracker
                     {
                         condition.Country = excelRange.Cells[i, 4].Value2.ToString();//this has null exception
                     }
-                    ConditionList.Add(condition);
+                    conditionList.Add(condition);
+
+                    //****this throws CA1416: Validate platform compatibility exception****
+                    //XmlWriter(conditionList, filePath);
                 }
                 //create new line
                 Console.Write("\r\n");
