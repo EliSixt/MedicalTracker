@@ -11,15 +11,17 @@ namespace MedicalTracker
     {
         static void Main(string[] args)
         {
-            string filePath = @"C:\TMP\conditionsData.xml";
-            string testFilePath = @"C:\TMP\testFile.xml";
-            var conditionList = new List<Condition>();
+            string filePathConditions = @"C:\TMP\conditionsData.xml";
+            string filePathSymptoms = @"C:\TMP\symptomsData.xml";
+            //string testFilePath = @"C:\TMP\testFile.xml";
+            List<Condition> conditionsList = new();
+            List<Symptom> symptomsList = new();
 
             //This a test for serializing to a local file
             Directory.CreateDirectory(@"C:\TMP");
             List<string> testFile = new List<string>();
             testFile.Add("This is a test to make sure i dont get a directory access denied exception.");
-            XmlWriter(testFile, testFilePath);
+            //XmlWriter(testFile, testFilePath);
 
 
 
@@ -33,7 +35,7 @@ namespace MedicalTracker
             }
 
             Workbook excelBook = excelApp.Workbooks.Open(@"C:\Users\elias\OneDrive\Documents\PeoplewithSymptomsAndConditions.xlsx");
-            _Worksheet excelSheet = excelBook.Sheets[1];
+            Worksheet excelSheet = excelBook.Sheets[1];
             Range excelRange = excelSheet.UsedRange;
 
             int rowCount = excelRange.Rows.Count;
@@ -42,6 +44,24 @@ namespace MedicalTracker
 
             for (int i = 2; i <= rowCount; i++)
             {
+                if (excelRange.Cells[i, 7].Value2 == "Symptom")
+                {
+                    Symptom symptom = new();
+                    symptom.UserID = excelRange.Cells[i, 1].Value2.ToString();                    
+                    if (excelRange.Cells[i, 5].Value2 != null)
+                    {
+                        symptom.Date = excelRange.Cells[i, 5].Value2;
+                    }
+                    if (excelRange.Cells[i, 8].Value2 != null)
+                    {
+                        symptom.Name = excelRange.Cells[i, 8].Value2.ToString();
+                    }
+                    if (excelRange.Cells[i, 9].Value2 != null)
+                    {
+                        symptom.Severity = excelRange.Cells[i, 9].Value2.ToString();
+                    }
+                    symptomsList.Add(symptom);
+                }
                 if (excelRange.Cells[i, 7].Value2 == "Condition")
                 {
 
@@ -73,11 +93,10 @@ namespace MedicalTracker
                     {
                         condition.Country = excelRange.Cells[i, 4].Value2.ToString();//this has null exception
                     }
-                    conditionList.Add(condition);
-
-                    //****this throws CA1416: Validate platform compatibility exception****
-                    //XmlWriter(conditionList, filePath);
+                    conditionsList.Add(condition);
                 }
+                XmlWriter(conditionsList, filePathConditions);
+                XmlWriter(symptomsList, filePathSymptoms);
                 //create new line
                 Console.Write("\r\n");
                 //for (int j = 1; j <= colCount; j++)

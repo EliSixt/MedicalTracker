@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MedicalTracker
 {
-    internal class Condition
+     public class Condition
     {
         public string UserID { get; set; }
         public string Sex { get; set; }
