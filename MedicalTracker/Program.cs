@@ -21,96 +21,95 @@ namespace MedicalTracker
             Directory.CreateDirectory(@"C:\TMP");
             List<string> testFile = new List<string>();
             testFile.Add("This is a test to make sure i dont get a directory access denied exception.");
-            //XmlWriter(testFile, testFilePath);
 
+            conditionsList = XmlReader<List<Condition>>(filePathConditions);
+            symptomsList = XmlReader<List<Symptom>>(filePathSymptoms);
 
+            ////Create Excel Objects.
+            //Application excelApp = new Application();
 
-            //Create COM Objects.
-            Application excelApp = new Application();
+            //if (excelApp == null)
+            //{
+            //    Console.WriteLine("Excel is not installed!!");
+            //    return;
+            //}
 
-            if (excelApp == null)
-            {
-                Console.WriteLine("Excel is not installed!!");
-                return;
-            }
+            //Workbook excelBook = excelApp.Workbooks.Open(@"C:\Users\elias\OneDrive\Documents\PeoplewithSymptomsAndConditions.xlsx");
+            //Worksheet excelSheet = excelBook.Sheets[1];
+            //Range excelRange = excelSheet.UsedRange;
 
-            Workbook excelBook = excelApp.Workbooks.Open(@"C:\Users\elias\OneDrive\Documents\PeoplewithSymptomsAndConditions.xlsx");
-            Worksheet excelSheet = excelBook.Sheets[1];
-            Range excelRange = excelSheet.UsedRange;
+            //int rowCount = excelRange.Rows.Count;
+            //int colCount = excelRange.Columns.Count;
 
-            int rowCount = excelRange.Rows.Count;
-            int colCount = excelRange.Columns.Count;
+            //for (int i = 2; i <= rowCount; i++)
+            //{
+            //    if (excelRange.Cells[i, 7].Value2 == "Symptom")
+            //    {
+            //        Symptom symptom = new();
+            //        symptom.UserID = excelRange.Cells[i, 1].Value2.ToString();                    
+            //        if (excelRange.Cells[i, 5].Value2 != null)
+            //        {
+            //            symptom.Date = excelRange.Cells[i, 5].Value2;
+            //        }
+            //        if (excelRange.Cells[i, 8].Value2 != null)
+            //        {
+            //            symptom.Name = excelRange.Cells[i, 8].Value2.ToString();
+            //        }
+            //        if (excelRange.Cells[i, 9].Value2 != null)
+            //        {
+            //            symptom.Severity = excelRange.Cells[i, 9].Value2.ToString();
+            //        }
+            //        symptomsList.Add(symptom);
+            //    }
+            //    if (excelRange.Cells[i, 7].Value2 == "Condition")
+            //    {
 
+            //        Condition condition = new Condition();
 
-            for (int i = 2; i <= rowCount; i++)
-            {
-                if (excelRange.Cells[i, 7].Value2 == "Symptom")
-                {
-                    Symptom symptom = new();
-                    symptom.UserID = excelRange.Cells[i, 1].Value2.ToString();                    
-                    if (excelRange.Cells[i, 5].Value2 != null)
-                    {
-                        symptom.Date = excelRange.Cells[i, 5].Value2;
-                    }
-                    if (excelRange.Cells[i, 8].Value2 != null)
-                    {
-                        symptom.Name = excelRange.Cells[i, 8].Value2.ToString();
-                    }
-                    if (excelRange.Cells[i, 9].Value2 != null)
-                    {
-                        symptom.Severity = excelRange.Cells[i, 9].Value2.ToString();
-                    }
-                    symptomsList.Add(symptom);
-                }
-                if (excelRange.Cells[i, 7].Value2 == "Condition")
-                {
+            //        condition.UserID = excelRange.Cells[i, 1].Value2.ToString();
+            //        if (excelRange.Cells[i, 2].Value2 != null)
+            //        {
+            //            condition.Age = excelRange.Cells[i, 2].Value2;
+            //        }
+            //        if (excelRange.Cells[i, 3].Value2 != null)
+            //        {
+            //            condition.Sex = excelRange.Cells[i, 3].Value2.ToString();
+            //        }
+            //        if (excelRange.Cells[i, 5].Value2 != null)
+            //        {
+            //            condition.Date = excelRange.Cells[i, 5].Value2;
+            //        }
+            //        //condition.TrackableType = excelRange.Cells[i, 7].Value2.ToString();
+            //        if (excelRange.Cells[i, 8].Value2 != null)
+            //        {
+            //            condition.Name = excelRange.Cells[i, 8].Value2.ToString();
+            //        }
+            //        if (excelRange.Cells[i, 9].Value2 != null)
+            //        {
+            //            condition.Severity = excelRange.Cells[i, 9].Value2.ToString();
+            //        }
+            //        if (excelRange.Cells[i, 4].Value2 != null)
+            //        {
+            //            condition.Country = excelRange.Cells[i, 4].Value2.ToString();//this has null exception
+            //        }
+            //        conditionsList.Add(condition);
+            //    }
+            //    XmlWriter(conditionsList, filePathConditions);
+            //    XmlWriter(symptomsList, filePathSymptoms);
+            //    //create new line
+            //    Console.Write("\r\n");
+            //    //for (int j = 1; j <= colCount; j++)
+            //    //{
 
-                    Condition condition = new Condition();
-
-                    condition.UserID = excelRange.Cells[i, 1].Value2.ToString();
-                    if (excelRange.Cells[i, 2].Value2 != null)
-                    {
-                        condition.Age = excelRange.Cells[i, 2].Value2;
-                    }
-                    if (excelRange.Cells[i, 3].Value2 != null)
-                    {
-                        condition.Sex = excelRange.Cells[i, 3].Value2.ToString();
-                    }
-                    if (excelRange.Cells[i, 5].Value2 != null)
-                    {
-                        condition.Date = excelRange.Cells[i, 5].Value2;
-                    }
-                    //condition.TrackableType = excelRange.Cells[i, 7].Value2.ToString();
-                    if (excelRange.Cells[i, 8].Value2 != null)
-                    {
-                        condition.Name = excelRange.Cells[i, 8].Value2.ToString();
-                    }
-                    if (excelRange.Cells[i, 9].Value2 != null)
-                    {
-                        condition.Severity = excelRange.Cells[i, 9].Value2.ToString();
-                    }
-                    if (excelRange.Cells[i, 4].Value2 != null)
-                    {
-                        condition.Country = excelRange.Cells[i, 4].Value2.ToString();//this has null exception
-                    }
-                    conditionsList.Add(condition);
-                }
-                XmlWriter(conditionsList, filePathConditions);
-                XmlWriter(symptomsList, filePathSymptoms);
-                //create new line
-                Console.Write("\r\n");
-                //for (int j = 1; j <= colCount; j++)
-                //{
-
-                //    //write the console
-                //    if (excelRange.Cells[i, j] != null && excelRange.Cells[i, j].Value2 != null)
-                //        Console.Write(excelRange.Cells[i, j].Value2.ToString() + "\t");
-                //}
-            }
-            //after reading, relaase the excel project
-            excelApp.Quit();
-            System.Runtime.InteropServices.Marshal.ReleaseComObject(excelApp);
-            Console.ReadLine();
+            //    //    //write the console
+            //    //    if (excelRange.Cells[i, j] != null && excelRange.Cells[i, j].Value2 != null)
+            //    //        Console.Write(excelRange.Cells[i, j].Value2.ToString() + "\t");
+            //    //}
+            //}
+            ////after reading, relaase the excel project
+            //excelApp.Quit();
+            //System.Runtime.InteropServices.Marshal.ReleaseComObject(excelApp);
+            //Console.ReadLine(); 
 
 
 

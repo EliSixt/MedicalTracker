@@ -16,5 +16,13 @@ namespace MedicalTracker
         public double Date { get; set; }
         //public string TrackableType { get; set; }
         public string Name { get; set; }
+        /// <summary>
+        /// Overrides string for Condition.
+        /// </summary>
+        /// <returns>Displays the name of the condition, severity, sex, age, country, and userId.</returns>
+        public override string ToString()
+        {
+            return $"name = {Name}, severity = {Severity}, sex = {Sex}, age = {Age}, country = {Country}, userID = {UserID}";
+        }
     }
 }

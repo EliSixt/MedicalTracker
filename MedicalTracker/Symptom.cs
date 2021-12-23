@@ -12,6 +12,14 @@ namespace MedicalTracker
         public string Name { get; set; }
         public double Date { get; set; }
         public string Severity { get; set; }
+        /// <summary>
+        /// Overrides string for Symptom.
+        /// </summary>
+        /// <returns>Displays the name of the symptom, severity, and userId.</returns>
+        public override string ToString()
+        {
+            return $"name = {Name}, severity = {Severity}, userID = {UserID}";
 
+        }
     }
 }
