@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
 using Microsoft.Office.Interop.Excel;
 using Range = Microsoft.Office.Interop.Excel.Range;
@@ -24,6 +25,22 @@ namespace MedicalTracker
 
             conditionsList = XmlReader<List<Condition>>(filePathConditions);
             symptomsList = XmlReader<List<Symptom>>(filePathSymptoms);
+
+            var query = conditionsList.GroupBy(
+                x => Math.Floor(x.Age),
+                x => x.Age,
+                (baseAge, ages) => new
+                {
+                    Key = baseAge,
+                    Count = ages.Count(),
+                    Min = ages.Min()
+                    //Max = ages.Max()
+                }).OrderBy(x => x.Min);
+            foreach (var result in query)
+            { 
+                Console.WriteLine($"Age group = {result.Key}");
+                Console.WriteLine($"Number of inputs with this age = {result.Count}");
+            }
 
             ////Create Excel Objects.
             //Application excelApp = new Application();
