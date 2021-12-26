@@ -8,6 +8,7 @@ namespace MedicalTracker
 {
      public class Condition
     {
+        public List<Symptom> Symptoms { get; set; }//symptoms associated with this condition
         public string UserID { get; set; }
         public string Sex { get; set; }
         public double Age { get; set; }

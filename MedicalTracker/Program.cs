@@ -12,12 +12,12 @@ namespace MedicalTracker
     {
         static void Main(string[] args)
         {
-            string filePathConditions = @"C:\TMP\conditionsData.xml";
-            string filePathSymptoms = @"C:\TMP\symptomsData.xml";
+            string filePathConditions = @"C:\Users\Elias\OneDrive\TMP\conditionsData.xml";
+            string filePathSymptoms = @"C:\Users\Elias\OneDrive\TMP\symptomsData.xml";
             //string testFilePath = @"C:\TMP\testFile.xml";
             List<Condition> conditionsList = new();
             List<Symptom> symptomsList = new();
-
+            List<Condition> conditionsWithSymptoms = new();
             //This a test for serializing to a local file
             Directory.CreateDirectory(@"C:\TMP");
             List<string> testFile = new List<string>();
@@ -25,6 +25,27 @@ namespace MedicalTracker
 
             conditionsList = XmlReader<List<Condition>>(filePathConditions);
             symptomsList = XmlReader<List<Symptom>>(filePathSymptoms);
+            foreach (Condition item in conditionsList)
+            {
+                conditionsWithSymptoms.Add(item);
+            }
+
+            foreach (Condition condition in conditionsWithSymptoms)
+            {
+                foreach (Symptom symptom in symptomsList)
+                {
+                    if (condition.UserID == symptom.UserID)
+                    {
+                        DateTime symptomDate = DateTime.FromOADate(symptom.Date);
+                        DateTime conditionDate = DateTime.FromOADate(condition.Date);
+                        if ((conditionDate - symptomDate).Days < 2 && (conditionDate - symptomDate).Days > 2)
+                        {
+                            condition.Symptoms.Add(symptom);
+                        }
+                    }
+                }
+            }
+
 
             var query = conditionsList.GroupBy(
                 x => Math.Floor(x.Age),
