@@ -8,23 +8,28 @@ using Range = Microsoft.Office.Interop.Excel.Range;
 
 namespace MedicalTracker
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             string filePathConditions = @"C:\Users\Elias\OneDrive\TMP\conditionsData.xml";
             string filePathSymptoms = @"C:\Users\Elias\OneDrive\TMP\symptomsData.xml";
             //string testFilePath = @"C:\TMP\testFile.xml";
+            
             List<Condition> conditionsList = new();
             List<Symptom> symptomsList = new();
             List<Condition> conditionsWithSymptoms = new();
+            
             //This a test for serializing to a local file
-            Directory.CreateDirectory(@"C:\TMP");
-            List<string> testFile = new List<string>();
-            testFile.Add("This is a test to make sure i dont get a directory access denied exception.");
+            //Directory.CreateDirectory(@"C:\TMP");
+            //List<string> testFile = new List<string>();
+            //testFile.Add("This is a test to make sure i dont get a directory access denied exception.");
+
 
             conditionsList = XmlReader<List<Condition>>(filePathConditions);
             symptomsList = XmlReader<List<Symptom>>(filePathSymptoms);
+
+
             foreach (Condition item in conditionsList)
             {
                 conditionsWithSymptoms.Add(item);
@@ -38,7 +43,8 @@ namespace MedicalTracker
                     {
                         DateTime symptomDate = DateTime.FromOADate(symptom.Date);
                         DateTime conditionDate = DateTime.FromOADate(condition.Date);
-                        if ((conditionDate - symptomDate).Days < 2 && (conditionDate - symptomDate).Days > 2)
+                        TimeSpan timeSpan = conditionDate - symptomDate;
+                        if (timeSpan.Days < 2 && timeSpan.Days > 2)
                         {
                             condition.Symptoms.Add(symptom);
                         }
@@ -57,8 +63,10 @@ namespace MedicalTracker
                     Min = ages.Min()
                     //Max = ages.Max()
                 }).OrderBy(x => x.Min);
+
+
             foreach (var result in query)
-            { 
+            {
                 Console.WriteLine($"Age group = {result.Key}");
                 Console.WriteLine($"Number of inputs with this age = {result.Count}");
             }
@@ -156,7 +164,7 @@ namespace MedicalTracker
             //BIG TODO: generate methods for common usages of the app
 
             //Get the next appointments
-            foreach (var app in p.Appointments)
+            foreach (Appointment app in p.Appointments)
             {
                 if (app.Date > DateTime.Now)
                 {
@@ -183,7 +191,7 @@ namespace MedicalTracker
         /// <param name="listToStore">The list to serialize.</param>
         public static void XmlWriter<T>(List<T> listToStore, string aFilePath)
         {
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<T>));
+            XmlSerializer xmlSerializer = new(typeof(List<T>));
             using (TextWriter tx = new StreamWriter(aFilePath))
             {
                 xmlSerializer.Serialize(tx, listToStore);
@@ -199,7 +207,7 @@ namespace MedicalTracker
         /// <returns>A deserialized list object.</returns>
         public static T XmlReader<T>(string aFilePath)
         {
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
+            XmlSerializer xmlSerializer = new(typeof(T));
             using (TextReader tx = new StreamReader(aFilePath))
             {
                 return (T)xmlSerializer.Deserialize(tx);
@@ -292,9 +300,9 @@ namespace MedicalTracker
             });
             return Currentpatient;
         }
-        static Patient TestPatient()
+        public static Patient TestPatient()
         {
-            Patient practicePatient = new Patient();
+            Patient practicePatient = new();
 
             practicePatient.PatientInfo.Name.FirstName = "Larry";
             practicePatient.PatientInfo.Name.MiddleName = "zoomy";
