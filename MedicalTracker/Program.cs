@@ -15,11 +15,12 @@ namespace MedicalTracker
             string filePathConditions = @"C:\Users\Elias\OneDrive\TMP\conditionsData.xml";
             string filePathSymptoms = @"C:\Users\Elias\OneDrive\TMP\symptomsData.xml";
             //string testFilePath = @"C:\TMP\testFile.xml";
-            
+
             List<Condition> conditionsList = new();
             List<Symptom> symptomsList = new();
             List<Condition> conditionsWithSymptoms = new();
-            
+            List<Appointment> appointmentsList = new();
+
             //This a test for serializing to a local file
             //Directory.CreateDirectory(@"C:\TMP");
             //List<string> testFile = new List<string>();
@@ -29,12 +30,13 @@ namespace MedicalTracker
             conditionsList = XmlReader<List<Condition>>(filePathConditions);
             symptomsList = XmlReader<List<Symptom>>(filePathSymptoms);
 
-
+            //copies the condition list into conditionsWithSymptoms
             foreach (Condition item in conditionsList)
             {
                 conditionsWithSymptoms.Add(item);
             }
 
+            //includes any possible symptoms (based on a timeSpan) onto their respective conditions in conditionsWithSymptoms
             foreach (Condition condition in conditionsWithSymptoms)
             {
                 foreach (Symptom symptom in symptomsList)
@@ -53,6 +55,7 @@ namespace MedicalTracker
             }
 
 
+            //tries to group people by age and counts/shows how many inputs are in that age group
             var query = conditionsList.GroupBy(
                 x => Math.Floor(x.Age),
                 x => x.Age,
@@ -64,12 +67,14 @@ namespace MedicalTracker
                     //Max = ages.Max()
                 }).OrderBy(x => x.Min);
 
-
             foreach (var result in query)
             {
                 Console.WriteLine($"Age group = {result.Key}");
                 Console.WriteLine($"Number of inputs with this age = {result.Count}");
             }
+
+
+
 
             ////Create Excel Objects.
             //Application excelApp = new Application();
@@ -161,7 +166,6 @@ namespace MedicalTracker
 
             Patient p = TestPatient();
 
-            //BIG TODO: generate methods for common usages of the app
 
             //Get the next appointments
             foreach (Appointment app in p.Appointments)
@@ -173,6 +177,7 @@ namespace MedicalTracker
             }
 
 
+            //BIG TODO: generate methods for common usages of the app
             //TODO list:
             //functinality to add appointment
             //alert on upcoming routine
@@ -270,8 +275,16 @@ namespace MedicalTracker
         {
             //This should help.https://docs.microsoft.com/en-us/dotnet/api/system.datetime.parse?view=net-6.0
             DateTime dateTime = new();
+            bool validDate = false;
             Console.WriteLine("Enter date and time. Ex: '12/30/2022 7:30am'");
-            dateTime = DateTime.Parse(Console.ReadLine());//try to make a loop until it passes
+            do
+            {
+                validDate = DateTime.TryParse(Console.ReadLine(), out dateTime);//try to make a loop until it passes
+                if (!validDate)
+                {
+                    Console.WriteLine("Please enter a valid date.");
+                }
+            } while (!validDate);
             return dateTime;
         }
 
