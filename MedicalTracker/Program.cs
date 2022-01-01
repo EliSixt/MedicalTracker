@@ -19,7 +19,6 @@ namespace MedicalTracker
             List<Condition> conditionsList = new();
             List<Symptom> symptomsList = new();
             List<Condition> conditionsWithSymptoms = new();
-            List<Appointment> appointmentsList = new();
 
             //This a test for serializing to a local file
             //Directory.CreateDirectory(@"C:\TMP");
@@ -267,27 +266,6 @@ namespace MedicalTracker
 
             return contactInfo;
         }
-        /// <summary>
-        /// Parse a string into datetime format, from the user input.
-        /// </summary>
-        /// <returns>A Datetime from the user.</returns>
-        public static DateTime GetDateTime()
-        {
-            //This should help.https://docs.microsoft.com/en-us/dotnet/api/system.datetime.parse?view=net-6.0
-            DateTime dateTime = new();
-            bool validDate = false;
-            Console.WriteLine("Enter date and time. Ex: '12/30/2022 7:30am'");
-            do
-            {
-                validDate = DateTime.TryParse(Console.ReadLine(), out dateTime);//try to make a loop until it passes
-                if (!validDate)
-                {
-                    Console.WriteLine("Please enter a valid date.");
-                }
-            } while (!validDate);
-            return dateTime;
-        }
-
         public static Patient AddAppointment(Patient Currentpatient, string DateAndTime)
         {
             Currentpatient.Appointments.Add(new Appointment()
@@ -302,7 +280,7 @@ namespace MedicalTracker
                 //    Email = "Gray_shade@yahoo.com",
                 //    WorkPhoneNum = "502-777-8888"
 
-                Date = GetDateTime(),
+                Date = UI.GetDateTime(),
                 PlaceOfAppointment = new ContactInfo()
                 {
                     Address = GetAddress(),
@@ -478,13 +456,15 @@ namespace MedicalTracker
                 }
             });
             //Medical history
-            practicePatient.MedicalCondition.Add(new MedicalHistory()
+            practicePatient.MedicalHistory.Add(new MedicalHistory()
             {
-                MedicalCondition = "Diabietes",
-                CounterMeasures = "Dont eat sugars",
-                Symptoms = null,
-                Treatment = "Take medication on time and excercise",
-                Medicine = new Medicine() { BrandName = "insulin", Description = "To treat diabietes", Directions = "Administer by injection" }
+                MedicalName = "Diabietes",
+                Preventatives = "Dont eat sugars",
+                Treatments = "Take medication on time and excercise",
+                PastMedicines = new List<Medicine>()
+                {
+                    new Medicine() { BrandName = "insulin", Description = "To treat diabietes", Directions = "Administer by injection" }
+                }
             });
             //UnUsual symtoms list
             practicePatient.UnusualSymptoms.Add(new UnusualSymptoms() { Symptom = "Lots of unusal burping" });

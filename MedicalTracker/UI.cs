@@ -27,7 +27,7 @@ namespace MedicalTracker
         public static int UserInputToInt(string message)
         {
             Console.WriteLine(message);
-            int num = int.Parse(Console.ReadLine());//need to get rid of this console.readline later
+            int num = int.Parse(Console.ReadLine());
             return num;
         }
         /// <summary>
@@ -39,6 +39,26 @@ namespace MedicalTracker
         {
             Console.WriteLine(message);
             return Console.ReadLine();
+        }
+        /// <summary>
+        /// Parse a string into datetime format, from the user input.
+        /// </summary>
+        /// <returns>A Datetime from the user.</returns>
+        public static DateTime GetDateTime()
+        {
+            //This should help.https://docs.microsoft.com/en-us/dotnet/api/system.datetime.parse?view=net-6.0
+            DateTime dateTime = new();
+            bool validDate = false;
+            Console.WriteLine("Enter date and time. Ex: '12/30/2022 7:30am'");
+            do
+            {
+                validDate = DateTime.TryParse(Console.ReadLine(), out dateTime);
+                if (!validDate)
+                {
+                    Console.WriteLine("Please enter a valid date.");
+                }
+            } while (!validDate);
+            return dateTime;
         }
     }
 }
