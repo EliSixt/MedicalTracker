@@ -13,7 +13,8 @@ namespace MedicalTracker
         //Todo: realtime medicine recall tracking? 
         // history of past medicine?
         //Appointment Alerts?
-        public ContactInfo PatientInfo { get; set; } = new();//What about age, weight, height, bmi?, background, languages, origin?
+        public ContactInfo PatientInfo { get; set; } = new();
+        public GeneralInfo GeneralInfo { get; set; } = new(); // I could make a small BMI calculator?
         public List<ContactInfo> EmergencyContacts { get; set; } = new();
         public List<ContactInfo> Caretakers { get; set; } = new();
         public List<Allergy> Allergies { get; set; } = new();
@@ -22,8 +23,8 @@ namespace MedicalTracker
         public List<Appointment> Appointments { get; set; } = new();
         public List<MedicalHistory> MedicalHistory { get; set; } = new();
         public List<Symptom> Symptoms { get; set; }
-        public List<UnusualSymptoms> UnusualSymptoms { get; set; } = new();
-        public List<AdditionalNeeds> AdditionalNeeds { get; set; } = new();//Maybe something timed?
+        public List<UnusualSymptoms> UnusualSymptoms { get; set; } = new(); //check this and change
+        public List<AdditionalNeeds> AdditionalNeeds { get; set; } = new();//check this and change
         public override string ToString()
         {
             return $"Patient: {PatientInfo.Name.FirstName} {PatientInfo.Name.LastName}";

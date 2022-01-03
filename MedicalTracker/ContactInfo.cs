@@ -8,8 +8,6 @@ namespace MedicalTracker
 {
     public class ContactInfo
     {
-        //Needs a ToString!
-
         public string TitleOrRelationship { get; set; }
         public Name Name { get; set; } = new();
         public string MobilePhoneNum { get; set; }
