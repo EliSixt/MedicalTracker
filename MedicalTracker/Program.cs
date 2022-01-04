@@ -26,8 +26,18 @@ namespace MedicalTracker
             //testFile.Add("This is a test to make sure i dont get a directory access denied exception.");
 
 
+
+            ////Copies information from a specific excelSheet and adds it onto an object of ExcelList,
+            ////returned 2 lists through excelList, and serializes those lists into separate files.
+            //string xlsxFile = @"C:\Users\elias\OneDrive\Documents\PeoplewithSymptomsAndConditions.xlsx";
+
+            //ExcelLists excelLists = new ExcelLists();
+            //excelLists = ExcelObjectGenerator(xlsxFile, filePathConditions, filePathSymptoms);
+
+
             conditionsList = XmlReader<List<Condition>>(filePathConditions);
             symptomsList = XmlReader<List<Symptom>>(filePathSymptoms);
+
 
             //copies the condition list into conditionsWithSymptoms
             foreach (Condition item in conditionsList)
@@ -74,95 +84,6 @@ namespace MedicalTracker
 
 
 
-
-            ////Create Excel Objects.
-            //Application excelApp = new Application();
-
-            //if (excelApp == null)
-            //{
-            //    Console.WriteLine("Excel is not installed!!");
-            //    return;
-            //}
-
-            //Workbook excelBook = excelApp.Workbooks.Open(@"C:\Users\elias\OneDrive\Documents\PeoplewithSymptomsAndConditions.xlsx");
-            //Worksheet excelSheet = excelBook.Sheets[1];
-            //Range excelRange = excelSheet.UsedRange;
-
-            //int rowCount = excelRange.Rows.Count;
-            //int colCount = excelRange.Columns.Count;
-
-            //for (int i = 2; i <= rowCount; i++)
-            //{
-            //    if (excelRange.Cells[i, 7].Value2 == "Symptom")
-            //    {
-            //        Symptom symptom = new();
-            //        symptom.UserID = excelRange.Cells[i, 1].Value2.ToString();                    
-            //        if (excelRange.Cells[i, 5].Value2 != null)
-            //        {
-            //            symptom.Date = excelRange.Cells[i, 5].Value2;
-            //        }
-            //        if (excelRange.Cells[i, 8].Value2 != null)
-            //        {
-            //            symptom.Name = excelRange.Cells[i, 8].Value2.ToString();
-            //        }
-            //        if (excelRange.Cells[i, 9].Value2 != null)
-            //        {
-            //            symptom.Severity = excelRange.Cells[i, 9].Value2.ToString();
-            //        }
-            //        symptomsList.Add(symptom);
-            //    }
-            //    if (excelRange.Cells[i, 7].Value2 == "Condition")
-            //    {
-
-            //        Condition condition = new Condition();
-
-            //        condition.UserID = excelRange.Cells[i, 1].Value2.ToString();
-            //        if (excelRange.Cells[i, 2].Value2 != null)
-            //        {
-            //            condition.Age = excelRange.Cells[i, 2].Value2;
-            //        }
-            //        if (excelRange.Cells[i, 3].Value2 != null)
-            //        {
-            //            condition.Sex = excelRange.Cells[i, 3].Value2.ToString();
-            //        }
-            //        if (excelRange.Cells[i, 5].Value2 != null)
-            //        {
-            //            condition.Date = excelRange.Cells[i, 5].Value2;
-            //        }
-            //        //condition.TrackableType = excelRange.Cells[i, 7].Value2.ToString();
-            //        if (excelRange.Cells[i, 8].Value2 != null)
-            //        {
-            //            condition.Name = excelRange.Cells[i, 8].Value2.ToString();
-            //        }
-            //        if (excelRange.Cells[i, 9].Value2 != null)
-            //        {
-            //            condition.Severity = excelRange.Cells[i, 9].Value2.ToString();
-            //        }
-            //        if (excelRange.Cells[i, 4].Value2 != null)
-            //        {
-            //            condition.Country = excelRange.Cells[i, 4].Value2.ToString();//this has null exception
-            //        }
-            //        conditionsList.Add(condition);
-            //    }
-            //    XmlWriter(conditionsList, filePathConditions);
-            //    XmlWriter(symptomsList, filePathSymptoms);
-            //    //create new line
-            //    Console.Write("\r\n");
-            //    //for (int j = 1; j <= colCount; j++)
-            //    //{
-
-            //    //    //write the console
-            //    //    if (excelRange.Cells[i, j] != null && excelRange.Cells[i, j].Value2 != null)
-            //    //        Console.Write(excelRange.Cells[i, j].Value2.ToString() + "\t");
-            //    //}
-            //}
-            ////after reading, relaase the excel project
-            //excelApp.Quit();
-            //System.Runtime.InteropServices.Marshal.ReleaseComObject(excelApp);
-            //Console.ReadLine(); 
-
-
-
             Patient p = TestPatient();
 
 
@@ -175,18 +96,123 @@ namespace MedicalTracker
                 }
             }
 
-
             //BIG TODO: generate methods for common usages of the app
-            //TODO list:
-            //functinality to add appointment
-            //alert on upcoming routine
-            //alert/Get the next daily medicines
-            //method to parse datetime string
-            //method to Address
-            //method to ContactInfo
-            //method to parse a string to an int. int.parse?
-            //
 
+            //  <-- TODO list: -->
+
+            //serialize lists of the patient for storage, then deserialize them
+
+            //turn the excel-object-generator into a method that will return 2 lists
+            //  Make a class that has lists as its properties and return those properties so i can return 2 lists???
+
+
+            //functinality to add appointment
+            //functionality to remove appointment from a "current" list
+
+            //alert/Get the next daily medicines and appointments
+
+
+
+        }
+        /// <summary>
+        /// Takes in a specific Excelsheet, reads it, and filters feeds that data into an ExcelLists object with the 2 list properties.
+        /// Then serializes those lists into separate xml files.
+        /// </summary>
+        /// <param name="xlsxFile">The filePath of the ExcelSheet.</param>
+        /// <param name="filePathConditions">The filePath of the Conditions.</param>
+        /// <param name="filePathSymptoms">The filePath of the Symptoms.</param>
+        /// <returns>Filled ExcelList object.</returns>
+        public static ExcelLists ExcelObjectGenerator(string xlsxFile, string filePathConditions, string filePathSymptoms)
+        {
+            ExcelLists excelList = new();
+
+            //Create Excel Objects.
+            Application excelApp = new();
+
+            if (excelApp == null)
+            {
+                Console.WriteLine("Excel is not installed!!");
+                return null;
+            }
+
+            Workbook excelBook = excelApp.Workbooks.Open(xlsxFile);
+            Worksheet excelSheet = excelBook.Sheets[1];
+            Range excelRange = excelSheet.UsedRange;
+
+            int rowCount = excelRange.Rows.Count;
+            int colCount = excelRange.Columns.Count;
+
+            for (int i = 2; i <= rowCount; i++)
+            {
+                if (excelRange.Cells[i, 7].Value2 == "Symptom")
+                {
+                    Symptom symptom = new();
+                    symptom.UserID = excelRange.Cells[i, 1].Value2.ToString();
+                    if (excelRange.Cells[i, 5].Value2 != null)
+                    {
+                        symptom.Date = excelRange.Cells[i, 5].Value2;
+                    }
+                    if (excelRange.Cells[i, 8].Value2 != null)
+                    {
+                        symptom.SymptomName = excelRange.Cells[i, 8].Value2.ToString();
+                    }
+                    if (excelRange.Cells[i, 9].Value2 != null)
+                    {
+                        symptom.Severity = excelRange.Cells[i, 9].Value2.ToString();
+                    }
+                    excelList.Symptoms.Add(symptom);
+                    //symptomsList.Add(symptom);
+                }
+                if (excelRange.Cells[i, 7].Value2 == "Condition")
+                {
+
+                    Condition condition = new Condition();
+
+                    condition.UserID = excelRange.Cells[i, 1].Value2.ToString();
+                    if (excelRange.Cells[i, 2].Value2 != null)
+                    {
+                        condition.Age = excelRange.Cells[i, 2].Value2;
+                    }
+                    if (excelRange.Cells[i, 3].Value2 != null)
+                    {
+                        condition.Sex = excelRange.Cells[i, 3].Value2.ToString();
+                    }
+                    if (excelRange.Cells[i, 5].Value2 != null)
+                    {
+                        condition.Date = excelRange.Cells[i, 5].Value2;
+                    }
+                    //condition.TrackableType = excelRange.Cells[i, 7].Value2.ToString();
+                    if (excelRange.Cells[i, 8].Value2 != null)
+                    {
+                        condition.ConditionName = excelRange.Cells[i, 8].Value2.ToString();
+                    }
+                    if (excelRange.Cells[i, 9].Value2 != null)
+                    {
+                        condition.Severity = excelRange.Cells[i, 9].Value2.ToString();
+                    }
+                    if (excelRange.Cells[i, 4].Value2 != null)
+                    {
+                        condition.Country = excelRange.Cells[i, 4].Value2.ToString();//this has null exception
+                    }
+                    excelList.Conditions.Add(condition);
+                    //conditionsList.Add(condition);
+                }
+                XmlWriter(excelList.Conditions, filePathConditions);
+                XmlWriter(excelList.Symptoms, filePathSymptoms);
+                //create new line
+                Console.Write("\r\n");
+                //for (int j = 1; j <= colCount; j++)
+                //{
+
+                //    //write the console
+                //    if (excelRange.Cells[i, j] != null && excelRange.Cells[i, j].Value2 != null)
+                //        Console.Write(excelRange.Cells[i, j].Value2.ToString() + "\t");
+                //}
+            }
+            //after reading, relaase the excel project
+            excelApp.Quit();
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(excelApp);
+            return excelList;
         }
         /// <summary>
         /// Method that serializes a list<Object>.
