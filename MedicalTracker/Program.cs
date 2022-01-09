@@ -14,6 +14,16 @@ namespace MedicalTracker
         {
             string filePathConditions = @"C:\Users\Elias\OneDrive\TMP\conditionsData.xml";
             string filePathSymptoms = @"C:\Users\Elias\OneDrive\TMP\symptomsData.xml";
+            string filePathPatientInfo = @"C:\Users\Elias\OneDrive\TMP\patientInfo.xml";
+
+            //string filePathGeneralInfo = @"C:\Users\Elias\OneDrive\TMP\generalInfo.xml";
+            //string filePathEmergencyContacts = @"C:\Users\Elias\OneDrive\TMP\emergencyContacts.xml";
+            //string filePathCaretakers = @"C:\Users\Elias\OneDrive\TMP\careTakers.xml";
+            //string filePathAllergies = @"C:\Users\Elias\OneDrive\TMP\allergies.xml";
+            //string filePathEmergencyMedications = @"C:\Users\Elias\OneDrive\TMP\allergies.xml";
+            //string 
+
+
             //string testFilePath = @"C:\TMP\testFile.xml";
 
             List<Condition> conditionsList = new();
@@ -74,95 +84,6 @@ namespace MedicalTracker
 
 
 
-
-            ////Create Excel Objects.
-            //Application excelApp = new Application();
-
-            //if (excelApp == null)
-            //{
-            //    Console.WriteLine("Excel is not installed!!");
-            //    return;
-            //}
-
-            //Workbook excelBook = excelApp.Workbooks.Open(@"C:\Users\elias\OneDrive\Documents\PeoplewithSymptomsAndConditions.xlsx");
-            //Worksheet excelSheet = excelBook.Sheets[1];
-            //Range excelRange = excelSheet.UsedRange;
-
-            //int rowCount = excelRange.Rows.Count;
-            //int colCount = excelRange.Columns.Count;
-
-            //for (int i = 2; i <= rowCount; i++)
-            //{
-            //    if (excelRange.Cells[i, 7].Value2 == "Symptom")
-            //    {
-            //        Symptom symptom = new();
-            //        symptom.UserID = excelRange.Cells[i, 1].Value2.ToString();                    
-            //        if (excelRange.Cells[i, 5].Value2 != null)
-            //        {
-            //            symptom.Date = excelRange.Cells[i, 5].Value2;
-            //        }
-            //        if (excelRange.Cells[i, 8].Value2 != null)
-            //        {
-            //            symptom.Name = excelRange.Cells[i, 8].Value2.ToString();
-            //        }
-            //        if (excelRange.Cells[i, 9].Value2 != null)
-            //        {
-            //            symptom.Severity = excelRange.Cells[i, 9].Value2.ToString();
-            //        }
-            //        symptomsList.Add(symptom);
-            //    }
-            //    if (excelRange.Cells[i, 7].Value2 == "Condition")
-            //    {
-
-            //        Condition condition = new Condition();
-
-            //        condition.UserID = excelRange.Cells[i, 1].Value2.ToString();
-            //        if (excelRange.Cells[i, 2].Value2 != null)
-            //        {
-            //            condition.Age = excelRange.Cells[i, 2].Value2;
-            //        }
-            //        if (excelRange.Cells[i, 3].Value2 != null)
-            //        {
-            //            condition.Sex = excelRange.Cells[i, 3].Value2.ToString();
-            //        }
-            //        if (excelRange.Cells[i, 5].Value2 != null)
-            //        {
-            //            condition.Date = excelRange.Cells[i, 5].Value2;
-            //        }
-            //        //condition.TrackableType = excelRange.Cells[i, 7].Value2.ToString();
-            //        if (excelRange.Cells[i, 8].Value2 != null)
-            //        {
-            //            condition.Name = excelRange.Cells[i, 8].Value2.ToString();
-            //        }
-            //        if (excelRange.Cells[i, 9].Value2 != null)
-            //        {
-            //            condition.Severity = excelRange.Cells[i, 9].Value2.ToString();
-            //        }
-            //        if (excelRange.Cells[i, 4].Value2 != null)
-            //        {
-            //            condition.Country = excelRange.Cells[i, 4].Value2.ToString();//this has null exception
-            //        }
-            //        conditionsList.Add(condition);
-            //    }
-            //    XmlWriter(conditionsList, filePathConditions);
-            //    XmlWriter(symptomsList, filePathSymptoms);
-            //    //create new line
-            //    Console.Write("\r\n");
-            //    //for (int j = 1; j <= colCount; j++)
-            //    //{
-
-            //    //    //write the console
-            //    //    if (excelRange.Cells[i, j] != null && excelRange.Cells[i, j].Value2 != null)
-            //    //        Console.Write(excelRange.Cells[i, j].Value2.ToString() + "\t");
-            //    //}
-            //}
-            ////after reading, relaase the excel project
-            //excelApp.Quit();
-            //System.Runtime.InteropServices.Marshal.ReleaseComObject(excelApp);
-            //Console.ReadLine(); 
-
-
-
             Patient p = TestPatient();
 
 
@@ -175,6 +96,7 @@ namespace MedicalTracker
                 }
             }
 
+            XmlWriter(p, filePathPatientInfo);
 
             //BIG TODO: generate methods for common usages of the app
             //TODO list:
@@ -188,14 +110,103 @@ namespace MedicalTracker
             //
 
         }
+        //look how to return 2 lists from a method.
+        //public static void ExcelReader(Symptom symptomsList, Condition conditionsList)
+        //{
+        //    Application excelApp = new Application();
+
+        //    if (excelApp == null)
+        //    {
+        //        Console.WriteLine("Excel is not installed!!");
+        //        return;
+        //    }
+
+        //    Workbook excelBook = excelApp.Workbooks.Open(@"C:\Users\elias\OneDrive\Documents\PeoplewithSymptomsAndConditions.xlsx");
+        //    Worksheet excelSheet = excelBook.Sheets[1];
+        //    Range excelRange = excelSheet.UsedRange;
+
+        //    int rowCount = excelRange.Rows.Count;
+        //    int colCount = excelRange.Columns.Count;
+
+        //    for (int i = 2; i <= rowCount; i++)
+        //    {
+        //        if (excelRange.Cells[i, 7].Value2 == "Symptom")
+        //        {
+        //            Symptom symptom = new();
+        //            symptom.UserID = excelRange.Cells[i, 1].Value2.ToString();
+        //            if (excelRange.Cells[i, 5].Value2 != null)
+        //            {
+        //                symptom.Date = excelRange.Cells[i, 5].Value2;
+        //            }
+        //            if (excelRange.Cells[i, 8].Value2 != null)
+        //            {
+        //                symptom.Name = excelRange.Cells[i, 8].Value2.ToString();
+        //            }
+        //            if (excelRange.Cells[i, 9].Value2 != null)
+        //            {
+        //                symptom.Severity = excelRange.Cells[i, 9].Value2.ToString();
+        //            }
+        //            symptomsList.Add(symptom);
+        //        }
+        //        if (excelRange.Cells[i, 7].Value2 == "Condition")
+        //        {
+
+        //            Condition condition = new Condition();
+
+        //            condition.UserID = excelRange.Cells[i, 1].Value2.ToString();
+        //            if (excelRange.Cells[i, 2].Value2 != null)
+        //            {
+        //                condition.Age = excelRange.Cells[i, 2].Value2;
+        //            }
+        //            if (excelRange.Cells[i, 3].Value2 != null)
+        //            {
+        //                condition.Sex = excelRange.Cells[i, 3].Value2.ToString();
+        //            }
+        //            if (excelRange.Cells[i, 5].Value2 != null)
+        //            {
+        //                condition.Date = excelRange.Cells[i, 5].Value2;
+        //            }
+        //            //condition.TrackableType = excelRange.Cells[i, 7].Value2.ToString();
+        //            if (excelRange.Cells[i, 8].Value2 != null)
+        //            {
+        //                condition.Name = excelRange.Cells[i, 8].Value2.ToString();
+        //            }
+        //            if (excelRange.Cells[i, 9].Value2 != null)
+        //            {
+        //                condition.Severity = excelRange.Cells[i, 9].Value2.ToString();
+        //            }
+        //            if (excelRange.Cells[i, 4].Value2 != null)
+        //            {
+        //                condition.Country = excelRange.Cells[i, 4].Value2.ToString();//this has null exception
+        //            }
+        //            conditionsList.Add(condition);
+        //        }
+        //        XmlWriter(conditionsList, filePathConditions);
+        //        XmlWriter(symptomsList, filePathSymptoms);
+        //        //create new line
+        //        Console.Write("\r\n");
+        //        //for (int j = 1; j <= colCount; j++)
+        //        //{
+
+        //        //    //write the console
+        //        //    if (excelRange.Cells[i, j] != null && excelRange.Cells[i, j].Value2 != null)
+        //        //        Console.Write(excelRange.Cells[i, j].Value2.ToString() + "\t");
+        //        //}
+        //    }
+        //    //after reading, relaase the excel project
+        //    excelApp.Quit();
+        //    System.Runtime.InteropServices.Marshal.ReleaseComObject(excelApp);
+        //    Console.ReadLine();
+        ////}
+
         /// <summary>
         /// Method that serializes a list<Object>.
         /// </summary>
         /// <paramref name="aFilePath">The path of the stored xml file.</paramref>
         /// <param name="listToStore">The list to serialize.</param>
-        public static void XmlWriter<T>(List<T> listToStore, string aFilePath)
+        public static void XmlWriter<T>(T listToStore, string aFilePath)
         {
-            XmlSerializer xmlSerializer = new(typeof(List<T>));
+            XmlSerializer xmlSerializer = new(typeof(T));
             using (TextWriter tx = new StreamWriter(aFilePath))
             {
                 xmlSerializer.Serialize(tx, listToStore);
