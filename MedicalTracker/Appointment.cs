@@ -10,7 +10,7 @@ namespace MedicalTracker
     {
         public string Title { get; set; }
 
-        private DateTime date;
+        public DateTime date;
 
         //todo: Track upcoming appointments with 
         //DateTime today = DateTime.Now;

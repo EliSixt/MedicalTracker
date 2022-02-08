@@ -1,5 +1,22 @@
 ﻿<h3>GetName</h3>
+<EditForm>
+<div>
+<input type="text" @bind-value=Name.FirstName @bind-value:event=onsubmit placeholder="First Name" />
+</div>
+<div>
+<input type="text" @bind-value=Name.MiddleName @bind-value:event=onsubmit placeholder="Middle Name" />
+</div>
+<div>
+<input type="text" @bind-value=Name.LastName @bind-value:event="oninput" placeholder="Last Name" />
+</div>
+
+<input type="submit" class="btn btn-primary" value="submit" />
+</EditForm>
 
 @code {
+    [Parameter]
+    public Name Name { get; set; } = new();
 
+    [Parameter]
+    public EventCallback<Name> NameChanged { get; set; }
 }
