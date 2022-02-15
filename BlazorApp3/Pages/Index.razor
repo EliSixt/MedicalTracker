@@ -8,6 +8,13 @@ Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
 
-<BlazorApp3.Conponents.GetName />
-<BlazorApp3.Conponents.GetName />
+<GetName @bind-NamesValue="_name" />
 
+<br />
+The current name in the parent component is @_name!!
+
+@code {
+    private Name _name = new();
+
+
+}

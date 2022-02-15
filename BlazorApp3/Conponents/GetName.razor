@@ -1,22 +1,35 @@
 ﻿<h3>GetName</h3>
-<EditForm>
-<div>
-<input type="text" @bind-value=Name.FirstName @bind-value:event=onsubmit placeholder="First Name" />
-</div>
-<div>
-<input type="text" @bind-value=Name.MiddleName @bind-value:event=onsubmit placeholder="Middle Name" />
-</div>
-<div>
-<input type="text" @bind-value=Name.LastName @bind-value:event="oninput" placeholder="Last Name" />
-</div>
 
-<input type="submit" class="btn btn-primary" value="submit" />
-</EditForm>
+<div style="margin: 5px">
+    <input type="text" @bind="NamesValue.FirstName" placeholder="First Name" />
+</div>
+<div style="margin: 5px">
+    <input type="text" @bind="NamesValue.MiddleName" placeholder="Middle Name" />
+</div>
+<div style="margin: 5px">
+    <input type="text" @bind="NamesValue.LastName" placeholder="Last Name" />
+</div>
+The name is: @NamesValue.FirstName @NamesValue.MiddleName @NamesValue.LastName!!!
 
 @code {
-    [Parameter]
-    public Name Name { get; set; } = new();
+    //private Name _namesValue { get; set; } = new();
+
+    //public Name NamesValue
+    //{
+    //    get => _namesValue;
+    //    set
+    //    {
+    //        if (_namesValue == NamesValue) return;
+
+    //        _namesValue = NamesValue;
+    //        NamesValueChanged.InvokeAsync(NamesValue);
+
+    //    }
+    //}
 
     [Parameter]
-    public EventCallback<Name> NameChanged { get; set; }
+    public Name NamesValue { get; set; } = new();
+
+    [Parameter]
+    public EventCallback<Name> NamesValueChanged { get; set; }
 }
