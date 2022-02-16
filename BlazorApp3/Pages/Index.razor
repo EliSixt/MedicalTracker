@@ -15,9 +15,18 @@ Welcome to your new app.
 <button @onclick="breakPoint"> Debugger </button>
 <br />
 The current name in the parent component is @_name!!
+<br />
+<br />
+
+<GetAddress @bind-AddressValue="_address" />
+<br />
+The parent address is: @_address
+
 
 @code {
     private Name _name = new();
+    private Address _address = new();
+
 
     private void breakPoint()
     {
