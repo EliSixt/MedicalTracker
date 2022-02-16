@@ -15,7 +15,7 @@ namespace MedicalTracker
 
         public override string ToString()
         {
-            return $"Name: {FirstName} {LastName}";
+            return $"Name: {FirstName} {MiddleName} {LastName}";
         }
     }
 }
