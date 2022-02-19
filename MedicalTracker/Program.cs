@@ -503,7 +503,7 @@ namespace MedicalTracker
                             "medicines for bladder spasm like oxybutynin, tolterodine, medicines for blood pressure, medicines for depression, anxiety, or psychotic disturbances, " +
                             "medicines for movement abnormalities or Parkinson's disease, medicines for sleep, " +
                             "other medicines for cold, cough or allergy, some medicines for the stomach like chlordiazepoxide, dicyclomine",
-                            WorriesomeSideEffects = "allergic reactions like skin rash, itching or hives, swelling of the face, lips, or tongue, changes in vision, confused, agitated, " +
+                            UnusualSideEffects = "allergic reactions like skin rash, itching or hives, swelling of the face, lips, or tongue, changes in vision, confused, agitated, " +
                             "nervous, irregular or fast heartbeat, tremor, trouble passing urine, unusual bleeding or bruising, unusually weak or tired",
                             CommmonSideEffects = "constipation, diarrhea, drowsy, headache, loss of appetite, stomach upset, vomiting, thick mucous",
                             Uses = "It is used to treat the symptoms of an allergic reaction.",
@@ -528,7 +528,7 @@ namespace MedicalTracker
                 " You will need to receive further treatment and observation." +
                 "Before using EpiPen a second time, tell your doctor if your first injection caused a serious side effect such as increased breathing difficulty, or dangerously high blood pressure(severe headache," +
                 " blurred vision, buzzing in your ears, anxiety, confusion, chest pain, shortness of breath, uneven heartbeats, seizure)",
-                WorriesomeSideEffects = "increased breathing difficulty, or dangerously high blood pressure(severe headache," +
+                UnusualSideEffects = "increased breathing difficulty, or dangerously high blood pressure(severe headache," +
                 " blurred vision, buzzing in your ears, anxiety, confusion, chest pain, shortness of breath, uneven heartbeats, seizure.",
                 CommmonSideEffects = "breathing problems; fast, irregular, or pounding heartbeats; pale skin, sweating; nausea and vomiting;" +
                 " dizziness; weakness or tremors; headache; orfeeling restless, fearful, nervous, anxious, or excited",

@@ -14,7 +14,7 @@ namespace MedicalTracker
         public string GenericName { get; set; }
         public string Description { get; set; } //looks
         public string Warnings { get; set; }
-        public string WorriesomeSideEffects { get; set; }
+        public string UnusualSideEffects { get; set; }
         public string CommmonSideEffects { get; set; }
         public string Uses { get; set; }
         public string Directions { get; set; } //int?
@@ -25,7 +25,10 @@ namespace MedicalTracker
 
         public override string ToString()
         {
-            return $"Brand name:{BrandName}, Generic name{GenericName}";
+            return $"Brand name:{BrandName}, Generic name:{GenericName}, Description:{Description}, " +
+                $"warnings:{Warnings}, Unusual side-effects:{UnusualSideEffects}, Commmon side-effects:{CommmonSideEffects}, " +
+                $"Uses:{Uses}, Directions:{Directions}, Purposes:{Purposes}, Allergy alerts:{AllergyAlerts}, " +
+                $"Warnings before use:{WarningsBeforeUse}, Don't mix with:{OtherDrugsThatMayCauseAReaction}";
         }
     }
 }
