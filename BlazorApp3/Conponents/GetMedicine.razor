@@ -1,5 +1,42 @@
 ﻿<h3>GetMedicine</h3>
-
+<div style="margin: 5px">
+    <input type="text" @bind="Medicine.BrandName" placeholder="Brand name" />
+</div>
+<div style="margin: 5px">
+    <input type="text" @bind="Medicine.GenericName" placeholder="Generic name" />
+</div>
+<div style="margin: 5px">
+    <input type="text" @bind="Medicine.Description" placeholder="Description" />
+</div>
+<div style="margin: 5px">
+    <input type="text" @bind="Medicine.Warnings" placeholder="Warnings" />
+</div>
+<div style="margin: 5px">
+    <input type="text" @bind="Medicine.UnusualSideEffects" placeholder="Unusual side-effects" />
+</div>
+<div style="margin: 5px">
+    <input type="text" @bind="Medicine.CommmonSideEffects" placeholder="Common side-effects" />
+</div>
+<div style="margin: 5px">
+    <input type="text" @bind="Medicine.Uses" placeholder="Uses" />
+</div>
+<div style="margin: 5px">
+    <input type="text" @bind="Medicine.Directions" placeholder="Directions" />
+</div>
+<div style="margin: 5px">
+    <input type="text" @bind="Medicine.Purposes" placeholder="Purposes" />
+</div>
+<div style="margin: 5px">
+    <input type="text" @bind="Medicine.AllergyAlerts" placeholder="Allergy alerts" />
+</div>
+<div style="margin: 5px">
+    <input type="text" @bind="Medicine.OtherDrugsThatMayCauseAReaction" placeholder="Don't mix with..." />
+</div>
+Medicine: @Medicine
 @code {
+    [Parameter]
+    public Medicine Medicine { get; set; } = new();
 
+    [Parameter]
+    public EventCallback<Medicine> MedicineChanged { get; set; }
 }
