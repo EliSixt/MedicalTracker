@@ -14,14 +14,9 @@ namespace MedicalTracker
         {
             string filePathConditions = @"C:\Users\Elias\OneDrive\TMP\conditionsData.xml";
             string filePathSymptoms = @"C:\Users\Elias\OneDrive\TMP\symptomsData.xml";
-            string filePathPatientInfo = @"C:\Users\Elias\OneDrive\TMP\patientInfo.xml";
-
-            //string filePathGeneralInfo = @"C:\Users\Elias\OneDrive\TMP\generalInfo.xml";
-            //string filePathEmergencyContacts = @"C:\Users\Elias\OneDrive\TMP\emergencyContacts.xml";
-            //string filePathCaretakers = @"C:\Users\Elias\OneDrive\TMP\careTakers.xml";
-            //string filePathAllergies = @"C:\Users\Elias\OneDrive\TMP\allergies.xml";
-            //string filePathEmergencyMedications = @"C:\Users\Elias\OneDrive\TMP\allergies.xml";
-            //string 
+            string filePathPatientsList = @"C:\Users\Elias\OneDrive\TMP\patientsList.xml";
+            
+            
 
 
             //string testFilePath = @"C:\TMP\testFile.xml";
@@ -29,6 +24,7 @@ namespace MedicalTracker
             List<Condition> conditionsList = new();
             List<Symptom> symptomsList = new();
             List<Condition> conditionsWithSymptoms = new();
+
 
             //This a test for serializing to a local file
             //Directory.CreateDirectory(@"C:\TMP");
