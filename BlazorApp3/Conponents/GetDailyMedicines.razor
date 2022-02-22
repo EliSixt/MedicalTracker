@@ -10,8 +10,11 @@
     <input type="text" @bind="DayToDayMedicine.FrequencyOfDose" placeholder="How often/when to take drug" />
 </div>
 <div style="margin: 5px">
-    @*<input type="time" @bind:format:"hh:mm" AmPm="false" />*@
+     @*<input type="text" @bind="times" />*@
 </div>
+
+@*<input type="time" min="@DayToDayMedicine.Min" max="@DayToDayMedicine.Max" bind="@TimeProxy" />*@
+
 
 @code {
     [Parameter]
@@ -20,8 +23,6 @@
     [Parameter]
     public EventCallback<DailyMedicine> DayToDayMedicineChanged { get; set; }
 
-    //public string times;
-
-    //public TimeSpan time = TimeSpan.Parse(times);
+    //string TimeProxy { get => DayToDayMedicine.Time.ToString(); set => TimeSpan.Parse(value); }
 
 }
