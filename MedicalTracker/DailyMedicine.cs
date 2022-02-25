@@ -12,14 +12,12 @@ namespace MedicalTracker
         public string DoseMg { get; set; }//medication taken at one time
         public string FrequencyOfDose { get; set; }//frequency of doses daily
         public TimeSpan TimeSpanOfDose { get; set; }
-        //public DateTime Time { get; set; }
-        //public int Min { get; set; }
-        //public int Max { get; set; }
+        public DateTime Time { get; set; }
 
 
         public override string ToString()
         {
-            return $"Medicine: {Medicine.BrandName}/{Medicine.GenericName}, Time between dose: {TimeSpanOfDose}";
+            return $"Medicine: {Medicine}, Time between dose: {TimeSpanOfDose}";
         }
     }
 }

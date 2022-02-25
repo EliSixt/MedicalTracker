@@ -38,6 +38,6 @@ namespace BlazorApp3.Data
         //        xmlSerializer.Serialize(tx, listToStore);
         //    }
 
-        }
+        //}
     }
 }

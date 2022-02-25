@@ -9,11 +9,6 @@ Welcome to your new app.
 <SurveyPrompt Title="How is Blazor working for you?" />
 
 <GetName @bind-NamesValue="_name" />
-<br />
-<button @onclick="StateHasChanged">Update ParentComponent</button>
-<br />
-<button @onclick="breakPoint"> Debugger </button>
-<br />
 The current name in the parent component is @_name!!
 <br />
 <br />
@@ -27,6 +22,11 @@ The parent address is: @_address
 <GetMedicine />
 
 <GetDailyMedicines />
+<br />
+<button @onclick="StateHasChanged">Update ParentComponent</button>
+<br />
+<button @onclick="breakPoint"> Debugger </button>
+<br />
 
 @code {
     private Name _name = new();

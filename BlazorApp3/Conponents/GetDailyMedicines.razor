@@ -1,8 +1,7 @@
 ﻿<h3>GetDailyMedicines</h3>
 
-<div style="margin: 5px">
-    <GetMedicine @bind-Medicine="DayToDayMedicine.Medicine" />
-</div>
+<GetMedicine @bind-Medicine="DayToDayMedicine.Medicine" />
+
 <div style="margin: 5px">
     <input type="text" @bind="DayToDayMedicine.DoseMg" placeholder="Dose Amount" /> @*Change dose amount*@
 </div>
@@ -10,11 +9,13 @@
     <input type="text" @bind="DayToDayMedicine.FrequencyOfDose" placeholder="How often/when to take drug" />
 </div>
 <div style="margin: 5px">
-     @*<input type="text" @bind="times" />*@
+    <input type="time" bind="@TimeProxy" />
+</div>
+<div style="margin: 5px">
+    <button @onclick="ConfirmTimeSpan">Bind TimeSpan</button>
 </div>
 
-@*<input type="time" min="@DayToDayMedicine.Min" max="@DayToDayMedicine.Max" bind="@TimeProxy" />*@
-
+The Daily Medicine: @DayToDayMedicine
 
 @code {
     [Parameter]
@@ -23,6 +24,25 @@
     [Parameter]
     public EventCallback<DailyMedicine> DayToDayMedicineChanged { get; set; }
 
-    //string TimeProxy { get => DayToDayMedicine.Time.ToString(); set => TimeSpan.Parse(value); }
+    public TimeSpan LocalTime = TimeSpan.FromHours(0);
 
+    string TimeProxy
+    {
+        get => DayToDayMedicine.Time.ToString();
+        set
+        {
+            //TimeSpan.TryParse(value, out DayToDayMedicine.TimeSpanOfDose);
+            //DayToDayMedicine.Time.TryParse(value, out DayToDayMedicine.TimeSpanOfDose );
+            TimeSpan.TryParse(value, out LocalTime);
+            DayToDayMedicine.TimeSpanOfDose = LocalTime;
+
+        }
+    }
+
+    private void ConfirmTimeSpan()
+    {
+        DayToDayMedicine.TimeSpanOfDose = LocalTime;
+        DayToDayMedicineChanged.InvokeAsync(DayToDayMedicine);
+
+    }
 }
