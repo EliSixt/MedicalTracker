@@ -1,12 +1,15 @@
 ﻿<h3>GetDailyMedicines</h3>
 
-<GetMedicine @bind-Medicine="DayToDayMedicine.Medicine" />
+<GetMedicine @bind-Medicine="DailyDrug.Medicine" />
+<br />
+<br />
+<br />
 
 <div style="margin: 5px">
-    <input type="text" @bind="DayToDayMedicine.DoseMg" placeholder="Dose Amount" /> @*Change dose amount*@
+    <input type="text" @bind="DailyDrug.DoseMg" placeholder="Dose Amount" /> @*Change dose amount*@
 </div>
 <div style="margin: 5px">
-    <input type="text" @bind="DayToDayMedicine.FrequencyOfDose" placeholder="How often/when to take drug" />
+    <input type="text" @bind="DailyDrug.FrequencyOfDose" placeholder="How often/when to take drug" />
 </div>
 <div style="margin: 5px">
     <input type="time" bind="@TimeProxy" />
@@ -15,34 +18,36 @@
     <button @onclick="ConfirmTimeSpan">Bind TimeSpan</button>
 </div>
 
-The Daily Medicine: @DayToDayMedicine
+The Daily Medicine: @DailyDrug
 
 @code {
     [Parameter]
-    public DailyMedicine DayToDayMedicine { get; set; } = new();
+    public DailyMedicine DailyDrug { get; set; } = new();
 
     [Parameter]
     public EventCallback<DailyMedicine> DayToDayMedicineChanged { get; set; }
 
     public TimeSpan LocalTime = TimeSpan.FromHours(0);
 
-    string TimeProxy
+    [Parameter]
+    public string TimeProxy
     {
-        get => DayToDayMedicine.Time.ToString();
-        set
-        {
-            //TimeSpan.TryParse(value, out DayToDayMedicine.TimeSpanOfDose);
-            //DayToDayMedicine.Time.TryParse(value, out DayToDayMedicine.TimeSpanOfDose );
-            TimeSpan.TryParse(value, out LocalTime);
-            DayToDayMedicine.TimeSpanOfDose = LocalTime;
+        get => DailyDrug.TimeSpanOfDose.ToString();
+        set => TimeSpan.TryParse(value, out LocalTime);
+        //{
+        //    //TimeSpan.TryParse(value, out DayToDayMedicine.TimeSpanOfDose);
+        //    //DayToDayMedicine.Time.TryParse(value, out DayToDayMedicine.TimeSpanOfDose );
+        //    TimeSpan.TryParse(value, out LocalTime);
+        //    DayToDayMedicine.TimeSpanOfDose = LocalTime;
 
-        }
+        //}
     }
 
     private void ConfirmTimeSpan()
     {
-        DayToDayMedicine.TimeSpanOfDose = LocalTime;
-        DayToDayMedicineChanged.InvokeAsync(DayToDayMedicine);
+        //DayToDayMedicine.TimeSpanOfDose = LocalTime;
+        //DailyDrug.TimeSpanOfDose = LocalTime;
+        DayToDayMedicineChanged.InvokeAsync(DailyDrug);
 
     }
 }
