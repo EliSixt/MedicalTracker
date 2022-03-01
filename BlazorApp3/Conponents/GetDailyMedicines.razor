@@ -12,7 +12,7 @@
     <input type="text" @bind="DailyDrug.FrequencyOfDose" placeholder="How often/when to take drug" />
 </div>
 <div style="margin: 5px">
-    <input type="time" bind="@TimeProxy" />
+    <input type="time" @bind="TimeProxy" />
 </div>
 <div style="margin: 5px">
     <button @onclick="ConfirmTimeSpan">Bind TimeSpan</button>
@@ -29,11 +29,11 @@ The Daily Medicine: @DailyDrug
 
     public TimeSpan LocalTime = TimeSpan.FromHours(0);
 
-    [Parameter]
-    public string TimeProxy
+    public DateTime TimeProxy
     {
-        get => DailyDrug.TimeSpanOfDose.ToString();
-        set => TimeSpan.TryParse(value, out LocalTime);
+        get => DateTime.Now.Date + LocalTime;
+        set => LocalTime = value.TimeOfDay;
+
         //{
         //    //TimeSpan.TryParse(value, out DayToDayMedicine.TimeSpanOfDose);
         //    //DayToDayMedicine.Time.TryParse(value, out DayToDayMedicine.TimeSpanOfDose );
@@ -46,7 +46,7 @@ The Daily Medicine: @DailyDrug
     private void ConfirmTimeSpan()
     {
         //DayToDayMedicine.TimeSpanOfDose = LocalTime;
-        //DailyDrug.TimeSpanOfDose = LocalTime;
+        DailyDrug.TimeSpanOfDose = LocalTime;
         DayToDayMedicineChanged.InvokeAsync(DailyDrug);
 
     }
