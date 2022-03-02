@@ -14,11 +14,7 @@ namespace MedicalTracker
         {
             string filePathConditions = @"C:\Users\Elias\OneDrive\TMP\conditionsData.xml";
             string filePathSymptoms = @"C:\Users\Elias\OneDrive\TMP\symptomsData.xml";
-            string filePathPatientsList = @"C:\Users\Elias\OneDrive\TMP\patientsList.xml";
-            
-            
-
-
+            //string filePathPatientsList = @"C:\Users\Elias\OneDrive\TMP\patientsList.xml";
             //string testFilePath = @"C:\TMP\testFile.xml";
 
             List<Condition> conditionsList = new();
@@ -30,7 +26,6 @@ namespace MedicalTracker
             //Directory.CreateDirectory(@"C:\TMP");
             //List<string> testFile = new List<string>();
             //testFile.Add("This is a test to make sure i dont get a directory access denied exception.");
-
 
 
             ////Copies information from a specific excelSheet and adds it onto an object of ExcelList,
@@ -167,12 +162,11 @@ namespace MedicalTracker
                         symptom.Severity = excelRange.Cells[i, 9].Value2.ToString();
                     }
                     excelList.Symptoms.Add(symptom);
-                    //symptomsList.Add(symptom);
                 }
                 if (excelRange.Cells[i, 7].Value2 == "Condition")
                 {
 
-                    Condition condition = new Condition();
+                    Condition condition = new();
 
                     condition.UserID = excelRange.Cells[i, 1].Value2.ToString();
                     if (excelRange.Cells[i, 2].Value2 != null)
@@ -220,7 +214,6 @@ namespace MedicalTracker
             System.Runtime.InteropServices.Marshal.ReleaseComObject(excelApp);
             return excelList;
         }
-        //look how to return 2 lists from a method.
         //public static void ExcelReader(Symptom symptomsList, Condition conditionsList)
         //{
         //    Application excelApp = new Application();
@@ -317,10 +310,8 @@ namespace MedicalTracker
         public static void XmlWriter<T>(T listToStore, string aFilePath)
         {
             XmlSerializer xmlSerializer = new(typeof(T));
-            using (TextWriter tx = new StreamWriter(aFilePath))
-            {
-                xmlSerializer.Serialize(tx, listToStore);
-            }
+            using TextWriter tx = new StreamWriter(aFilePath);
+            xmlSerializer.Serialize(tx, listToStore);
 
         }
 
@@ -333,85 +324,83 @@ namespace MedicalTracker
         public static T XmlReader<T>(string aFilePath)
         {
             XmlSerializer xmlSerializer = new(typeof(T));
-            using (TextReader tx = new StreamReader(aFilePath))
-            {
-                return (T)xmlSerializer.Deserialize(tx);
-            }
+            using TextReader tx = new StreamReader(aFilePath);
+            return (T)xmlSerializer.Deserialize(tx);
         }
         /// <summary>
         /// Gets Address items from the user.
         /// </summary>
         /// <returns>Filled in Address object.</returns>
-        public static Address GetAddress()
-        {
-            Address address = new()
-            {
-                BuildingNumber = UI.UserInputToInt("Enter building number."),
-                StreetName = UI.GetString("Enter street name."),
-                City = UI.GetString("Enter city."),
-                State = UI.GetString("Enter state."),
-                ZIPCode = UI.UserInputToInt("Enter Zipcode.")
-            };
-            return address;
-        }
-        /// <summary>
-        /// Uses UI method to enter specific fields within Name.
-        /// </summary>
-        /// <returns>Filled new Name class.</returns>
-        public static Name GetName()
-        {
-            Name name = new()
-            {
-                FirstName = UI.GetString("Enter first name."),
-                LastName = UI.GetString("Enter last name."),
-                MiddleName = UI.GetString("Enter middle name.")
-            };
-            return name;
-        }
-        /// <summary>
-        /// Gets the ContactInfo items from the user and returns a filled ContactInfo object.
-        /// </summary>
-        /// <returns>Filled out new ContactInfo.</returns>
-        public static ContactInfo GetContactInfo()
-        {
-            ContactInfo contactInfo = new()
-            {
-                Address = GetAddress(),
-                TitleOrRelationship = UI.GetString("Enter title and/or relationship."),
-                Name = GetName(),
-                Email = UI.GetString("Enter email."),
-                MobilePhoneNum = UI.GetString("Enter mobile phone number."),
-                HomePhoneNum = UI.GetString("Enter home phone number."),
-                WorkPhoneNum = UI.GetString("Enter work phone number.")
-            };
+        //public static Address GetAddress()
+        //{
+        //    Address address = new()
+        //    {
+        //        BuildingNumber = UI.UserInputToInt("Enter building number."),
+        //        StreetName = UI.GetString("Enter street name."),
+        //        City = UI.GetString("Enter city."),
+        //        State = UI.GetString("Enter state."),
+        //        ZIPCode = UI.UserInputToInt("Enter Zipcode.")
+        //    };
+        //    return address;
+        //}
+        ///// <summary>
+        ///// Uses UI method to enter specific fields within Name.
+        ///// </summary>
+        ///// <returns>Filled new Name class.</returns>
+        //public static Name GetName()
+        //{
+        //    Name name = new()
+        //    {
+        //        FirstName = UI.GetString("Enter first name."),
+        //        LastName = UI.GetString("Enter last name."),
+        //        MiddleName = UI.GetString("Enter middle name.")
+        //    };
+        //    return name;
+        //}
+        ///// <summary>
+        ///// Gets the ContactInfo items from the user and returns a filled ContactInfo object.
+        ///// </summary>
+        ///// <returns>Filled out new ContactInfo.</returns>
+        //public static ContactInfo GetContactInfo()
+        //{
+        //    ContactInfo contactInfo = new()
+        //    {
+        //        Address = GetAddress(),
+        //        TitleOrRelationship = UI.GetString("Enter title and/or relationship."),
+        //        Name = GetName(),
+        //        Email = UI.GetString("Enter email."),
+        //        MobilePhoneNum = UI.GetString("Enter mobile phone number."),
+        //        HomePhoneNum = UI.GetString("Enter home phone number."),
+        //        WorkPhoneNum = UI.GetString("Enter work phone number.")
+        //    };
 
-            return contactInfo;
-        }
-        public static Patient AddAppointment(Patient Currentpatient, string DateAndTime)
-        {
-            Currentpatient.Appointments.Add(new Appointment()
-            {
-                //BriefDiscription = "Getting blood pressure checked",
-                //Date = new DateTime(2022, 12, 01),
-                //Time = new TimeSpan(08, 00, 00),
-                //PlaceOfAppointment = new ContactInfo()
-                //{
-                //    Address = new Address() { City = "louisville", StreetName = "streeeat", BuildingNumber = 8989 },
-                //    Name = new Name() { FirstName = "Dr.Gray", LastName = "Shady" },
-                //    Email = "Gray_shade@yahoo.com",
-                //    WorkPhoneNum = "502-777-8888"
+        //    return contactInfo;
+        //}
+        //public static Patient AddAppointment(Patient Currentpatient, string DateAndTime)
+        //{
+        //    Currentpatient.Appointments.Add(new Appointment()
+        //    {
+        //        //BriefDiscription = "Getting blood pressure checked",
+        //        //Date = new DateTime(2022, 12, 01),
+        //        //Time = new TimeSpan(08, 00, 00),
+        //        //PlaceOfAppointment = new ContactInfo()
+        //        //{
+        //        //    Address = new Address() { City = "louisville", StreetName = "streeeat", BuildingNumber = 8989 },
+        //        //    Name = new Name() { FirstName = "Dr.Gray", LastName = "Shady" },
+        //        //    Email = "Gray_shade@yahoo.com",
+        //        //    WorkPhoneNum = "502-777-8888"
 
-                Date = UI.GetDateTime(),
-                PlaceOfAppointment = new ContactInfo()
-                {
-                    Address = GetAddress(),
-                    Name = GetName(),
+        //        Date = UI.GetDateTime(),
+        //        PlaceOfAppointment = new ContactInfo()
+        //        {
+        //            Address = GetAddress(),
+        //            Name = GetName(),
 
-                }
+        //        }
 
-            });
-            return Currentpatient;
-        }
+        //    });
+        //    return Currentpatient;
+        //}
         public static Patient TestPatient()
         {
             Patient practicePatient = new();
