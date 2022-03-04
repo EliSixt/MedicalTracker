@@ -1,0 +1,51 @@
+﻿<h3>GetAllergy</h3>
+<div style="margin: 5px">
+    <input type="checkbox" @bind="Allergy.IngestionOnly" />@*Ingestion only?*@
+</div>
+<div style="margin: 5px">
+    <input type="text" @bind="Allergy.AlgyName" />@*AlgyName*@
+</div>
+<div style="margin: 5px">
+    <input type="checkbox" @bind="Allergy.ConfirmedTestedAlgyType" />@*ConfirmedTestedAlgyType*@
+</div>
+<div style="margin: 5px">
+    <input type="text" @bind="Allergy.BriefDescriptionOfReactions" />@*BriefDescriptionOfReactions*@
+</div>
+<div style="margin: 5px">
+    <input type="checkbox" @bind="Allergy.IslifeThreatening" />@*IsLifeThreatening*@
+</div>
+<div style="margin: 5px">
+    <input type="text" @bind="Allergy.SymptomsLeadingToLifeThreatening" />@*SymptomsLeadingToLifeThreatening*@
+</div>
+<div style="margin: 5px">
+    <input type="checkbox" @bind="Allergy.EpiPenRequired" />@*EpiPenRequired*@
+</div>
+<div style="margin: 5px">
+    <input type="checkbox" @bind="Allergy.CPRRequired" />@*CPRRequired*@
+</div>
+<div style="margin: 5px">
+    <input type="checkbox" @bind="Allergy.Call911" />@*Call911*@
+</div>
+<div style="margin: 5px">
+    <input type="checkbox" @bind="Allergy.TreatmentRequired" />@*TreatmentRequired*@
+</div>
+@*<div>
+    <GetMedicine @bind-Medicine="Allergy.AlgyTreatmentMedication" /> 
+    AlgyTreatmentMedication. A list
+    <button @onclick="AddMeds">Add</button>
+</div>*@
+
+@code {
+    [Parameter]
+    public Allergy Allergy { get; set; } = new();
+    [Parameter]
+    public EventCallback<Allergy> AllergyChanged { get; set; }
+
+    //public List<Medicine> AlgyMeds = new();
+
+    //public void AddMeds(Medicine medicine)
+    //{
+    //    AlgyMeds.Add(medicine);
+    //    AllergyChanged.InvokeAsync(AlgyMeds);
+    //}
+}

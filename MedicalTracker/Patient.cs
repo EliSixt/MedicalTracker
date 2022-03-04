@@ -15,7 +15,7 @@ namespace MedicalTracker
         //Appointment Alerts?
         public ContactInfo PatientInfo { get; set; } = new(); //component made
         public GeneralInfo GeneralInfo { get; set; } = new(); // I could make a small BMI calculator? Component Made
-        public List<ContactInfo> EmergencyContacts { get; set; } = new();
+        public List<ContactInfo> EmergencyContacts { get; set; } = new();//list of contact Info? Do I make a component or do i just leave it into a page orrrr??
         public List<ContactInfo> Caretakers { get; set; } = new();
         public List<Allergy> Allergies { get; set; } = new();
         public List<Medicine> EmergencyMedications { get; set; } = new();//like an epipen

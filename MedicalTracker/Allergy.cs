@@ -23,7 +23,7 @@ namespace MedicalTracker
         public bool Call911 { get; set; }
         //else
         public string TreatmentRequired { get; set; }
-        public List<Medicine> AlgyTreatmentMedication { get; set; } = new();
+        public Medicine AlgyTreatmentMedication { get; set; }
 
         public override string ToString()
         {
