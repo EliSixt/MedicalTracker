@@ -13,8 +13,8 @@ namespace MedicalTracker
         //Todo: realtime medicine recall tracking? 
         // history of past medicine?
         //Appointment Alerts?
-        public ContactInfo PatientInfo { get; set; } = new();
-        public GeneralInfo GeneralInfo { get; set; } = new(); // I could make a small BMI calculator?
+        public ContactInfo PatientInfo { get; set; } = new(); //component made
+        public GeneralInfo GeneralInfo { get; set; } = new(); // I could make a small BMI calculator? Component Made
         public List<ContactInfo> EmergencyContacts { get; set; } = new();
         public List<ContactInfo> Caretakers { get; set; } = new();
         public List<Allergy> Allergies { get; set; } = new();
