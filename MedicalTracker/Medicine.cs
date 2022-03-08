@@ -30,5 +30,24 @@ namespace MedicalTracker
                 $"Uses:{Uses}, Directions:{Directions}, Purposes:{Purposes}, Allergy alerts:{AllergyAlerts}, " +
                 $"Warnings before use:{WarningsBeforeUse}, Don't mix with:{OtherDrugsThatMayCauseAReaction}";
         }
+        /// <summary>
+        /// Copy Constructor
+        /// </summary>
+        /// <param name="originalMedicine">Medicine to duplicate from.</param>
+        public Medicine(Medicine originalMedicine)
+        {
+            BrandName = originalMedicine.BrandName;
+            GenericName = originalMedicine.GenericName;
+            Description = originalMedicine.Description;
+            Warnings = originalMedicine.Warnings;
+            UnusualSideEffects = originalMedicine.UnusualSideEffects;
+            CommmonSideEffects = originalMedicine.CommmonSideEffects;
+            Uses = originalMedicine.Uses;
+            Directions = originalMedicine.Directions;
+            Purposes = originalMedicine.Purposes;
+            AllergyAlerts = originalMedicine.AllergyAlerts;
+            WarningsBeforeUse = originalMedicine.WarningsBeforeUse;
+            OtherDrugsThatMayCauseAReaction = originalMedicine.OtherDrugsThatMayCauseAReaction;
+        }
     }
 }

@@ -29,11 +29,13 @@
 <div style="margin: 5px">
     <input type="checkbox" @bind="Allergy.TreatmentRequired" />@*TreatmentRequired*@
 </div>
-@*<div>
-    <GetMedicine @bind-Medicine="Allergy.AlgyTreatmentMedication" /> 
-    AlgyTreatmentMedication. A list
-    <button @onclick="AddMeds">Add</button>
-</div>*@
+<div>
+  @*  <GetMedicine @bind-Medicine="AlgyMed" />
+    <button @onclick="AddMeds">Add</button>*@ @*trying to have a list of allergy medicine, then everytime you press the submit button it adds the input of medicine to the list*@
+    @*AlgyTreatmentMedication. A list*@
+
+
+</div>
 
 @code {
     [Parameter]
@@ -41,11 +43,20 @@
     [Parameter]
     public EventCallback<Allergy> AllergyChanged { get; set; }
 
-    //public List<Medicine> AlgyMeds = new();
+    //public Medicine AlgyMed = new();
 
-    //public void AddMeds(Medicine medicine)
+    //private List<Medicine> _algyMeds = new();
+
+    //public List<Medicine> AlgyMedicines
     //{
-    //    AlgyMeds.Add(medicine);
-    //    AllergyChanged.InvokeAsync(AlgyMeds);
+    //    get => _algyMeds;
+    //    set => _algyMeds = value;
+    //}
+
+    //private void AddMeds()
+    //{
+    //    //AlgyMedicines.Add(new Medicine {});
+    //    //AlgyMed = new();
+
     //}
 }
