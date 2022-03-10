@@ -1,0 +1,40 @@
+﻿@page "/"
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+
+<GetName @bind-NamesValue="_name" />
+The current name in the parent component is @_name!!
+<br />
+<br />
+
+<GetAddress @bind-AddressValue="_address" />
+<br />
+The parent address is: @_address
+
+<GetContactInfo></GetContactInfo>
+
+<GetMedicine />
+
+<GetDailyMedicines />
+<br />
+<button @onclick="StateHasChanged">Update ParentComponent</button>
+<br />
+<button @onclick="breakPoint"> Debugger </button>
+<br />
+<GetGeneralInfo></GetGeneralInfo>
+@code {
+    private Name _name = new();
+    private Address _address = new();
+
+
+    private void breakPoint()
+    {
+        ;
+    }
+}

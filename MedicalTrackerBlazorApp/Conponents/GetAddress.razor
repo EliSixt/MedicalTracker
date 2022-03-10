@@ -1,0 +1,31 @@
+﻿<h3>GetAddress</h3>
+<div style="margin: 5px">
+    <input type="number" @bind="AddressValue.BuildingNumber" placeholder="Building Number" />
+</div>
+<div style="margin: 5px">
+    <input type="text" @bind="AddressValue.StreetName" placeholder="Street Name" />
+</div>
+<div style="margin: 5px">
+    <input type="text" @bind="AddressValue.City" placeholder="City" />
+</div>
+<div style="margin: 5px">
+    <input type="text" @bind="AddressValue.State" placeholder="State" />
+</div>
+<div style="margin: 5px">
+    <input type="number" @bind="AddressValue.ZIPCode" placeholder="Zipcode" />
+</div>
+<div style="margin: 5px">
+    <input type="text" @bind="AddressValue.Country" placeholder="Country" />
+</div>
+
+
+The address in the component is: @AddressValue
+
+@code {
+    [Parameter]
+    public Address AddressValue { get; set; } = new();
+
+    [Parameter]
+    public EventCallback<Address> AddressValueChanged { get; set; }
+
+}

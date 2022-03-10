@@ -1,0 +1,40 @@
+﻿<h3>GetGeneralInfo</h3>
+
+<div style="margin: 5px">
+    <input type="date" @bind="GeneralInfo.DateOfBirth" /> @*Birthday*@
+</div>
+<div style="margin: 5px">
+    <input type="number" @bind="GeneralInfo.Weight" /> @*Weight*@
+</div>
+<div style="margin: 5px">
+    <input type="number" @bind="GeneralInfo.Height" /> @*Height*@
+</div>
+<div style="margin: 5px">
+    <input type="text" @bind="GeneralInfo.Languages" />@*languages*@
+</div>
+<div style="margin: 5px">
+    <input type="text" @bind="GeneralInfo.Ethnicity" />@*Ethnicity*@
+</div>
+<div style="margin: 5px">
+    <input type="text" @bind="GeneralInfo.Race" />@*race*@
+</div>
+<div style="margin: 5px">
+    <input type="text" @bind="GeneralInfo.Gender" />@*gender*@
+</div>
+<div style="margin: 5px">
+    <input type="text" @bind="GeneralInfo.SexAtBirth" />@*SexAtBirth*@
+</div>
+
+
+General Info: @GeneralInfo.
+
+
+@code {
+    [Parameter]
+    public GeneralInfo GeneralInfo { get; set; } = new();
+
+    [Parameter]
+    public EventCallback<GeneralInfo> GeneralInfoChanged { get; set; }
+
+
+}

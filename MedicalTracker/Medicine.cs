@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MedicalTracker
+﻿namespace MedicalTracker
 {
     public class Medicine
     {
@@ -48,6 +42,11 @@ namespace MedicalTracker
             AllergyAlerts = originalMedicine.AllergyAlerts;
             WarningsBeforeUse = originalMedicine.WarningsBeforeUse;
             OtherDrugsThatMayCauseAReaction = originalMedicine.OtherDrugsThatMayCauseAReaction;
+        }
+
+        public Medicine()
+        {
+
         }
     }
 }
