@@ -1,41 +1,54 @@
 ﻿<h3>GetAllergy</h3>
 <div style="margin: 5px">
+    Name of the Allergy
+    <br />
+    <input type="text" @bind="Allergy.AlgyName" placeholder="Allergy Name" />@*AlgyName*@
+</div>
+<div style="margin: 5px">
+    Description of Allergy Reactions
+    <br />
+    <input type="text" @bind="Allergy.BriefDescriptionOfReactions" placeholder="List all of the Allergy Reactions" />@*BriefDescriptionOfReactions*@
+</div>
+<div style="margin: 5px">
+    <input type="checkbox" @bind="Allergy.IslifeThreatening" /> Life Threatening @*IsLifeThreatening*@
+</div>
+@if (Allergy.IslifeThreatening)
+{
+    <div style="margin: 5px">
+        <input type="text" @bind="Allergy.SymptomsLeadingToLifeThreatening" placeholder="Symptoms Leading to Life-Threatening" />@*SymptomsLeadingToLifeThreatening*@
+    </div>
+}
+<div style="margin: 5px">
     <input type="checkbox" @bind="Allergy.IngestionOnly" />@*Ingestion only?*@
+    Ingestion Only
 </div>
 <div style="margin: 5px">
-    <input type="text" @bind="Allergy.AlgyName" />@*AlgyName*@
+    <input type="checkbox" @bind="Allergy.ConfirmedTestedAlgyType"> Allergy Tested @*ConfirmedTestedAlgyType*@
 </div>
 <div style="margin: 5px">
-    <input type="checkbox" @bind="Allergy.ConfirmedTestedAlgyType" />@*ConfirmedTestedAlgyType*@
+    <input type="checkbox" @bind="Allergy.EpiPenRequired" /> EpiPen Required @*EpiPenRequired*@
 </div>
 <div style="margin: 5px">
-    <input type="text" @bind="Allergy.BriefDescriptionOfReactions" />@*BriefDescriptionOfReactions*@
+    <input type="checkbox" @bind="Allergy.CPRRequired" /> CPR Required @*CPRRequired*@
 </div>
 <div style="margin: 5px">
-    <input type="checkbox" @bind="Allergy.IslifeThreatening" />@*IsLifeThreatening*@
+    <input type="checkbox" @bind="Allergy.Call911" /> Call 911 @*Call911*@
 </div>
+
+
+@*IF medicine is required pop-up GetMedicine with the List in case of multiple medicines*@
 <div style="margin: 5px">
-    <input type="text" @bind="Allergy.SymptomsLeadingToLifeThreatening" />@*SymptomsLeadingToLifeThreatening*@
+    <input type="checkbox" @bind="Allergy.TreatmentRequired" /> Medicine Required  @*TreatmentRequired*@
 </div>
-<div style="margin: 5px">
-    <input type="checkbox" @bind="Allergy.EpiPenRequired" />@*EpiPenRequired*@
-</div>
-<div style="margin: 5px">
-    <input type="checkbox" @bind="Allergy.CPRRequired" />@*CPRRequired*@
-</div>
-<div style="margin: 5px">
-    <input type="checkbox" @bind="Allergy.Call911" />@*Call911*@
-</div>
-<div style="margin: 5px">
-    <input type="checkbox" @bind="Allergy.TreatmentRequired" />@*TreatmentRequired*@
-</div>
-<div>
+@if (Allergy.TreatmentRequired)
+{
     <GetMedicine @bind-Medicine="AlgyMed" />
-    <button @onclick="AddMeds">Add</button> @*trying to have a list of allergy medicine, then everytime you press the submit button it adds the input of medicine to the list*@
-    @*AlgyTreatmentMedication. A list*@
-
-
-</div>
+    <button @onclick="AddMeds">Add</button>
+    @foreach (Medicine item in AlgyMedicines)
+    {
+        <div>@item</div>
+    }
+}
 
 @code {
     [Parameter]
@@ -53,9 +66,12 @@
         set => _algyMeds = value;
     }
 
-    private void AddMeds()
+    public void AddMeds()
     {
-        Medicine copeMedicine = new(AlgyMed);
-
+        Medicine copyMed = new(AlgyMed);
+        if (!AlgyMedicines.Contains(copyMed))
+        {
+            AlgyMedicines.Add(copyMed);
+        }
     }
 }

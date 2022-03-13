@@ -464,7 +464,7 @@ namespace MedicalTracker
                 SymptomsLeadingToLifeThreatening = "Tightening of the airways and throat, causing trouble breathing",
                 EpiPenRequired = true,
                 CPRRequired = false,
-                TreatmentRequired = "Administer EpiPen"
+                TreatmentRequired = true
             });
             practicePatient.Allergies.Add(new Allergy
             {
@@ -478,7 +478,7 @@ namespace MedicalTracker
                 EpiPenRequired = false,
                 CPRRequired = true,
                 Call911 = true,
-                TreatmentRequired = "Withdrawal of the drug, Antihistamine related drugs",
+                TreatmentRequired = true,
                 AlgyTreatmentMedication = new List<Medicine>() {
                         new Medicine() {
                             BrandName = "Benadryl Allergy, Benadryl Children's Allergy, DiphenMax, Dytan, Uni-Tann",

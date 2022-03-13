@@ -18,7 +18,7 @@ namespace MedicalTracker
         public bool CPRRequired { get; set; }
         public bool Call911 { get; set; }
         //else
-        public string TreatmentRequired { get; set; }
+        public bool TreatmentRequired { get; set; }
         public List<Medicine> AlgyTreatmentMedication { get; set; }
 
         public override string ToString()
