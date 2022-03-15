@@ -43,6 +43,7 @@
 @if (Allergy.TreatmentRequired)
 {
     <GetMedicine @bind-Medicine="AlgyMed" />
+    <br />
     <button @onclick="AddMeds">Add</button>
     @foreach (Medicine item in AlgyMedicines)
     {
@@ -69,7 +70,24 @@
     public void AddMeds()
     {
         Medicine copyMed = new(AlgyMed);
-        if (!AlgyMedicines.Contains(copyMed))
+
+        bool duplicate = false;
+
+        foreach (Medicine item in AlgyMedicines)
+        {
+            duplicate = string.Equals(copyMed.BrandName, item.BrandName, StringComparison.OrdinalIgnoreCase);
+            if (duplicate)
+            {
+                break;
+            }
+            duplicate = string.Equals(copyMed.GenericName, item.GenericName, StringComparison.OrdinalIgnoreCase);
+            if (duplicate)
+            {
+                break;
+            }
+        }
+
+        if (!duplicate)
         {
             AlgyMedicines.Add(copyMed);
         }
