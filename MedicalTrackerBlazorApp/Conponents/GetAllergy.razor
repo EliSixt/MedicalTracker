@@ -58,15 +58,22 @@
     public EventCallback<Allergy> AllergyChanged { get; set; }
 
     public Medicine AlgyMed = new();
-
     private List<Medicine> _algyMeds = new();
-
-    public List<Medicine> AlgyMedicines
+    public List<Medicine> AlgyMedicines //Add this to service?
     {
         get => _algyMeds;
         set => _algyMeds = value;
     }
 
+
+
+    //make BrandName a requirement to make sure an empty medicine doesn 
+
+    /// <summary>
+    /// Makes sure and prevents duplicate answers from being added onto a medicine list
+    /// by comparing both BrandName and GenericName from two objects (ignoring the Case).
+    /// If it passes it gets added onto AlgyMedicines.
+    /// </summary>
     public void AddMeds()
     {
         Medicine copyMed = new(AlgyMed);
@@ -87,7 +94,7 @@
             }
         }
 
-        if (!duplicate)
+        if (!duplicate && !String.IsNullOrEmpty(copyMed.BrandName))
         {
             AlgyMedicines.Add(copyMed);
         }
