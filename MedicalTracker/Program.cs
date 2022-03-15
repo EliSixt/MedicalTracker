@@ -461,7 +461,11 @@ namespace MedicalTracker
                 ConfirmedTestedAlgyType = true,
                 BriefDescriptionOfReactions = "Swelling of face and neck",
                 IslifeThreatening = true,
-                SymptomsLeadingToLifeThreatening = "Tightening of the airways and throat, causing trouble breathing",
+                SymptomsLeadingToLifeThreatening = new List<string>()
+                {
+                    "tightening of airways", "trouble breathing"
+                }, //"Tightening of the airways and throat, causing trouble breathing"
+                
                 EpiPenRequired = true,
                 CPRRequired = false,
                 TreatmentRequired = true
@@ -473,8 +477,8 @@ namespace MedicalTracker
                 ConfirmedTestedAlgyType = true,
                 BriefDescriptionOfReactions = "Rashes, hives, itchy eyes, and swollen lips, tongue, or face. Within an hour.",
                 IslifeThreatening = true,
-                SymptomsLeadingToLifeThreatening = "Tightening of the airways and throat, causing trouble breathing, Nausea or abdominal cramps, Vomiting or diarrhea, Dizziness or lightheadedness," +
-                " Weak, rapid pulse, Drop in blood pressure, Seizures, Loss of consciousness",
+                SymptomsLeadingToLifeThreatening = new List<string>() { "tightening of airways", "trouble breathing" },
+                //"Tightening of the airways and throat, causing trouble breathing, Nausea or abdominal cramps, Vomiting or diarrhea, Dizziness or lightheadedness," + " Weak, rapid pulse, Drop in blood pressure, Seizures, Loss of consciousness",
                 EpiPenRequired = false,
                 CPRRequired = true,
                 Call911 = true,

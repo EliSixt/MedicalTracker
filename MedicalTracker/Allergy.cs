@@ -10,7 +10,7 @@ namespace MedicalTracker
         public string BriefDescriptionOfReactions { get; set; }
         //life threatening?? action plan..
         public bool IslifeThreatening { get; set; }
-        public string SymptomsLeadingToLifeThreatening { get; set; }
+        public List<string> SymptomsLeadingToLifeThreatening { get; set; } = new(); //changed to list, limit character input for brief descriptions
         //if having symptomsLeadintoLifeThreatening
         //do
         public bool EpiPenRequired { get; set; }
@@ -19,7 +19,7 @@ namespace MedicalTracker
         public bool Call911 { get; set; }
         //else
         public bool TreatmentRequired { get; set; }
-        public List<Medicine> AlgyTreatmentMedication { get; set; }
+        public List<Medicine> AlgyTreatmentMedication { get; set; } = new();
 
         public override string ToString()
         {
