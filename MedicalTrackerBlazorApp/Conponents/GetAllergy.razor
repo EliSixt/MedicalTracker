@@ -5,8 +5,7 @@
     <input type="text" @bind="Allergy.AlgyName" placeholder="Allergy Name" />@*AlgyName*@
 </div>
 <div style="margin: 5px">
-    Description of Allergy Reactions
-    <br />
+    <p style="font-size:small" >Description of Allergy Reactions:</p>
     <input type="text" @bind="Allergy.BriefDescriptionOfReactions" placeholder="List all of the Allergy Reactions" />@*BriefDescriptionOfReactions*@
 </div>
 <div style="margin: 5px">
@@ -14,8 +13,12 @@
 </div>
 @if (Allergy.IslifeThreatening)
 {
+    <p style="font-size:small" >Add Symptom:</p>
     <div style="margin: 5px">
-        <input type="text" @bind="Allergy.SymptomsLeadingToLifeThreatening.SymptomName" placeholder="Symptoms Leading to Life-Threatening" />@*SymptomsLeadingToLifeThreatening*@
+        <input type="text" @bind="Symptom.SymptomName" placeholder="Symptom Name" />@*SymptomsLeadingToLifeThreatening*@
+    </div>
+    <div style="margin: 5px">
+        <input type="text" @bind="Symptom.SymptomDescription" placeholder="Symptom Description" />
     </div>
 }
 <div style="margin: 5px">
@@ -65,11 +68,12 @@
         set => _algyMeds = value;
     }
 
-
-
-    //add a button method and bind it to Allergy.SymptomsLeadingToLifeThreatening and service here
-
-    //make BrandName a requirement to make sure an empty medicine doesn 
+    [Parameter]
+    public Symptom Symptom { get; set; } = new();
+    [Parameter]
+    public EventCallback<Symptom> SymptomChanged { get; set; }
+    //add a button method, adding each of the inputs onto a list (kinda like AddMeds()), 
+    // then bind it to Allergy.SymptomsLeadingToLifeThreatening and service here
 
     /// <summary>
     /// Makes sure and prevents duplicate answers from being added onto a medicine list
