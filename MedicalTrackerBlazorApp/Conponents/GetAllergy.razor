@@ -15,7 +15,7 @@
 @if (Allergy.IslifeThreatening)
 {
     <div style="margin: 5px">
-        <input type="text" @bind="Allergy.SymptomsLeadingToLifeThreatening" placeholder="Symptoms Leading to Life-Threatening" />@*SymptomsLeadingToLifeThreatening*@
+        <input type="text" @bind="Allergy.SymptomsLeadingToLifeThreatening.SymptomName" placeholder="Symptoms Leading to Life-Threatening" />@*SymptomsLeadingToLifeThreatening*@
     </div>
 }
 <div style="margin: 5px">
@@ -64,6 +64,8 @@
         get => _algyMeds;
         set => _algyMeds = value;
     }
+
+
 
     //add a button method and bind it to Allergy.SymptomsLeadingToLifeThreatening and service here
 

@@ -20,7 +20,7 @@ namespace MedicalTracker
         /// <returns>Displays the name of the symptom, severity, and userId.</returns>
         public override string ToString()
         {
-            return $"name = {SymptomName}, severity = {Severity}, userID = {UserID}";
+            return $"name = {SymptomName}, symptomDescription= {SymptomDescription} , severity = {Severity}, userID = {UserID}";
 
         }
     }
