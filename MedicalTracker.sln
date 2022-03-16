@@ -7,9 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedicalTracker", "MedicalTr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CA6A8CAD-313D-43B6-A614-7036DE475D04}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApp3", "BlazorApp3\BlazorApp3.csproj", "{93BC5C39-034F-47A6-892A-DA8C65007559}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicalTrackerBlazorApp", "MedicalTrackerBlazorApp\MedicalTrackerBlazorApp.csproj", "{928F3AE6-6022-4AAC-8BC2-1BF91C8AA729}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedicalTrackerBlazorApp", "MedicalTrackerBlazorApp\MedicalTrackerBlazorApp.csproj", "{928F3AE6-6022-4AAC-8BC2-1BF91C8AA729}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +19,6 @@ Global
 		{5928F039-7C83-4A76-A7F7-871E67378A17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5928F039-7C83-4A76-A7F7-871E67378A17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5928F039-7C83-4A76-A7F7-871E67378A17}.Release|Any CPU.Build.0 = Release|Any CPU
-		{93BC5C39-034F-47A6-892A-DA8C65007559}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{93BC5C39-034F-47A6-892A-DA8C65007559}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{93BC5C39-034F-47A6-892A-DA8C65007559}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{93BC5C39-034F-47A6-892A-DA8C65007559}.Release|Any CPU.Build.0 = Release|Any CPU
 		{928F3AE6-6022-4AAC-8BC2-1BF91C8AA729}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{928F3AE6-6022-4AAC-8BC2-1BF91C8AA729}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{928F3AE6-6022-4AAC-8BC2-1BF91C8AA729}.Release|Any CPU.ActiveCfg = Release|Any CPU
