@@ -5,7 +5,7 @@
     <input type="text" @bind="Allergy.AlgyName" placeholder="Allergy Name" />@*AlgyName*@
 </div>
 <div style="margin: 5px">
-    <p style="font-size:small" >Description of Allergy Reactions:</p>
+    <p style="font-size:small">Description of Allergy Reactions:</p>
     <input type="text" @bind="Allergy.BriefDescriptionOfReactions" placeholder="List all of the Allergy Reactions" />@*BriefDescriptionOfReactions*@
 </div>
 <div style="margin: 5px">
@@ -13,13 +13,19 @@
 </div>
 @if (Allergy.IslifeThreatening)
 {
-    <p style="font-size:small" >Add Symptoms leading to life threatening:</p>
+    <p style="font-size:small">Add Symptoms leading to life threatening:</p>
     <div style="margin: 5px">
         <input type="text" @bind="Symptom.SymptomName" placeholder="Symptom Name" />@*SymptomsLeadingToLifeThreatening*@
     </div>
     <div style="margin: 5px">
         <input type="text" @bind="Symptom.SymptomDescription" placeholder="Symptom Description" />
     </div>
+    <button @onclick="AddSymptom">Add Symptom</button>
+    <br />
+    @foreach (Symptom item in Symptoms) @*this is temporary, to see list behavior*@ 
+    {
+        @item
+    }
 }
 <div style="margin: 5px">
     <input type="checkbox" @bind="Allergy.IngestionOnly" />@*Ingestion only?*@
@@ -47,8 +53,8 @@
 {
     <GetMedicine @bind-Medicine="AlgyMed" />
     <br />
-    <button @onclick="AddMeds">Add</button>
-    @foreach (Medicine item in AlgyMedicines)
+    <button @onclick="AddMed">Add</button>
+    @foreach (Medicine item in AlgyMedicines) @*this is temporary, to see list behavior*@
     {
         <div>@item</div>
     }
@@ -62,7 +68,7 @@
 
     public Medicine AlgyMed = new();
     private List<Medicine> _algyMeds = new();
-    public List<Medicine> AlgyMedicines //Add this to service?
+    public List<Medicine> AlgyMedicines //Add this to Allergy object and then to service with the submit button. 
     {
         get => _algyMeds;
         set => _algyMeds = value;
@@ -72,15 +78,56 @@
     public Symptom Symptom { get; set; } = new();
     [Parameter]
     public EventCallback<Symptom> SymptomChanged { get; set; }
-    //add a button method, adding each of the inputs onto a list (kinda like AddMeds()), 
-    // then bind it to Allergy.SymptomsLeadingToLifeThreatening and service here
+    private List<Symptom> _symptoms { get; set; } = new();
+    public List<Symptom> Symptoms //Add this to Allergy object with a submit button
+    {
+        get => _symptoms;
+        set => _symptoms = value;
+    }
 
+    //add a button method, adding each of the inputs onto a list (kinda like AddMeds()),
+    // then bind it to Allergy.SymptomsLeadingToLifeThreatening and service here
+    //add an editForm with a submit button and validation error messages in the class' properties
+
+
+    /// <summary>
+    /// Prevents duplicate answers from being added onto a Symptoms list
+    /// by comparing SymptomName and SymptomDescription from two objects (ignoring the case).
+    /// If it passes it gets added onto Symptoms.
+    /// </summary>
+    public void AddSymptom()
+    {
+        Symptom copySymptom = new(Symptom);
+
+        bool duplicate = false;
+
+        foreach (Symptom item in Symptoms)
+        {
+            duplicate = string.Equals(copySymptom.SymptomName, item.SymptomName, StringComparison.OrdinalIgnoreCase);
+            if (duplicate)
+            {
+                //pop up a message telling the user that theres already the same value saved
+                break;
+            }
+            duplicate = string.Equals(copySymptom.SymptomDescription, item.SymptomDescription, StringComparison.OrdinalIgnoreCase);
+            if (duplicate)
+            {
+                //pop up a message telling the user that theres already the same value saved
+                break;
+            }
+        }
+
+        if (!duplicate && !string.IsNullOrEmpty(copySymptom.SymptomDescription))
+        {
+            Symptoms.Add(copySymptom);
+        }
+    }
     /// <summary>
     /// Makes sure and prevents duplicate answers from being added onto a medicine list
     /// by comparing both BrandName and GenericName from two objects (ignoring the Case).
     /// If it passes it gets added onto AlgyMedicines.
     /// </summary>
-    public void AddMeds()
+    public void AddMed()
     {
         Medicine copyMed = new(AlgyMed);
 
@@ -91,11 +138,13 @@
             duplicate = string.Equals(copyMed.BrandName, item.BrandName, StringComparison.OrdinalIgnoreCase);
             if (duplicate)
             {
+                //pop up a message telling the user that theres already the same value saved
                 break;
             }
             duplicate = string.Equals(copyMed.GenericName, item.GenericName, StringComparison.OrdinalIgnoreCase);
             if (duplicate)
             {
+                //pop up a message telling the user that theres already the same value saved
                 break;
             }
         }
