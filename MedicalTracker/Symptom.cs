@@ -23,5 +23,21 @@ namespace MedicalTracker
             return $"name = {SymptomName}, symptomDescription= {SymptomDescription} , severity = {Severity}, userID = {UserID}";
 
         }
+        /// <summary>
+        /// Copy Constructor
+        /// </summary>
+        /// <param name="originalSymptom">Symptom to duplicate from.</param>
+        public Symptom(Symptom originalSymptom)
+        {
+            UserID = originalSymptom.UserID;
+            SymptomName = originalSymptom.SymptomName;
+            Date = originalSymptom.Date;
+            Severity = originalSymptom.Severity;
+            SymptomDescription = originalSymptom.SymptomDescription;
+        }
+        public Symptom()
+        {
+
+        }
     }
 }
