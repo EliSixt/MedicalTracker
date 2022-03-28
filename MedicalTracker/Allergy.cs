@@ -6,8 +6,8 @@ namespace MedicalTracker
     {
         public bool IngestionOnly { get; set; }
         public string AlgyName { get; set; }//food,drug,latex,insect,mold,pet,pollen,other..
-        public bool ConfirmedTestedAlgyType { get; set; }
-        public string BriefDescriptionOfReactions { get; set; }
+        public bool ConfirmedTestedAlgyType { get; set; } //dont think this is necessary
+        public string CommonReactions { get; set; }//list? This should go after IsLifeThreatening in UI, if its true then the user might input duplicates. Redundant.
         //life threatening?? action plan..
         public bool IslifeThreatening { get; set; }
         public List<Symptom> SymptomsLeadingToLifeThreatening { get; set; } = new(); //changed to list, limit character input for brief descriptions

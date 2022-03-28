@@ -6,11 +6,17 @@
 </div>
 <div style="margin: 5px">
     <p style="font-size:small">Description of Allergy Reactions:</p>
-    <input type="text" @bind="Allergy.BriefDescriptionOfReactions" placeholder="List all of the Allergy Reactions" />@*BriefDescriptionOfReactions*@
+    <input type="text" @bind="Allergy.CommonReactions" placeholder="List all of the Allergy Reactions" />@*BriefDescriptionOfReactions, make this into a little list with a submit button as well. Look into validation*@
 </div>
 <div style="margin: 5px">
     <input type="checkbox" @bind="Allergy.IslifeThreatening" /> Life Threatening @*IsLifeThreatening*@
 </div>
+
+
+@*If IsLifeThreatening, it will show text boxes to input symptom and and that symptom description with a submit button binded to a method. 
+    The method will check for duplicates then submit those text inputs into a list of SymptomsLeadingToLifeThreatening.
+    Then add/update that list into the current patient's Allergy.SymptomsLeadingToLifeThreatening.
+*@
 @if (Allergy.IslifeThreatening)
 {
     <p style="font-size:small">Add Symptoms leading to life threatening:</p>
@@ -49,6 +55,10 @@
 <div style="margin: 5px">
     <input type="checkbox" @bind="Allergy.TreatmentRequired" /> Medicine Required  @*TreatmentRequired*@
 </div>
+@*If TreatmentRequired, it will show GetMedicine Component along with a submit button binded to a method. 
+    The method will check for duplicates through the medicine names then submit the input into a list of Medicine (AlgyTreatmentMedication) used for or against the Allergy.
+    Then add/update that list into the current patient's Allergy.AlgyTreatmentMedication.
+*@
 @if (Allergy.TreatmentRequired)
 {
     <GetMedicine @bind-Medicine="AlgyMed" />
@@ -78,7 +88,7 @@
     public Symptom Symptom { get; set; } = new();
     [Parameter]
     public EventCallback<Symptom> SymptomChanged { get; set; }
-    private List<Symptom> _symptoms { get; set; } = new();
+    private List<Symptom> _symptoms {  get; set; } = new();
     public List<Symptom> Symptoms //Add this to Allergy object with a submit button
     {
         get => _symptoms;

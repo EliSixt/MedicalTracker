@@ -459,7 +459,7 @@ namespace MedicalTracker
                 IngestionOnly = true,
                 AlgyName = "peanuts",
                 ConfirmedTestedAlgyType = true,
-                BriefDescriptionOfReactions = "Swelling of face and neck",
+                CommonReactions = "Swelling of face and neck",
                 IslifeThreatening = true,
                 SymptomsLeadingToLifeThreatening = new List<Symptom>()
                 {
@@ -475,7 +475,7 @@ namespace MedicalTracker
                 IngestionOnly = true,
                 AlgyName = "Penicillin",
                 ConfirmedTestedAlgyType = true,
-                BriefDescriptionOfReactions = "Rashes, hives, itchy eyes, and swollen lips, tongue, or face. Within an hour.",
+                CommonReactions = "Rashes, hives, itchy eyes, and swollen lips, tongue, or face. Within an hour.",
                 IslifeThreatening = true,
                 SymptomsLeadingToLifeThreatening = new List<Symptom>()
                 {
