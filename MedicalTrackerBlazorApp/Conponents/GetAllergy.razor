@@ -77,22 +77,22 @@
     public EventCallback<Allergy> AllergyChanged { get; set; }
 
     public Medicine AlgyMed = new();
-    private List<Medicine> _algyMeds = new();
+    //private List<Medicine> _algyMeds = new();
     public List<Medicine> AlgyMedicines //Add this to Allergy object and then to service with the submit button. 
     {
-        get => _algyMeds;
-        set => _algyMeds = value;
+        get => Allergy.AlgyTreatmentMedication;
+        set => Allergy.AlgyTreatmentMedication = value;
     }
 
     [Parameter]
     public Symptom Symptom { get; set; } = new();
     [Parameter]
     public EventCallback<Symptom> SymptomChanged { get; set; }
-    private List<Symptom> _symptoms {  get; set; } = new();
+    //private List<Symptom> _symptoms {  get; set; } = new();
     public List<Symptom> Symptoms //Add this to Allergy object with a submit button
     {
-        get => _symptoms;
-        set => _symptoms = value;
+        get => Allergy.SymptomsLeadingToLifeThreatening;
+        set => Allergy.SymptomsLeadingToLifeThreatening = value;
     }
 
     //add a button method, adding each of the inputs onto a list (kinda like AddMeds()),
@@ -165,3 +165,4 @@
         }
     }
 }
+@*add a submit button at the end to add this Allergy into the List<Allergy> within Patient under a service*@
