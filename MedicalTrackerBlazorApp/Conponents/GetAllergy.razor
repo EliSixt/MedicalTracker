@@ -1,4 +1,6 @@
-﻿<h3>GetAllergy</h3>
+﻿@inject Data.DataService CurrentPatientData
+
+<h3>GetAllergy</h3>
 <div style="margin: 5px">
     Name of the Allergy
     <br />
@@ -26,11 +28,14 @@
     <div style="margin: 5px">
         <input type="text" @bind="Symptom.SymptomDescription" placeholder="Symptom Description" />
     </div>
-    <button @onclick="AddSymptom">Add Symptom</button>
+    <button type="submit" @onclick="AddSymptom">Add Symptom</button>
     <br />
+
     @foreach (Symptom item in Symptoms) @*this is temporary, to see list behavior*@ 
     {
+    <li>
         @item
+    </li>
     }
 }
 <div style="margin: 5px">
@@ -63,12 +68,16 @@
 {
     <GetMedicine @bind-Medicine="AlgyMed" />
     <br />
-    <button @onclick="AddMed">Add</button>
+    <button type="submit" @onclick="AddMed">Add</button>
     @foreach (Medicine item in AlgyMedicines) @*this is temporary, to see list behavior*@
     {
-        <div>@item</div>
+        <li>@item</li>
     }
 }
+<br />
+<br />
+
+<button type="submit">Submit Allergy</button>
 
 @code {
     [Parameter]
@@ -130,6 +139,7 @@
         if (!duplicate && !string.IsNullOrEmpty(copySymptom.SymptomDescription))
         {
             Symptoms.Add(copySymptom);
+            Symptom = new();
         }
     }
     /// <summary>
@@ -162,7 +172,15 @@
         if (!duplicate && !String.IsNullOrEmpty(copyMed.BrandName))
         {
             AlgyMedicines.Add(copyMed);
+            AlgyMed = new();
         }
     }
+
+
+    @*add a submit button at the end to add this Allergy into the List<Allergy> within Patient under a service
+    public void OnSubmitAllergy()
+    {
+        CurrentPatientData.
+    }
+    *@
 }
-@*add a submit button at the end to add this Allergy into the List<Allergy> within Patient under a service*@

@@ -1,11 +1,15 @@
 ﻿using MedicalTracker;
 
-namespace BlazorApp3.Data
+namespace MedicalTrackerBlazorApp.Data
 {
 
     public class DataService
     {
+
         private readonly string filePathPatientsList = @"C:\Users\Elias\OneDrive\TMP\patientsList.xml";
+
+        public Patient CurrentPatient { get; set; } = new();
+
         private List<Patient> _patients = new();
         public List<Patient> Patients
         {
@@ -15,9 +19,15 @@ namespace BlazorApp3.Data
 
         public void AddPatient(Patient P)
         {
+            //Patient copyPatient = new (CurrentPatient);
+
             Patients.Add(P);
+
             //XmlWriter<Patient>(_patients, filePath);
+
             MedicalTracker.Program.XmlWriter(Patients, filePathPatientsList);
         }
+        
     }
 }
+

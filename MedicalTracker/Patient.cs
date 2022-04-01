@@ -30,5 +30,6 @@ namespace MedicalTracker
             return $"Patient: {PatientInfo.Name.FirstName} {PatientInfo.Name.LastName}";
         }
 
+
     }
 }
