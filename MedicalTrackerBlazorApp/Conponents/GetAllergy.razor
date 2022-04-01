@@ -177,10 +177,11 @@
     }
 
 
-    @*add a submit button at the end to add this Allergy into the List<Allergy> within Patient under a service
+    @*add a submit button at the end to add this Allergy into the List<Allergy> within Patient under a service*@
     public void OnSubmitAllergy()
     {
-        CurrentPatientData.
+        CurrentPatientData.CurrentPatient.Allergies.Add(Allergy);
+
+        Allergy = new();
     }
-    *@
 }

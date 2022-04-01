@@ -17,13 +17,18 @@ namespace MedicalTrackerBlazorApp.Data
             set => _patients = value;
         }
 
-        public void AddPatient(Patient P)
+        /// <summary>
+        /// Intended to use at the end, when all of the patient info has been filled out and ready to submit.
+        /// Will add CurrentPatient into a Patients List, erase value in CurrentPatient variable, and
+        /// update/override the local xml file.
+        /// </summary>
+        public void AtEndSubmitAndAddPatient()
         {
-            //Patient copyPatient = new (CurrentPatient);
+            Patient copyPatient = new(CurrentPatient);
 
-            Patients.Add(P);
+            Patients.Add(copyPatient);
 
-            //XmlWriter<Patient>(_patients, filePath);
+            CurrentPatient = new();
 
             MedicalTracker.Program.XmlWriter(Patients, filePathPatientsList);
         }

@@ -25,11 +25,40 @@ namespace MedicalTracker
         public List<Symptom> Symptoms { get; set; }
         public List<UnusualSymptoms> UnusualSymptoms { get; set; } = new(); //check this and change
         public List<AdditionalNeeds> AdditionalNeeds { get; set; } = new();//check this and change
+        
+        /// <summary>
+        /// Overrides string for Patient
+        /// </summary>
+        /// <returns>Displays all the variables of Patient and their values.</returns>
         public override string ToString()
         {
             return $"Patient: {PatientInfo.Name.FirstName} {PatientInfo.Name.LastName}";
         }
 
 
+        /// <summary>
+        /// Copy Constructor
+        /// </summary>
+        /// <param name="originalPatient">Patient to duplicate from.</param>
+        public Patient(Patient originalPatient)
+        {
+            PatientInfo = originalPatient.PatientInfo;
+            GeneralInfo = originalPatient.GeneralInfo;
+            EmergencyContacts = originalPatient.EmergencyContacts;
+            Caretakers = originalPatient.Caretakers;
+            Allergies = originalPatient.Allergies;
+            EmergencyMedications = originalPatient.EmergencyMedications;
+            DailyMedication = originalPatient.DailyMedication;
+            Appointments = originalPatient.Appointments;
+            MedicalHistory = originalPatient.MedicalHistory;
+            Symptoms = originalPatient.Symptoms;
+            UnusualSymptoms = originalPatient.UnusualSymptoms;
+            AdditionalNeeds = originalPatient.AdditionalNeeds;
+        }
+
+        public Patient()
+        {
+
+        }
     }
 }
