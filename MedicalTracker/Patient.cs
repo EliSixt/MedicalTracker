@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace MedicalTracker
 {
@@ -25,7 +21,7 @@ namespace MedicalTracker
         public List<Symptom> Symptoms { get; set; }
         public List<UnusualSymptoms> UnusualSymptoms { get; set; } = new(); //check this and change
         public List<AdditionalNeeds> AdditionalNeeds { get; set; } = new();//check this and change
-        
+
         /// <summary>
         /// Overrides string for Patient
         /// </summary>

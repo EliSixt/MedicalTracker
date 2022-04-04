@@ -25,5 +25,24 @@ namespace MedicalTracker
         {
             return $"Allergy: {AlgyName}";
         }
+
+        public Allergy(Allergy OriginalAllergy)
+        {
+            IngestionOnly = OriginalAllergy.IngestionOnly;
+            AlgyName = OriginalAllergy.AlgyName;
+            ConfirmedTestedAlgyType = OriginalAllergy.ConfirmedTestedAlgyType;
+            CommonReactions = OriginalAllergy.CommonReactions;
+            IslifeThreatening = OriginalAllergy.IslifeThreatening;
+            SymptomsLeadingToLifeThreatening = new List<Symptom>(SymptomsLeadingToLifeThreatening);
+            EpiPenRequired = OriginalAllergy.EpiPenRequired;
+            CPRRequired = OriginalAllergy.CPRRequired;
+            Call911 = OriginalAllergy.Call911;
+            TreatmentRequired = OriginalAllergy.TreatmentRequired;
+            AlgyTreatmentMedication = new List<Medicine>(AlgyTreatmentMedication);
+        }
+
+        public Allergy()
+        {
+        }
     }
 }

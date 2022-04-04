@@ -15,7 +15,7 @@
 </div>
 
 
-@*If IsLifeThreatening, it will show text boxes to input symptom and and that symptom description with a submit button binded to a method. 
+@*If IsLifeThreatening, it will show text boxes to input symptom and and that symptom description with a submit button binded to a method.
     The method will check for duplicates then submit those text inputs into a list of SymptomsLeadingToLifeThreatening.
     Then add/update that list into the current patient's Allergy.SymptomsLeadingToLifeThreatening.
 *@
@@ -31,11 +31,11 @@
     <button type="submit" @onclick="AddSymptom">Add Symptom</button>
     <br />
 
-    @foreach (Symptom item in Symptoms) @*this is temporary, to see list behavior*@ 
+    @foreach (Symptom item in Symptoms) @*this is temporary, to see list behavior*@
     {
-    <li>
-        @item
-    </li>
+        <li>
+            @item
+        </li>
     }
 }
 <div style="margin: 5px">
@@ -60,7 +60,7 @@
 <div style="margin: 5px">
     <input type="checkbox" @bind="Allergy.TreatmentRequired" /> Medicine Required  @*TreatmentRequired*@
 </div>
-@*If TreatmentRequired, it will show GetMedicine Component along with a submit button binded to a method. 
+@*If TreatmentRequired, it will show GetMedicine Component along with a submit button binded to a method.
     The method will check for duplicates through the medicine names then submit the input into a list of Medicine (AlgyTreatmentMedication) used for or against the Allergy.
     Then add/update that list into the current patient's Allergy.AlgyTreatmentMedication.
 *@
@@ -77,7 +77,12 @@
 <br />
 <br />
 
-<button type="submit">Submit Allergy</button>
+<button type="submit" @onclick="OnSubmitAllergy">Submit Allergy</button>
+
+@foreach (Allergy item in CurrentPatientData.CurrentPatient.Allergies)
+{
+    <li>@item</li>
+}
 
 @code {
     [Parameter]
@@ -87,7 +92,7 @@
 
     public Medicine AlgyMed = new();
     //private List<Medicine> _algyMeds = new();
-    public List<Medicine> AlgyMedicines //Add this to Allergy object and then to service with the submit button. 
+    public List<Medicine> AlgyMedicines //Add this to Allergy object and then to service with the submit button.
     {
         get => Allergy.AlgyTreatmentMedication;
         set => Allergy.AlgyTreatmentMedication = value;
@@ -178,9 +183,16 @@
 
 
     @*add a submit button at the end to add this Allergy into the List<Allergy> within Patient under a service*@
+    /// <summary>
+    /// Adds Allergy variable into the list<allergy> of the CurrentPatient from the DataService.
+    /// </summary>
     public void OnSubmitAllergy()
     {
-        CurrentPatientData.CurrentPatient.Allergies.Add(Allergy);
+        Allergy CopyAllergy = new(Allergy);
+
+        //check for duplicate allergies first.
+
+        CurrentPatientData.CurrentPatient.Allergies.Add(CopyAllergy);
 
         Allergy = new();
     }
