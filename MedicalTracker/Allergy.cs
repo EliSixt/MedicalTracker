@@ -23,7 +23,9 @@ namespace MedicalTracker
 
         public override string ToString()
         {
-            return $"Allergy: {AlgyName}";
+            return $"Allergy: {AlgyName}, IngestionOnly: ${IngestionOnly}," +
+                $" ConfirmedTestedAlgy: ${ConfirmedTestedAlgyType}, CommonReactions: ${CommonReactions}, IslifeThreatening: ${IslifeThreatening}, " +
+                $"EpiPenRequired: ${EpiPenRequired}, CPRRequired: ${CPRRequired}, Call911: ${Call911}, TreatmentRequired: ${TreatmentRequired}, AlgyTreatmentMedication: ${AlgyTreatmentMedication} ";
         }
 
         public Allergy(Allergy OriginalAllergy)

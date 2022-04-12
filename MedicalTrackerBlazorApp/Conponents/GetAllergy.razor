@@ -181,10 +181,12 @@
         }
     }
 
-
     @*add a submit button at the end to add this Allergy into the List<Allergy> within Patient under a service*@
+
     /// <summary>
     /// Adds Allergy variable into the list<allergy> of the CurrentPatient from the DataService.
+    /// Checks for any duplicates in the list<allergy> of the dataservice by comparing allergy names.
+    /// Ignores case.
     /// </summary>
     public void OnSubmitAllergy()
     {
@@ -192,8 +194,48 @@
 
         //check for duplicate allergies first.
 
-        CurrentPatientData.CurrentPatient.Allergies.Add(CopyAllergy);
+        bool duplicate = false;
 
-        Allergy = new();
+        foreach (Allergy item in CurrentPatientData.CurrentPatient.Allergies)
+        {
+            duplicate = string.Equals(CopyAllergy.AlgyName, item.AlgyName, StringComparison.OrdinalIgnoreCase);
+            if (duplicate)
+            {
+                break;
+            }
+        }
+
+        if (!duplicate && !string.IsNullOrEmpty(CopyAllergy.AlgyName))
+        {
+            CurrentPatientData.CurrentPatient.Allergies.Add(CopyAllergy);
+
+            Allergy = new();
+        }
+
     }
+
+    ///// <summary>
+    ///// Takes in a list, a string item(X) in the list used as a base, and a string item(Y) used to compare to.
+    ///// Loops through the list and compares item(X) from the list to item(Y), if X is equal to Y the method returns true.
+    ///// Ignores the case of both string items.
+    ///// </summary>
+    ///// <typeparam name="T">Type of the list.</typeparam>
+    ///// <param name="ListToCheck">list to check and loop through.</param>
+    ///// <param name="BaseItemFromList">Item from the list used as base.</param>
+    ///// <param name="ItemToCompare">Item from the list used to compare the base to.</param>
+    ///// <returns></returns>
+    //public static bool CheckForDuplicates<T>(List<T> ListToCheck, string BaseItemFromList, string ItemToCompare)
+    //{
+    //    bool duplicate = false;
+
+    //    foreach (T item in ListToCheck)
+    //    {
+    //        duplicate = string.Equals(ItemToCompare, BaseItemFromList, StringComparison.OrdinalIgnoreCase);
+    //        if (duplicate)
+    //        {
+    //            break;
+    //        }
+    //    }
+    //    return duplicate;
+    //}
 }
