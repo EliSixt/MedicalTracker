@@ -8,6 +8,7 @@ namespace MedicalTracker
 {
     public class GeneralInfo
     {
+        public Name Name { get; set; } = new();
         public DateTime DateOfBirth { get; set; }
         public double Age { get; set; } /*Already have birthday...*/
         public int Weight { get; set; }

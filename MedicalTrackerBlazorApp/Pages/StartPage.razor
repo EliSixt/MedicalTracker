@@ -1,8 +1,32 @@
 ﻿@page "/"
-@page "/StartPage"
+@inject Data.DataService Data
+
 <h4>This is the startup page.</h4>
 <br />
+<p>
+    Hello, welcome to the Medical Tracker.
+    Helps you and your loved ones keep up with medicines, appointments, allegies, etc...
+</p>
 
+@if (Data.Patients.Count > 0)
+{
+    <p>Here is a list of all accessible patients.</p>
+    @foreach (Patient patient in Data.Patients)
+    {
+        <li>
+            Name: @patient.GeneralInfo.Name, DOB: @patient.GeneralInfo.DateOfBirth
+        </li>
+    }
+}
+@*<button @onclick="NewPatient" >Add New Patient</button>*@
 @code {
+    //[Parameter]
+    //public Patient Patient { get; set; } = new();
+    //[Parameter]
+    //public EventCallback<Patient> PatientChanged { get; set; }
 
+    //public Patient NewPatient()
+    //{
+        
+    //}
 }
