@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace MedicalTracker
 {
     public class GeneralInfo
@@ -19,6 +14,10 @@ namespace MedicalTracker
         public string Gender { get; set; }
         public string SexAtBirth { get; set; }
 
+        /// <summary>
+        /// Overrides string for GeneralInfo.
+        /// </summary>
+        /// <returns>Displays all the variables of GeneralInfo and their values.</returns>
         public override string ToString()
         {
             return $"DateOfBirth:{DateOfBirth}, Age:{Age}, Weight:{Weight}, Height:{Height}, Languages:{Languages}" +

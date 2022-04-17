@@ -12,9 +12,25 @@ namespace MedicalTracker
         //public TimeSpan Time { get; set; }
 
 
+        /// <summary>
+        /// Overrides string for DailyMedicine.
+        /// </summary>
+        /// <returns>Displays all the variables of DailyMedicine and their values.</returns>
         public override string ToString()
         {
             return $"Medicine: {Medicine}, DoseMg: {DoseMg}, Frequency of Dose: {FrequencyOfDose}, Time between dose: {TimeSpanOfDose}";
+        }
+
+        public DailyMedicine(DailyMedicine OrginalDailyMedicine)
+        {
+            Medicine = OrginalDailyMedicine.Medicine;
+            DoseMg = OrginalDailyMedicine.DoseMg;
+            FrequencyOfDose = OrginalDailyMedicine.FrequencyOfDose;
+            TimeSpanOfDose = OrginalDailyMedicine.TimeSpanOfDose;
+        }
+
+        public DailyMedicine()
+        {
         }
     }
 }

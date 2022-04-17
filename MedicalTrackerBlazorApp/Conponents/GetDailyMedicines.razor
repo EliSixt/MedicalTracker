@@ -2,8 +2,6 @@
 
 <GetMedicine @bind-Medicine="DailyDrug.Medicine" />
 <br />
-<br />
-<br />
 
 <div style="margin: 5px">
     <input type="text" @bind="DailyDrug.DoseMg" placeholder="Dose Amount" /> @*Change dose amount*@
@@ -17,9 +15,13 @@
 <div style="margin: 5px">
     <button @onclick="ConfirmTimeSpan">Bind TimeSpan</button>
 </div>
+<button @onclick="AddMedication">Add Medication</button>
+<br />
 
-The Daily Medicine: @DailyDrug
-
+@foreach (DailyMedicine item in Data.CurrentPatient.DailyMedication)
+{
+    <li>@item</li>
+}
 @code {
     [Parameter]
     public DailyMedicine DailyDrug { get; set; } = new();
@@ -42,12 +44,26 @@ The Daily Medicine: @DailyDrug
 
         //}
     }
-
-    private void ConfirmTimeSpan ()
+    /// <summary>
+    /// Confirms and adds the input time onto the current DailyMedicine variable.
+    /// </summary>
+    private void ConfirmTimeSpan()
     {
         //DayToDayMedicine.TimeSpanOfDose = LocalTime;
         DailyDrug.TimeSpanOfDose = LocalTime;
         DailyDrugChanged.InvokeAsync(DailyDrug);
 
+    }
+
+    /// <summary>
+    /// Adds all the inputs of the DailyMedicine Variable into the list CurrentPatient.DailyMedication 
+    /// from the DataService. Earses DailyMedicine variable to start over. 
+    /// </summary>
+    public void AddMedication()
+    {
+        DailyMedicine CopyDailyDrug = new(DailyDrug);
+
+        Data.CurrentPatient.DailyMedication.Add(CopyDailyDrug);
+        DailyDrug = new();
     }
 }

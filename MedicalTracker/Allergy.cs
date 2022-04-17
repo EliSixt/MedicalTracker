@@ -21,6 +21,10 @@ namespace MedicalTracker
         public bool TreatmentRequired { get; set; }
         public List<Medicine> AlgyTreatmentMedication { get; set; } = new();
 
+        /// <summary>
+        /// Overrides string for Allergy
+        /// </summary>
+        /// <returns>Displays all the variables of Allergy and their values.</returns>
         public override string ToString()
         {
             return $"Allergy: {AlgyName}, IngestionOnly: ${IngestionOnly}," +
@@ -35,12 +39,14 @@ namespace MedicalTracker
             ConfirmedTestedAlgyType = OriginalAllergy.ConfirmedTestedAlgyType;
             CommonReactions = OriginalAllergy.CommonReactions;
             IslifeThreatening = OriginalAllergy.IslifeThreatening;
-            SymptomsLeadingToLifeThreatening = new List<Symptom>(SymptomsLeadingToLifeThreatening);
+            //SymptomsLeadingToLifeThreatening = new List<Symptom>(SymptomsLeadingToLifeThreatening);
+            SymptomsLeadingToLifeThreatening = OriginalAllergy.SymptomsLeadingToLifeThreatening;
             EpiPenRequired = OriginalAllergy.EpiPenRequired;
             CPRRequired = OriginalAllergy.CPRRequired;
             Call911 = OriginalAllergy.Call911;
             TreatmentRequired = OriginalAllergy.TreatmentRequired;
-            AlgyTreatmentMedication = new List<Medicine>(AlgyTreatmentMedication);
+            //AlgyTreatmentMedication = new List<Medicine>(AlgyTreatmentMedication);
+            AlgyTreatmentMedication = OriginalAllergy.AlgyTreatmentMedication;
         }
 
         public Allergy()

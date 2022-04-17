@@ -1,6 +1,4 @@
 ﻿@page "/"
-@inject Data.DataService Data
-
 <h4>This is the startup page.</h4>
 <br />
 <p>
@@ -14,7 +12,7 @@
     @foreach (Patient patient in Data.Patients)
     {
         <li>
-            Name: @patient.GeneralInfo.Name, DOB: @patient.GeneralInfo.DateOfBirth
+            @patient.GeneralInfo.Name, DOB: @patient.GeneralInfo.DateOfBirth
         </li>
     }
 }
@@ -23,8 +21,8 @@
 {
     <GetContactInfo @bind-Contact="Data.CurrentPatient.PatientInfo"></GetContactInfo>
     <GetGeneralInfo @bind-GeneralInfo="Data.CurrentPatient.GeneralInfo"></GetGeneralInfo>
-    <GetDailyMedicines></GetDailyMedicines>//bind this to Data.CurrentPatient
-    <GetAllergy></GetAllergy>//bind this to Data.CurrentPatient
+    <GetDailyMedicines></GetDailyMedicines>
+    <GetAllergy></GetAllergy>
     //future components
     <br />
     <br />
@@ -33,12 +31,11 @@
 }
 @*make it to where the user can erase and edit Patients in the list. Add dates when the patients were added?*@
 @code {
-    //[Parameter]
-    //public Patient Patient { get; set; } = new();
-    //[Parameter]
-    //public EventCallback<Patient> PatientChanged { get; set; }
-
     public bool CreatingANewPatient = false;
+
+    /// <summary>
+    /// When it gets called, it changes CreatingANewPatient to true.
+    /// </summary>
     public void CreatePatient()
     {
         CreatingANewPatient = true;

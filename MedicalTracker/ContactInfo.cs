@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MedicalTracker
+﻿namespace MedicalTracker
 {
     public class ContactInfo
     {
@@ -16,6 +10,11 @@ namespace MedicalTracker
         public string Email { get; set; }
         public Address Address { get; set; } = new();
 
+
+        /// <summary>
+        /// Overrides string for ContactInfo
+        /// </summary>
+        /// <returns>Displays all the variables of ContactInfo and their values.</returns>
         public override string ToString()
         {
             return $"Name: {Name.FirstName} {Name.LastName}, Title/Relation: {TitleOrRelationship}";
