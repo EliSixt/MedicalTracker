@@ -18,15 +18,29 @@
         </li>
     }
 }
-@*<button @onclick="NewPatient" >Add New Patient</button>*@
+<button @onclick="CreatePatient">Create Patient</button>
+@if (CreatingANewPatient)
+{
+    <GetContactInfo @bind-Contact="Data.CurrentPatient.PatientInfo"></GetContactInfo>
+    <GetGeneralInfo @bind-GeneralInfo="Data.CurrentPatient.GeneralInfo"></GetGeneralInfo>
+    <GetDailyMedicines></GetDailyMedicines>//bind this to Data.CurrentPatient
+    <GetAllergy></GetAllergy>//bind this to Data.CurrentPatient
+    //future components
+    <br />
+    <br />
+    <button @onclick="Data.AtEndSubmitAndAddPatient"> Save Patient</button>
+    CreatingANewPatient = false;
+}
+@*make it to where the user can erase and edit Patients in the list. Add dates when the patients were added?*@
 @code {
     //[Parameter]
     //public Patient Patient { get; set; } = new();
     //[Parameter]
     //public EventCallback<Patient> PatientChanged { get; set; }
 
-    //public Patient NewPatient()
-    //{
-        
-    //}
+    public bool CreatingANewPatient = false;
+    public void CreatePatient()
+    {
+        CreatingANewPatient = true;
+    }
 }

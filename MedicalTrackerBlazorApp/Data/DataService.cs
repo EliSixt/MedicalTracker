@@ -2,7 +2,6 @@
 
 namespace MedicalTrackerBlazorApp.Data
 {
-
     public class DataService
     {
 
@@ -11,11 +10,13 @@ namespace MedicalTrackerBlazorApp.Data
         public Patient CurrentPatient { get; set; } = new();
 
         private List<Patient> _patients = new();
+
         public List<Patient> Patients
         {
             get => _patients;
             set => _patients = value;
         }
+
 
         /// <summary>
         /// Intended to use at the end, when all of the patient info has been filled out and ready to submit.
@@ -31,8 +32,11 @@ namespace MedicalTrackerBlazorApp.Data
             CurrentPatient = new();
 
             MedicalTracker.Program.XmlWriter(Patients, filePathPatientsList);
+
+
         }
-        
+
+
     }
 }
 
