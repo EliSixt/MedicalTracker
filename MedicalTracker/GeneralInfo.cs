@@ -1,9 +1,13 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace MedicalTracker
 {
     public class GeneralInfo
     {
+        [Required]
         public Name Name { get; set; } = new();
+        [Required]
         public DateTime DateOfBirth { get; set; }
         public double Age { get; set; } /*Already have birthday...*/
         public int Weight { get; set; }
@@ -12,6 +16,7 @@ namespace MedicalTracker
         public string Ethnicity { get; set; }
         public string Race { get; set; }
         public string Gender { get; set; }
+        [Required]
         public string SexAtBirth { get; set; }
 
         /// <summary>

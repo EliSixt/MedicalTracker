@@ -6,6 +6,8 @@
     Helps you and your loved ones keep up with medicines, appointments, allegies, etc...
 </p>
 
+@*<EditForm Model="Data.CurrentPatient.GeneralInfo">*@
+@*<DataAnnotationsValidator></DataAnnotationsValidator>*@
 @if (Data.Patients.Count > 0)
 {
     <p>Here is a list of all accessible patients.</p>
@@ -19,17 +21,18 @@
 <button @onclick="CreatePatient">Create Patient</button>
 @if (CreatingANewPatient)
 {
-    <GetContactInfo @bind-Contact="Data.CurrentPatient.PatientInfo"></GetContactInfo>
     <GetGeneralInfo @bind-GeneralInfo="Data.CurrentPatient.GeneralInfo"></GetGeneralInfo>
+    <GetContactInfo @bind-Contact="Data.CurrentPatient.PatientInfo"></GetContactInfo>
     <GetDailyMedicines></GetDailyMedicines>
     <GetAllergy></GetAllergy>
-    //future components
+                //future components
     <br />
     <br />
-    <button @onclick="Data.AtEndSubmitAndAddPatient"> Save Patient</button>
+    <button @onclick="Data.AtEndSubmitAndAddPatient" type="submit"> Save Patient</button>
     CreatingANewPatient = false;
 }
 @*make it to where the user can erase and edit Patients in the list. Add dates when the patients were added?*@
+@*</EditForm>*@
 @code {
     public bool CreatingANewPatient = false;
 

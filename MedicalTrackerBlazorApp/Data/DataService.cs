@@ -26,17 +26,33 @@ namespace MedicalTrackerBlazorApp.Data
         public void AtEndSubmitAndAddPatient()
         {
             Patient copyPatient = new(CurrentPatient);
+            bool duplicate = false;
 
+            foreach (Patient P in Patients)
+            {
+                duplicate = string.Equals(copyPatient.GeneralInfo.Name.FirstName, P.GeneralInfo.Name.FirstName, StringComparison.CurrentCultureIgnoreCase);
+                if (duplicate)
+                {
+                    break;
+                }
+                duplicate = string.Equals(copyPatient.GeneralInfo.Name.LastName, P.GeneralInfo.Name.LastName, StringComparison.CurrentCultureIgnoreCase);
+                if (duplicate)
+                {
+                    break;
+                }
+                if (copyPatient.GeneralInfo.DateOfBirth == P.GeneralInfo.DateOfBirth)
+                {
+                    duplicate = true;
+                    break;
+                }
+            }
+            if (!duplicate && !string.IsNullOrEmpty(copyPatient.GeneralInfo.Name.FirstName))
+            {
             Patients.Add(copyPatient);
-
             CurrentPatient = new();
-
             MedicalTracker.Program.XmlWriter(Patients, filePathPatientsList);
-
-
+            }
         }
-
-
     }
 }
 
