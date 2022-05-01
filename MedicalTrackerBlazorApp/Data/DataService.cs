@@ -5,8 +5,7 @@ namespace MedicalTrackerBlazorApp.Data
     public class DataService
     {
 
-        private readonly string filePathPatientsList = @"C:\Users\Elias\OneDrive\TMP\patientsList.xml";
-
+        public readonly string filePathPatientsList = @"C:\Users\Elias\OneDrive\TMP\patientsList.xml";
         public Patient CurrentPatient { get; set; } = new();
 
         private List<Patient> _patients = new();
@@ -19,18 +18,23 @@ namespace MedicalTrackerBlazorApp.Data
 
 
         /// <summary>
+        /// Checks whether a directory exists, else it creates one.
         /// Intended to use at the end, when all of the patient info has been filled out and ready to submit.
         /// Will add CurrentPatient into a Patients List, erase value in CurrentPatient variable, and
         /// update/override the local xml file.
         /// </summary>
         public void AtEndSubmitAndAddPatient()
         {
+            if (!Directory.Exists(@"C:\TMP"))
+            {
+                _ = Directory.CreateDirectory(@"C:\TMP");
+            }
             Patient copyPatient = new(CurrentPatient);
             bool duplicate = false;
 
             foreach (Patient P in Patients)
             {
-                duplicate = string.Equals(copyPatient.GeneralInfo.Name.FirstName, P.GeneralInfo.Name.FirstName, StringComparison.CurrentCultureIgnoreCase);
+                duplicate = string.Equals(copyPatient.GeneralInfo.Name.FirstName, P.GeneralInfo.Name.FirstName, StringComparison.OrdinalIgnoreCase);
                 if (duplicate)
                 {
                     break;
@@ -48,9 +52,20 @@ namespace MedicalTrackerBlazorApp.Data
             }
             if (!duplicate && !string.IsNullOrEmpty(copyPatient.GeneralInfo.Name.FirstName))
             {
-            Patients.Add(copyPatient);
-            CurrentPatient = new();
-            MedicalTracker.Program.XmlWriter(Patients, filePathPatientsList);
+                Patients.Add(copyPatient);
+                CurrentPatient = new();
+                MedicalTracker.Program.XmlWriter(Patients, filePathPatientsList);
+            }
+        }
+        /// <summary>
+        /// Checks to see if the patient list file exists locally. 
+        /// If true, it'll assign the stored values into a Patient list variable.
+        /// </summary>
+        public void LoadExistingPatients()
+        {
+            if (File.Exists(filePathPatientsList))
+            {
+                Patients = MedicalTracker.Program.XmlReader<List<Patient>>(filePathPatientsList);
             }
         }
     }

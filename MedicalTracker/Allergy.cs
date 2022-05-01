@@ -32,6 +32,10 @@ namespace MedicalTracker
                 $"EpiPenRequired: ${EpiPenRequired}, CPRRequired: ${CPRRequired}, Call911: ${Call911}, TreatmentRequired: ${TreatmentRequired}, AlgyTreatmentMedication: ${AlgyTreatmentMedication} ";
         }
 
+        /// <summary>
+        /// Copy constructor
+        /// </summary>
+        /// <param name="OriginalAllergy"></param>
         public Allergy(Allergy OriginalAllergy)
         {
             IngestionOnly = OriginalAllergy.IngestionOnly;

@@ -2,29 +2,37 @@
 <h3>GetGeneralInfo</h3>
 
 <div style="margin: 5px">
+    <GetName @bind-NamesValue="GeneralInfo.Name" />
+</div>
+<div style="margin: 5px">
+    Date of Birth:
     <input type="date" @bind="GeneralInfo.DateOfBirth" /> @*Birthday*@
 </div>
 <div style="margin: 5px">
-    <input type="number" @bind="GeneralInfo.Weight" /> @*Weight*@
+    Weight:
+    <input type="number" @bind="GeneralInfo.Weight" placeholder="Weight" /> @*Weight*@
 </div>
 <div style="margin: 5px">
-    <input type="number" @bind="GeneralInfo.Height" /> @*Height*@
+    Height:
+    <input type="number" @bind="GeneralInfo.Height" placeholder="Height" /> @*Height*@
 </div>
 <div style="margin: 5px">
-    <input type="text" @bind="GeneralInfo.Languages" />@*languages*@
+    <input type="text" @bind="GeneralInfo.Languages" placeholder="Languages" />@*languages*@
 </div>
 <div style="margin: 5px">
-    <input type="text" @bind="GeneralInfo.Ethnicity" />@*Ethnicity*@
+    <input type="text" @bind="GeneralInfo.Ethnicity" placeholder="Ethnicity" />@*Ethnicity*@
 </div>
 <div style="margin: 5px">
-    <input type="text" @bind="GeneralInfo.Race" />@*race*@
+    <input type="text" @bind="GeneralInfo.Race" placeholder="Race" />@*race*@
 </div>
 <div style="margin: 5px">
-    <input type="text" @bind="GeneralInfo.Gender" />@*gender*@
+    <input type="text" @bind="GeneralInfo.Gender" placeholder="Gender" />@*gender*@
 </div>
 <div style="margin: 5px">
-    <input type="text" @bind="GeneralInfo.SexAtBirth" />@*SexAtBirth*@
+    <input type="text" @bind="GeneralInfo.SexAtBirth" placeholder="Sex at Birth" />@*SexAtBirth*@
 </div>
+
+<button @onclick="SaveGeneralInfo">Submit General Info</button>
 
 
     General Info: @GeneralInfo.
@@ -38,4 +46,38 @@
     public EventCallback<GeneralInfo> GeneralInfoChanged { get; set; }
 
 
+    /// <summary>
+    /// Prevents duplicate patients from being added into the Patients list
+    /// by comparing, GeneralInfo.Name.FirstName and GeneralInfo.Name.LastName, to the existing patients (ignoring the case).
+    /// If it passes it gets allowed to be saved.
+    /// </summary>
+    public void SaveGeneralInfo()
+    {
+        GeneralInfo copyGeneralInfo = new(GeneralInfo);
+
+        bool duplicate = false;
+
+        foreach (Patient item in Data.Patients)
+        {
+            duplicate = string.Equals(GeneralInfo.Name.FirstName, item.GeneralInfo.Name.FirstName, StringComparison.OrdinalIgnoreCase);
+            if (duplicate)
+            {
+                //pop up a message telling the user that theres already the same value saved
+                break;
+            }
+            duplicate = string.Equals(GeneralInfo.Name.LastName, item.GeneralInfo.Name.LastName, StringComparison.OrdinalIgnoreCase);
+            if (duplicate)
+            {
+                //pop up a message telling the user that theres already the same value saved
+                break;
+            }
+        }
+
+        if (!duplicate && !string.IsNullOrEmpty(GeneralInfo.Name.FirstName))
+        {
+
+            Data.CurrentPatient.GeneralInfo = copyGeneralInfo;
+            GeneralInfo = new();
+        }
+    }
 }

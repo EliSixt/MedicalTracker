@@ -28,5 +28,28 @@ namespace MedicalTracker
             return $"DateOfBirth:{DateOfBirth}, Age:{Age}, Weight:{Weight}, Height:{Height}, Languages:{Languages}" +
                 $"Ethnicity:{Ethnicity}, Race:{Race}, Gender:{Gender}, SexAtBirth:{SexAtBirth}.";
         }
+
+        /// <summary>
+        /// Copy Constructor.
+        /// </summary>
+        /// <param name="originalGeneralInfo"></param>
+        public GeneralInfo(GeneralInfo originalGeneralInfo)
+        {
+            Name = originalGeneralInfo.Name;
+            DateOfBirth = originalGeneralInfo.DateOfBirth;
+            Age = originalGeneralInfo.Age;
+            Weight = originalGeneralInfo.Weight;
+            Height = originalGeneralInfo.Height;
+            Languages = originalGeneralInfo.Languages;
+            Ethnicity = originalGeneralInfo.Ethnicity;
+            Gender = originalGeneralInfo.Gender;
+            Race = originalGeneralInfo.Race;
+            Gender = originalGeneralInfo.Gender;
+            SexAtBirth = originalGeneralInfo.SexAtBirth;
+        }
+
+        public GeneralInfo()
+        {
+        }
     }
 }
