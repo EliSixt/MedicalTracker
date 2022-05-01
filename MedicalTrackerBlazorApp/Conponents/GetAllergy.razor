@@ -111,7 +111,6 @@
     // then bind it to Allergy.SymptomsLeadingToLifeThreatening and service here
     //add an editForm with a submit button and validation error messages in the class' properties
 
-
     /// <summary>
     /// Prevents duplicate answers from being added onto a Symptoms list
     /// by comparing SymptomName and SymptomDescription from two objects (ignoring the case).
@@ -125,6 +124,7 @@
 
         foreach (Symptom item in Symptoms)
         {
+
             duplicate = string.Equals(copySymptom.SymptomName, item.SymptomName, StringComparison.OrdinalIgnoreCase);
             if (duplicate)
             {
