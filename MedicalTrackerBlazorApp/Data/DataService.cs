@@ -4,6 +4,17 @@ namespace MedicalTrackerBlazorApp.Data
 {
     public class DataService
     {
+        public DataService()
+        {
+            LoadExistingPatients();
+        }
+        public bool PatientsLoaded
+        {
+            get
+            {
+                return _patients.Count > 0;
+            }
+        }
 
         public readonly string filePathPatientsList = @"C:\Users\Elias\OneDrive\TMP\patientsList.xml";
         public Patient CurrentPatient { get; set; } = new();
