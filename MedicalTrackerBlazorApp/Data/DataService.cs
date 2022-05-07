@@ -68,6 +68,21 @@ namespace MedicalTrackerBlazorApp.Data
                 Patients = MedicalTracker.Program.XmlReader<List<Patient>>(filePathPatientsList);
             }
         }
+        /// <summary>
+        /// Produces a unique hashcode from a string.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns>hashcode string</returns>
+        public int HashingString(string s)
+        {
+            int hash = 0;
+            foreach (char c in s)
+            {
+                hash = (hash * 31) + c.GetHashCode();
+            }
+
+            return hash;
+        }
     }
 }
 
