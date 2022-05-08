@@ -56,6 +56,7 @@ namespace MedicalTrackerBlazorApp.Data
                 CurrentPatient = new();
                 MedicalTracker.Program.XmlWriter(Patients, filePathPatientsList);
             }
+
         }
         /// <summary>
         /// Checks to see if the patient list file exists locally. 
@@ -73,7 +74,7 @@ namespace MedicalTrackerBlazorApp.Data
         /// </summary>
         /// <param name="s"></param>
         /// <returns>hashcode string</returns>
-        public int HashingString(string s)
+        public int HashingString(string s, DateTime birthday, string s2)
         {
             int hash = 0;
             foreach (char c in s)
@@ -82,6 +83,15 @@ namespace MedicalTrackerBlazorApp.Data
             }
 
             return hash;
+        }
+        public Dictionary<int, Patient> HashPatients()
+        {
+            Dictionary<int, Patient> result = new Dictionary<int, Patient>();
+            foreach (Patient patient in Patients)
+            {
+               // result.Add(HashingString(patient.GeneralInfo.Name.FirstName), patient);
+            }
+            return result;
         }
     }
 }
