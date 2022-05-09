@@ -1,5 +1,4 @@
 ﻿using MedicalTracker;
-
 namespace MedicalTrackerBlazorApp.Data
 {
     public class DataService
@@ -29,6 +28,7 @@ namespace MedicalTrackerBlazorApp.Data
             {
                 _ = Directory.CreateDirectory(@"C:\TMP");
             }
+            CurrentPatient.PatientID = CreatePatientID();
             Patient copyPatient = new(CurrentPatient);
             bool duplicate = false;
 
@@ -56,7 +56,6 @@ namespace MedicalTrackerBlazorApp.Data
                 CurrentPatient = new();
                 MedicalTracker.Program.XmlWriter(Patients, filePathPatientsList);
             }
-
         }
         /// <summary>
         /// Checks to see if the patient list file exists locally. 
@@ -89,10 +88,20 @@ namespace MedicalTrackerBlazorApp.Data
             Dictionary<int, Patient> result = new Dictionary<int, Patient>();
             foreach (Patient patient in Patients)
             {
-               // result.Add(HashingString(patient.GeneralInfo.Name.FirstName), patient);
+                // result.Add(HashingString(patient.GeneralInfo.Name.FirstName), patient);
             }
             return result;
         }
+        /// <summary>
+        /// Creates a string ID.
+        /// Concatenates the first two letters of the first name and last name (lowercase) and adds birth date to the end of the string.
+        /// </summary>
+        /// <returns>ID String</returns>
+        public string CreatePatientID()
+        {
+            return string.Concat(CurrentPatient.GeneralInfo.Name.FirstName.AsSpan(0, 2), CurrentPatient.GeneralInfo.Name.LastName.AsSpan(0, 2)).ToLower() + CurrentPatient.GeneralInfo.DateOfBirth;
+        }
+
     }
 }
 

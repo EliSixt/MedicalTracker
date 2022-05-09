@@ -23,18 +23,18 @@
         int indicator = i;
         @*Patient indicatorPerson = @Data.Patients[i];*@
         <div>
-            <div> @Data.Patients[i].GeneralInfo.Name, DOB: @Data.Patients[i].GeneralInfo.DateOfBirth</div>
+            <div> @Data.Patients[i].GeneralInfo.Name, DOB: @Data.Patients[i].GeneralInfo.DateOfBirth, @Data.Patients[i].PatientID </div>
             <div @onclick="(() => Delete(indicator))">&times;</div>
         </div>
     }
     @*@foreach (Patient patient in Data.Patients)
-    {
+        {
 
         <div>
-            <div> @patient.GeneralInfo.Name, DOB: @patient.GeneralInfo.DateOfBirth</div>
-            <div @onclick="Delete">&times;</div>
+        <div> @patient.GeneralInfo.Name, DOB: @patient.GeneralInfo.DateOfBirth</div>
+        <div @onclick="Delete">&times;</div>
         </div>
-    }*@
+        }*@
 }
 <button @onclick="CreatePatient">Create Patient</button>
 @if (CreatingANewPatient)

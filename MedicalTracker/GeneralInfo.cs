@@ -8,7 +8,7 @@ namespace MedicalTracker
         [Required]
         public Name Name { get; set; } = new();
         [Required]
-        public DateTime DateOfBirth { get; set; }
+        public DateOnly DateOfBirth { get; set; }
         public double Age { get; set; } /*Already have birthday...*/
         public int Weight { get; set; }
         public int Height { get; set; }

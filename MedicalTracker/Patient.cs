@@ -9,7 +9,7 @@ namespace MedicalTracker
         //Todo: realtime medicine recall tracking? 
         // history of past medicine?
         //Appointment Alerts?
-        public int ID { get; set; }
+        public string PatientID { get; set; }
         public ContactInfo PatientInfo { get; set; } = new(); //component made
         public GeneralInfo GeneralInfo { get; set; } = new(); // I could make a small BMI calculator? Component Made
         public List<ContactInfo> EmergencyContacts { get; set; } = new();//list of contact Info? Do I make a component or do i just leave it into a page orrrr??
@@ -39,6 +39,7 @@ namespace MedicalTracker
         /// <param name="originalPatient">Patient to duplicate from.</param>
         public Patient(Patient originalPatient)
         {
+            PatientID = originalPatient.PatientID;
             PatientInfo = originalPatient.PatientInfo;
             GeneralInfo = originalPatient.GeneralInfo;
             EmergencyContacts = originalPatient.EmergencyContacts;
