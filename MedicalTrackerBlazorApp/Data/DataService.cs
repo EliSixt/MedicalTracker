@@ -71,17 +71,23 @@ namespace MedicalTrackerBlazorApp.Data
         /// <summary>
         /// Produces a unique hashcode from a string.
         /// </summary>
-        /// <param name="s"></param>
-        /// <returns>hashcode string</returns>
-        public int HashingString(string s, DateTime birthday, string s2)
+        /// <param name="s">string</param>
+        /// <param name="s2">string</param>
+        /// <param name="DOB">DateOfBirth</param>
+        /// <returns>Hashcode String</returns>
+        public int GetHashString(string s, string s2, DateOnly? DOB)
         {
             int hash = 0;
-            foreach (char c in s)
+            if (DOB.HasValue)
             {
-                hash = (hash * 31) + c.GetHashCode();
+                hash = (s.ToLower() + s2.ToLower() + DOB).GetHashCode();
             }
-
+            else
+            {
+                hash = (s.ToLower() + s2.ToLower()).GetHashCode();
+            }
             return hash;
+
         }
         public Dictionary<int, Patient> HashPatients()
         {
