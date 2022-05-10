@@ -107,7 +107,26 @@ namespace MedicalTrackerBlazorApp.Data
         {
             return string.Concat(CurrentPatient.GeneralInfo.Name.FirstName.AsSpan(0, 2), CurrentPatient.GeneralInfo.Name.LastName.AsSpan(0, 2)).ToLower() + CurrentPatient.GeneralInfo.DateOfBirth;
         }
-
+        //public static bool operator == (Patient obj1, Patient obj2)
+        //{
+        //    if (ReferenceEquals(obj1, obj2))
+        //        return true;
+        //    if (ReferenceEquals(obj1, null))
+        //        return false;
+        //    if (ReferenceEquals(obj2, null))
+        //        return false;
+        //    return obj1.Equals(obj2);
+        //}
+        //public static bool operator != (Patient person, Patient person2)
+        //{
+        //    if (ReferenceEquals(person, person2))
+        //        return false;
+        //    if (ReferenceEquals(person, null))
+        //        return true;
+        //    if (ReferenceEquals(person2, null))
+        //        return true;
+        //    return person.Equals(person2);
+        //}
     }
 }
 
