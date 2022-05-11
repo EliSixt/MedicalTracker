@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-
 namespace MedicalTracker
 {
     public class GeneralInfo
@@ -27,6 +26,39 @@ namespace MedicalTracker
         {
             return $"DateOfBirth:{DateOfBirth}, Age:{Age}, Weight:{Weight}, Height:{Height}, Languages:{Languages}" +
                 $"Ethnicity:{Ethnicity}, Race:{Race}, Gender:{Gender}, SexAtBirth:{SexAtBirth}.";
+        }
+
+        /// <summary>
+        /// Produces a unique int hashcode from a string.
+        /// </summary>
+        /// <param name="s">string</param>
+        /// <param name="s2">string</param>
+        /// <returns>Hashcode</returns>
+        public static int GetHashString(string s, string s2)
+        {
+            int hash = 0;
+            hash = (s.ToLower() + s2.ToLower()).GetHashCode();
+            return hash;
+
+        }
+        public static bool operator ==(GeneralInfo person1, GeneralInfo person2)
+        {
+            bool v = false;
+            if (GetHashString(person1.Name.FirstName, person1.Name.LastName).Equals(GetHashString(person2.Name.FirstName, person2.Name.LastName)))
+            {
+                v = true;
+            }
+            return v;
+        }
+
+        public static bool operator !=(GeneralInfo person1, GeneralInfo person2)
+        {
+            bool v = true;
+            if (GetHashString(person1.Name.FirstName, person1.Name.LastName).Equals(GetHashString(person2.Name.FirstName, person2.Name.LastName)))
+            {
+                v = false;
+            }
+            return v;
         }
 
         /// <summary>
