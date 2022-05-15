@@ -77,21 +77,13 @@ namespace MedicalTrackerBlazorApp.Data
         /// <returns>Hashcode String</returns>
         public int GetHashString(string s, string s2, DateOnly? DOB)
         {
-            int hash = 0;
-            if (DOB.HasValue)
-            {
-                hash = (s.ToLower() + s2.ToLower() + DOB).GetHashCode();
-            }
-            else
-            {
-                hash = (s.ToLower() + s2.ToLower()).GetHashCode();
-            }
+            int hash = DOB.HasValue ? (s.ToLower() + s2.ToLower() + DOB).GetHashCode() : (s.ToLower() + s2.ToLower()).GetHashCode();
             return hash;
 
         }
         public Dictionary<int, Patient> HashPatients()
         {
-            Dictionary<int, Patient> result = new Dictionary<int, Patient>();
+            Dictionary<int, Patient> result = new();
             foreach (Patient patient in Patients)
             {
                 // result.Add(HashingString(patient.GeneralInfo.Name.FirstName), patient);

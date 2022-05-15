@@ -43,22 +43,12 @@ namespace MedicalTracker
         }
         public static bool operator ==(GeneralInfo person1, GeneralInfo person2)
         {
-            bool v = false;
-            if (GetHashString(person1.Name.FirstName, person1.Name.LastName).Equals(GetHashString(person2.Name.FirstName, person2.Name.LastName)))
-            {
-                v = true;
-            }
-            return v;
+            return GetHashString(person1.Name.FirstName, person1.Name.LastName).Equals(GetHashString(person2.Name.FirstName, person2.Name.LastName));
         }
 
         public static bool operator !=(GeneralInfo person1, GeneralInfo person2)
         {
-            bool v = true;
-            if (GetHashString(person1.Name.FirstName, person1.Name.LastName).Equals(GetHashString(person2.Name.FirstName, person2.Name.LastName)))
-            {
-                v = false;
-            }
-            return v;
+            return !GetHashString(person1.Name.FirstName, person1.Name.LastName).Equals(GetHashString(person2.Name.FirstName, person2.Name.LastName));
         }
 
         /// <summary>
@@ -76,7 +66,6 @@ namespace MedicalTracker
             Ethnicity = originalGeneralInfo.Ethnicity;
             Gender = originalGeneralInfo.Gender;
             Race = originalGeneralInfo.Race;
-            Gender = originalGeneralInfo.Gender;
             SexAtBirth = originalGeneralInfo.SexAtBirth;
         }
 
