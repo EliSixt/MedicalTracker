@@ -57,18 +57,11 @@
 
         bool duplicate = false;
 
-        foreach (Patient item in Data.Patients)
+        foreach (Patient patient in Data.Patients)
         {
-            duplicate = string.Equals(GeneralInfo.Name.FirstName, item.GeneralInfo.Name.FirstName, StringComparison.OrdinalIgnoreCase);
-            if (duplicate)
+            if (patient.GeneralInfo == copyGeneralInfo)
             {
-                //pop up a message telling the user that theres already the same value saved
-                break;
-            }
-            duplicate = string.Equals(GeneralInfo.Name.LastName, item.GeneralInfo.Name.LastName, StringComparison.OrdinalIgnoreCase);
-            if (duplicate)
-            {
-                //pop up a message telling the user that theres already the same value saved
+                duplicate = true; //pop up a message telling the user that theres already the same value saved
                 break;
             }
         }
