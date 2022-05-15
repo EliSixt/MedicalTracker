@@ -29,7 +29,7 @@ namespace MedicalTracker
         }
 
         /// <summary>
-        /// Produces a unique int hashcode from a string.
+        /// Produces a unique int hashcode from two strings added together.
         /// </summary>
         /// <param name="s">string</param>
         /// <param name="s2">string</param>
@@ -41,11 +41,22 @@ namespace MedicalTracker
             return hash;
 
         }
+        /// <summary>
+        /// Compares the hashcodes of two persons (firstname + lastname) and determines if they're Equal.
+        /// </summary>
+        /// <param name="person1"></param>
+        /// <param name="person2"></param>
+        /// <returns>Bool</returns>
         public static bool operator ==(GeneralInfo person1, GeneralInfo person2)
         {
             return GetHashString(person1.Name.FirstName, person1.Name.LastName).Equals(GetHashString(person2.Name.FirstName, person2.Name.LastName));
         }
-
+        /// <summary>
+        /// Compares the hashcodes of two persons (firstname + lastname) and determines if they're NOT Equal.
+        /// </summary>
+        /// <param name="person1"></param>
+        /// <param name="person2"></param>
+        /// <returns>Bool</returns>
         public static bool operator !=(GeneralInfo person1, GeneralInfo person2)
         {
             return !GetHashString(person1.Name.FirstName, person1.Name.LastName).Equals(GetHashString(person2.Name.FirstName, person2.Name.LastName));
