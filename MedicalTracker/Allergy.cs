@@ -31,6 +31,26 @@ namespace MedicalTracker
                 $" ConfirmedTestedAlgy: ${ConfirmedTestedAlgyType}, CommonReactions: ${CommonReactions}, IslifeThreatening: ${IslifeThreatening}, " +
                 $"EpiPenRequired: ${EpiPenRequired}, CPRRequired: ${CPRRequired}, Call911: ${Call911}, TreatmentRequired: ${TreatmentRequired}, AlgyTreatmentMedication: ${AlgyTreatmentMedication} ";
         }
+        /// <summary>
+        /// Compares the hashcodes of two algyName and determines if they're equal.
+        /// </summary>
+        /// <param name="allergy1"></param>
+        /// <param name="allergy2"></param>
+        /// <returns>Bool</returns>
+        public static bool operator ==(Allergy allergy1, Allergy allergy2)
+        {
+            return allergy1.AlgyName.ToLower().GetHashCode().Equals(allergy2.AlgyName.ToLower().GetHashCode());
+        }
+        /// <summary>
+        /// Compares the hashcodes of two algyName and determines if they're NOT equal.
+        /// </summary>
+        /// <param name="allergy1"></param>
+        /// <param name="allergy2"></param>
+        /// <returns>bool</returns>
+        public static bool operator !=(Allergy allergy1, Allergy allergy2)
+        {
+            return !(allergy1.AlgyName.ToLower().GetHashCode().Equals(allergy2.AlgyName.ToLower().GetHashCode()));
+        }
 
         /// <summary>
         /// Copy constructor
