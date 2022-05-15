@@ -51,6 +51,14 @@ namespace MedicalTracker
         {
             return !(allergy1.AlgyName.ToLower().GetHashCode().Equals(allergy2.AlgyName.ToLower().GetHashCode()));
         }
+        public override bool Equals(object o)
+        {
+            return true;
+        }
+        public override int GetHashCode()
+        {
+            return 0;
+        }
 
         /// <summary>
         /// Copy constructor

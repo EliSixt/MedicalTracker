@@ -61,7 +61,14 @@ namespace MedicalTracker
         {
             return !GetHashString(person1.Name.FirstName, person1.Name.LastName).Equals(GetHashString(person2.Name.FirstName, person2.Name.LastName));
         }
-
+        //public override bool Equals(object o)
+        //{
+        //    return true;
+        //}
+        //public override int GetHashCode()
+        //{
+        //    return 0;
+        //}
         /// <summary>
         /// Copy Constructor.
         /// </summary>
