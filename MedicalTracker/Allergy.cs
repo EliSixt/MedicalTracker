@@ -39,7 +39,8 @@ namespace MedicalTracker
         /// <returns>Bool</returns>
         public static bool operator ==(Allergy allergy1, Allergy allergy2)
         {
-            return allergy1.AlgyName.ToLower().GetHashCode().Equals(allergy2.AlgyName.ToLower().GetHashCode());
+            return allergy1.Equals(allergy2);
+            //return allergy1.AlgyName.ToLower().GetHashCode().Equals(allergy2.AlgyName.ToLower().GetHashCode());
         }
         /// <summary>
         /// Compares the hashcodes of two algyName and determines if they're NOT equal.
@@ -49,15 +50,31 @@ namespace MedicalTracker
         /// <returns>bool</returns>
         public static bool operator !=(Allergy allergy1, Allergy allergy2)
         {
-            return !(allergy1.AlgyName.ToLower().GetHashCode().Equals(allergy2.AlgyName.ToLower().GetHashCode()));
+            return !allergy1.Equals(allergy2);
+            //return !(allergy1.AlgyName.ToLower().GetHashCode().Equals(allergy2.AlgyName.ToLower().GetHashCode()));
         }
-        public override bool Equals(object o)
+        /// <summary>
+        /// Compares two Allergy objects. 
+        /// Checks if the obj is Null and of the same type, it then checks if the two AlgyName of both Allergy objects are equal.
+        /// </summary>
+        /// <param name="obj">allergy object</param>
+        /// <returns>Bool</returns>
+        public override bool Equals(object obj)
         {
-            return true;
+            if ((obj == null) || this.GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
+
+            return AlgyName.ToLower() == ((Allergy)obj).AlgyName.ToLower();
         }
+        /// <summary>
+        /// Gets the hashcode of AlgyName lowercased.
+        /// </summary>
+        /// <returns>HashCode of AlgyName lowercase </returns>
         public override int GetHashCode()
         {
-            return 0;
+            return AlgyName.ToLower().GetHashCode();
         }
 
         /// <summary>
