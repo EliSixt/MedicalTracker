@@ -27,48 +27,39 @@ namespace MedicalTracker
             return $"DateOfBirth:{DateOfBirth}, Age:{Age}, Weight:{Weight}, Height:{Height}, Languages:{Languages}" +
                 $"Ethnicity:{Ethnicity}, Race:{Race}, Gender:{Gender}, SexAtBirth:{SexAtBirth}.";
         }
-
         /// <summary>
-        /// Produces a unique int hashcode from two strings added together.
+        /// Uses the firstname lastname and DateOfBirth from two GeneralInfo objects and returns if the two objects are the same or not.
         /// </summary>
-        /// <param name="s">string</param>
-        /// <param name="s2">string</param>
-        /// <returns>Hashcode</returns>
-        public static int GetHashString(string s, string s2)
+        /// <param name="obj">Other object being compared.</param>
+        /// <returns>bool</returns>
+        public override bool Equals(object obj)
         {
-            int hash = 0;
-            hash = (s.ToLower() + s2.ToLower()).GetHashCode();
-            return hash;
-
+            if ((obj == null) || this.GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
+            return (Name.FirstName + Name.LastName).ToLower() + DateOfBirth == (((GeneralInfo)obj).Name.FirstName + ((GeneralInfo)obj).Name.LastName).ToLower() + ((GeneralInfo)obj).DateOfBirth;
         }
         /// <summary>
-        /// Compares the hashcodes of two persons (firstname + lastname) and determines if they're Equal.
+        /// Uses the .Equals function to determine if two GeneralInfo objects are equal to one another.
         /// </summary>
         /// <param name="person1"></param>
         /// <param name="person2"></param>
         /// <returns>Bool</returns>
         public static bool operator ==(GeneralInfo person1, GeneralInfo person2)
         {
-            return GetHashString(person1.Name.FirstName, person1.Name.LastName).Equals(GetHashString(person2.Name.FirstName, person2.Name.LastName));
+            return person1.Equals(person2);
         }
         /// <summary>
-        /// Compares the hashcodes of two persons (firstname + lastname) and determines if they're NOT Equal.
+        ///  Uses the .Equals function to determine if two GeneralInfo objects are equal to one another.
         /// </summary>
         /// <param name="person1"></param>
         /// <param name="person2"></param>
         /// <returns>Bool</returns>
         public static bool operator !=(GeneralInfo person1, GeneralInfo person2)
         {
-            return !GetHashString(person1.Name.FirstName, person1.Name.LastName).Equals(GetHashString(person2.Name.FirstName, person2.Name.LastName));
+            return !person1.Equals(person2);
         }
-        //public override bool Equals(object o)
-        //{
-        //    return true;
-        //}
-        //public override int GetHashCode()
-        //{
-        //    return 0;
-        //}
         /// <summary>
         /// Copy Constructor.
         /// </summary>
