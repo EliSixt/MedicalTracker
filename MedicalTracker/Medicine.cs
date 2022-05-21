@@ -25,7 +25,7 @@
                 $"Warnings before use:{WarningsBeforeUse}, Don't mix with:{OtherDrugsThatMayCauseAReaction}";
         }
         /// <summary>
-        /// Uses the GeneralName from two Medicine objects and returns if the two objects are the same or not.
+        /// Uses the GeneralName and BrandName from two Medicine objects and returns if the two objects are the same or not.
         /// </summary>
         /// <param name="obj">Other object being compared.</param>
         /// <returns>Bool</returns>
