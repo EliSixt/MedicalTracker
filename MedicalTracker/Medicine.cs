@@ -25,6 +25,46 @@
                 $"Warnings before use:{WarningsBeforeUse}, Don't mix with:{OtherDrugsThatMayCauseAReaction}";
         }
         /// <summary>
+        /// Uses the GeneralName from two Medicine objects and returns if the two objects are the same or not.
+        /// </summary>
+        /// <param name="obj">Other object being compared.</param>
+        /// <returns>Bool</returns>
+        public override bool Equals(object obj)
+        {
+            if ((obj == null) || this.GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
+            if (GenericName.ToLower() == ((Medicine)obj).GenericName.ToLower() || BrandName.ToLower() == ((Medicine)obj).BrandName.ToLower())
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Uses the .Equals function to determine if two Medicine objects are equal to one another.
+        /// </summary>
+        /// <param name="obj1"></param>
+        /// <param name="obj2"></param>
+        /// <returns>Bool</returns>
+        public static bool operator ==(Medicine obj1, Medicine obj2)
+        {
+            return obj1.Equals(obj2);
+        }
+
+        /// <summary>
+        /// Uses the .Equals function to determine if two Medicine objects are equal to one another.
+        /// </summary>
+        /// <param name="obj1"></param>
+        /// <param name="obj2"></param>
+        /// <returns>Bool</returns>
+        public static bool operator !=(Medicine obj1, Medicine obj2)
+        {
+            return !obj1.Equals(obj2);
+        }
+
+        /// <summary>
         /// Copy Constructor
         /// </summary>
         /// <param name="originalMedicine">Medicine to duplicate from.</param>
