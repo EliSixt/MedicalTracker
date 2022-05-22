@@ -55,5 +55,13 @@ namespace MedicalTracker
         {
             return condition1.Equals(condition2);
         }
+        /// <summary>
+        /// Gets the hashcode of ConditionName lowercased.
+        /// </summary>
+        /// <returns>HashCode of ConditionName lowercase </returns>
+        public override int GetHashCode()
+        {
+            return ConditionName.ToLower().GetHashCode();
+        }
     }
 }
