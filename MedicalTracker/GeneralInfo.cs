@@ -61,6 +61,14 @@ namespace MedicalTracker
             return !person1.Equals(person2);
         }
         /// <summary>
+        /// Gets the hashcode of the firstName and lastName lowercased.
+        /// </summary>
+        /// <returns>HashCode</returns>
+        public override int GetHashCode()
+        {
+            return (Name.FirstName.ToLower() + Name.LastName.ToLower()).GetHashCode();
+        }
+        /// <summary>
         /// Copy Constructor.
         /// </summary>
         /// <param name="originalGeneralInfo"></param>
