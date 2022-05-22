@@ -9,7 +9,7 @@ namespace MedicalTracker
         //Todo: realtime medicine recall tracking? 
         // history of past medicine?
         //Appointment Alerts?
-        public string PatientID { get; set; }
+        public string ID { get; set; }
         public ContactInfo PatientInfo { get; set; } = new(); //component made
         public GeneralInfo GeneralInfo { get; set; } = new(); // I could make a small BMI calculator? Component Made
         public List<ContactInfo> EmergencyContacts { get; set; } = new();//list of contact Info? Do I make a component or do i just leave it into a page orrrr??
@@ -31,7 +31,48 @@ namespace MedicalTracker
         {
             return $"Patient: {PatientInfo.Name.FirstName} {PatientInfo.Name.LastName}";
         }
+        /// <summary>
+        /// Uses the GeneralInfo objects from Patient and returns if the two objects are the same or not.
+        /// </summary>
+        /// <param name="obj">Other object being compared.</param>
+        /// <returns>bool</returns>
+        public override bool Equals(object obj)
+        {
+            if ((obj == null) || this.GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
 
+            return GeneralInfo == ((Patient)obj).GeneralInfo;
+        }
+        /// <summary>
+        /// Uses the .Equals function to determine if two patient objects are equal to one another.
+        /// </summary>
+        /// <param name="obj1"></param>
+        /// <param name="obj2"></param>
+        /// <returns>Bool</returns>
+        public static bool operator ==(Patient obj1, Patient obj2)
+        {
+            return obj1.Equals(obj2);
+        }
+        /// <summary>
+        ///  Uses the .Equals function to determine if two patient objects are not equal to one another.
+        /// </summary>
+        /// <param name="obj1"></param>
+        /// <param name="obj2"></param>
+        /// <returns>Bool</returns>
+        public static bool operator !=(Patient obj1, Patient obj2)
+        {
+            return !obj1.Equals(obj2);
+        }
+        /// <summary>
+        /// Gets the hashcode of the firstName and lastName lowercased.
+        /// </summary>
+        /// <returns>HashCode</returns>
+        public override int GetHashCode()
+        {
+            return (GeneralInfo.Name.FirstName.ToLower() + GeneralInfo.Name.LastName.ToLower()).GetHashCode();
+        }
 
         /// <summary>
         /// Copy Constructor
@@ -39,7 +80,7 @@ namespace MedicalTracker
         /// <param name="originalPatient">Patient to duplicate from.</param>
         public Patient(Patient originalPatient)
         {
-            PatientID = originalPatient.PatientID;
+            ID = originalPatient.ID;
             PatientInfo = originalPatient.PatientInfo;
             GeneralInfo = originalPatient.GeneralInfo;
             EmergencyContacts = originalPatient.EmergencyContacts;

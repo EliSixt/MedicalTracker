@@ -28,7 +28,7 @@ namespace MedicalTrackerBlazorApp.Data
             {
                 _ = Directory.CreateDirectory(@"C:\TMP");
             }
-            CurrentPatient.PatientID = CreatePatientID();
+            CurrentPatient.ID = CreatePatientID();
             Patient copyPatient = new(CurrentPatient);
             bool duplicate = false;
 

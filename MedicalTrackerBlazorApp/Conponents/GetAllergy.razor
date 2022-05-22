@@ -19,21 +19,21 @@
 *@
 @if (Allergy.IslifeThreatening)
 {
-        <p style="font-size:small">Add Symptoms leading to life threatening:</p>
-        <div style="margin: 5px">
-            <input type="text" @bind="Symptom.SymptomName" placeholder="Symptom Name" />@*SymptomsLeadingToLifeThreatening*@
-        </div>
-        <div style="margin: 5px">
-            <input type="text" @bind="Symptom.SymptomDescription" placeholder="Symptom Description" />
-        </div>
-        <button type="submit" @onclick="AddSymptom">Add Symptom</button>
-        <br />
+    <p style="font-size:small">Add Symptoms leading to life threatening:</p>
+    <div style="margin: 5px">
+        <input type="text" @bind="Symptom.SymptomName" placeholder="Symptom Name" />@*SymptomsLeadingToLifeThreatening*@
+    </div>
+    <div style="margin: 5px">
+        <input type="text" @bind="Symptom.SymptomDescription" placeholder="Symptom Description" />
+    </div>
+    <button type="submit" @onclick="AddSymptom">Add Symptom</button>
+    <br />
 
     @foreach (Symptom item in Symptoms) @*this is temporary, to see list behavior*@
     {
-                <li>
+        <li>
             @item
-                </li>
+        </li>
     }
 }
 <div style="margin: 5px">
@@ -64,12 +64,12 @@
 *@
 @if (Allergy.TreatmentRequired)
 {
-        <GetMedicine @bind-Medicine="AlgyMed" />
-        <br />
-        <button type="submit" @onclick="AddMed">Add</button>
+    <GetMedicine @bind-Medicine="AlgyMed" />
+    <br />
+    <button type="submit" @onclick="AddMed">Add</button>
     @foreach (Medicine item in AlgyMedicines) @*this is temporary, to see list behavior*@
     {
-                <li>@item</li>
+        <li>@item</li>
     }
 }
 <br />
@@ -79,7 +79,7 @@
 
 @foreach (Allergy item in Data.CurrentPatient.Allergies)
 {
-        <li>@item</li>
+    <li>@item</li>
 }
 
 @code {
@@ -158,21 +158,22 @@
 
         foreach (Medicine item in AlgyMedicines)
         {
-            duplicate = string.Equals(copyMed.BrandName, item.BrandName, StringComparison.OrdinalIgnoreCase);
-            if (duplicate)
-            {
-                //pop up a message telling the user that theres already the same value saved
-                break;
-            }
-            duplicate = string.Equals(copyMed.GenericName, item.GenericName, StringComparison.OrdinalIgnoreCase);
-            if (duplicate)
-            {
-                //pop up a message telling the user that theres already the same value saved
-                break;
-            }
+            //duplicate = string.Equals(copyMed.BrandName, item.BrandName, StringComparison.OrdinalIgnoreCase);
+            //if (duplicate)
+            //{
+            //    //pop up a message telling the user that theres already the same value saved
+            //    break;
+            //}
+            //duplicate = string.Equals(copyMed.GenericName, item.GenericName, StringComparison.OrdinalIgnoreCase);
+            //if (duplicate)
+            //{
+            //    //pop up a message telling the user that theres already the same value saved
+            //    break;
+            //}
+
         }
 
-        if (!duplicate && !String.IsNullOrEmpty(copyMed.BrandName))
+        if (!duplicate && !String.IsNullOrEmpty(copyMed.BrandName)) //TODO: delete
         {
             AlgyMedicines.Add(copyMed);
             AlgyMed = new();

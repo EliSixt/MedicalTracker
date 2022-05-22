@@ -17,13 +17,22 @@
 @if (Data.Patients.Count > 0)
 {
     <p>Here is a list of all accessible patients:</p>
+    //TODO: Make this into it's own component
+ @*   @foreach (var p in Data.Patients)
+    {
+        <div>
+            <div> @p.GeneralInfo.Name, DOB: @p.GeneralInfo.DateOfBirth, @p.ID </div>
+            <div @onclick="(() => Delete(p.ID))">&times;</div>
+        </div>
+    }*@
 
     @for (int i = 0; i < Data.Patients.Count; i++)
     {
         int indicator = i;
+        var p = Data.Patients[i];
         @*Patient indicatorPerson = @Data.Patients[i];*@
         <div>
-            <div> @Data.Patients[i].GeneralInfo.Name, DOB: @Data.Patients[i].GeneralInfo.DateOfBirth, @Data.Patients[i].PatientID </div>
+            <div> @p.GeneralInfo.Name, DOB: @p.GeneralInfo.DateOfBirth, @Data.Patients[i].ID </div>
             <div @onclick="(() => Delete(indicator))">&times;</div>
         </div>
     }
