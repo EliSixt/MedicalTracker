@@ -46,7 +46,7 @@ namespace MedicalTracker
             return condition1.Equals(condition2);
         }
         /// <summary>
-        /// Uses the .Equals function to determine if two condition objects are equal to one another.
+        /// Uses the .Equals function to determine if two condition objects are not equal to one another.
         /// </summary>
         /// <param name="condition1"></param>
         /// <param name="condition2"></param>

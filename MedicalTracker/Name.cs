@@ -48,7 +48,7 @@ namespace MedicalTracker
         }
 
         /// <summary>
-        /// Uses the .Equals function to determine if two Name objects are equal to one another.
+        /// Uses the .Equals function to determine if two Name objects are not equal to one another.
         /// </summary>
         /// <param name="obj1"></param>
         /// <param name="obj2"></param>

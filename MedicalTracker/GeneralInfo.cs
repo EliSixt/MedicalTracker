@@ -51,7 +51,7 @@ namespace MedicalTracker
             return person1.Equals(person2);
         }
         /// <summary>
-        ///  Uses the .Equals function to determine if two GeneralInfo objects are equal to one another.
+        ///  Uses the .Equals function to determine if two GeneralInfo objects are not equal to one another.
         /// </summary>
         /// <param name="person1"></param>
         /// <param name="person2"></param>
