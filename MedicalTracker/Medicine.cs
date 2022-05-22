@@ -63,7 +63,14 @@
         {
             return !obj1.Equals(obj2);
         }
-
+        /// <summary>
+        /// Gets the hashcode of GenericName + BrandName lowercased.
+        /// </summary>
+        /// <returns>HashCode</returns>
+        public override int GetHashCode()
+        {
+            return (GenericName.ToLower() + BrandName.ToLower()).GetHashCode();
+        }
         /// <summary>
         /// Copy Constructor
         /// </summary>
