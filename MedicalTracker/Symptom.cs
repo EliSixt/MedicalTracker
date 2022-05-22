@@ -54,6 +54,15 @@
         }
 
         /// <summary>
+        /// Gets the hashcode of SymptomName lowercased.
+        /// </summary>
+        /// <returns>HashCode of SymptomName lowercase </returns>
+        public override int GetHashCode()
+        {
+            return SymptomName.ToLower().GetHashCode();
+        }
+
+        /// <summary>
         /// Copy Constructor
         /// </summary>
         /// <param name="originalSymptom">Symptom to duplicate from.</param>
