@@ -121,7 +121,7 @@ namespace MedicalTrackerBlazorApp.Data
         //}
 
 
-        //TODO: Put this in the DataService and double checks before deleting
+        //TODO: Put this in the DataService and double checks before deleting. Save the new modified list onto a new xml List and make a backup list incase.
         public void Delete(int indicator)
         {
             Patients.RemoveAt(indicator);
