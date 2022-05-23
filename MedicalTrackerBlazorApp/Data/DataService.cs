@@ -119,6 +119,13 @@ namespace MedicalTrackerBlazorApp.Data
         //        return true;
         //    return person.Equals(person2);
         //}
+
+
+        //TODO: Put this in the DataService and double checks before deleting
+        public void Delete(int indicator)
+        {
+            Patients.RemoveAt(indicator);
+        }
     }
 }
 
