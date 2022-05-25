@@ -68,28 +68,7 @@ namespace MedicalTrackerBlazorApp.Data
                 Patients = MedicalTracker.Program.XmlReader<List<Patient>>(filePathPatientsList);
             }
         }
-        /// <summary>
-        /// Produces a unique hashcode from a string.
-        /// </summary>
-        /// <param name="s">string</param>
-        /// <param name="s2">string</param>
-        /// <param name="DOB">DateOfBirth</param>
-        /// <returns>Hashcode String</returns>
-        public int GetHashString(string s, string s2, DateOnly? DOB)
-        {
-            int hash = DOB.HasValue ? (s.ToLower() + s2.ToLower() + DOB).GetHashCode() : (s.ToLower() + s2.ToLower()).GetHashCode();
-            return hash;
 
-        }
-        public Dictionary<int, Patient> HashPatients()
-        {
-            Dictionary<int, Patient> result = new();
-            foreach (Patient patient in Patients)
-            {
-                // result.Add(HashingString(patient.GeneralInfo.Name.FirstName), patient);
-            }
-            return result;
-        }
         /// <summary>
         /// Creates a string ID.
         /// Concatenates the first two letters of the first name and last name (lowercase) and adds birth date to the end of the string.
@@ -99,27 +78,31 @@ namespace MedicalTrackerBlazorApp.Data
         {
             return string.Concat(CurrentPatient.GeneralInfo.Name.FirstName.AsSpan(0, 2), CurrentPatient.GeneralInfo.Name.LastName.AsSpan(0, 2)).ToLower() + CurrentPatient.GeneralInfo.DateOfBirth;
         }
-        //public static bool operator == (Patient obj1, Patient obj2)
-        //{
-        //    if (ReferenceEquals(obj1, obj2))
-        //        return true;
-        //    if (ReferenceEquals(obj1, null))
-        //        return false;
-        //    if (ReferenceEquals(obj2, null))
-        //        return false;
-        //    return obj1.Equals(obj2);
-        //}
-        //public static bool operator != (Patient person, Patient person2)
-        //{
-        //    if (ReferenceEquals(person, person2))
-        //        return false;
-        //    if (ReferenceEquals(person, null))
-        //        return true;
-        //    if (ReferenceEquals(person2, null))
-        //        return true;
-        //    return person.Equals(person2);
-        //}
 
+        /// <summary>
+        /// Checks list if there's an item thats the same as the provided object.
+        /// Null checks.
+        /// Checks if the list's tpe and the object's type are the same.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="objList">The List of items</param>
+        /// <param name="objToCheck">Object to compare</param>
+        /// <returns>Boolean</returns>
+        public bool IsDuplicate<T>(List<T> objList, T objToCheck)
+        {
+            if (objToCheck == null || objList == null || objList.GetType().Equals(objToCheck.GetType()))
+            {
+                return true;
+            }
+            foreach (T obj in objList)
+            {
+                if (obj.Equals(objToCheck))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         //TODO: Put this in the DataService and double checks before deleting. Save the new modified list onto a new xml List and make a backup list incase.
         public void Delete(int indicator)
