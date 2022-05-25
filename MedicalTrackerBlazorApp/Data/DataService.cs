@@ -22,35 +22,17 @@ namespace MedicalTrackerBlazorApp.Data
         /// Will add CurrentPatient into a Patients List, erase value in CurrentPatient variable, and
         /// update/override the local xml file.
         /// </summary>
-        public void AtEndSubmitAndAddPatient()
+        public void SubmitAndSerializePatient()
         {
             if (!Directory.Exists(@"C:\TMP"))
             {
                 _ = Directory.CreateDirectory(@"C:\TMP");
             }
+
             CurrentPatient.ID = CreatePatientID();
             Patient copyPatient = new(CurrentPatient);
-            bool duplicate = false;
 
-            foreach (Patient P in Patients)
-            {
-                duplicate = string.Equals(copyPatient.GeneralInfo.Name.FirstName, P.GeneralInfo.Name.FirstName, StringComparison.OrdinalIgnoreCase);
-                if (duplicate)
-                {
-                    break;
-                }
-                duplicate = string.Equals(copyPatient.GeneralInfo.Name.LastName, P.GeneralInfo.Name.LastName, StringComparison.CurrentCultureIgnoreCase);
-                if (duplicate)
-                {
-                    break;
-                }
-                if (copyPatient.GeneralInfo.DateOfBirth == P.GeneralInfo.DateOfBirth)
-                {
-                    duplicate = true;
-                    break;
-                }
-            }
-            if (!duplicate && !string.IsNullOrEmpty(copyPatient.GeneralInfo.Name.FirstName))
+            if (!HasDuplicate(Patients, copyPatient))
             {
                 Patients.Add(copyPatient);
                 CurrentPatient = new();
@@ -88,7 +70,7 @@ namespace MedicalTrackerBlazorApp.Data
         /// <param name="objList">The List of items</param>
         /// <param name="objToCheck">Object to compare</param>
         /// <returns>Boolean</returns>
-        public bool IsDuplicate<T>(List<T> objList, T objToCheck)
+        public bool HasDuplicate<T>(List<T> objList, T objToCheck)
         {
             if (objToCheck == null || objList == null || objList.GetType().Equals(objToCheck.GetType()))
             {
