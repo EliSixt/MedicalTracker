@@ -9,7 +9,7 @@ namespace MedicalTracker
         //Todo: realtime medicine recall tracking? 
         // history of past medicine?
         //Appointment Alerts?
-        public string ID { get; set; }
+        public int ID { get; set; }
         public ContactInfo PatientInfo { get; set; } = new(); //component made
         public GeneralInfo GeneralInfo { get; set; } = new(); // I could make a small BMI calculator? Component Made
         public List<ContactInfo> EmergencyContacts { get; set; } = new();//list of contact Info? Do I make a component or do i just leave it into a page orrrr??

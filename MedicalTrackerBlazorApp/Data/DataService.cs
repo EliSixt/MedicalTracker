@@ -29,7 +29,7 @@ namespace MedicalTrackerBlazorApp.Data
                 _ = Directory.CreateDirectory(@"C:\TMP");
             }
 
-            CurrentPatient.ID = CreatePatientID();
+            _ = CreatePatientID();
             Patient copyPatient = new(CurrentPatient);
 
             if (!HasDuplicate(Patients, copyPatient))
@@ -52,13 +52,12 @@ namespace MedicalTrackerBlazorApp.Data
         }
 
         /// <summary>
-        /// Creates a string ID.
-        /// Concatenates the first two letters of the first name and last name (lowercase) and adds birth date to the end of the string.
+        /// Creates Int ID from the number of patients plus one.
         /// </summary>
-        /// <returns>ID String</returns>
-        public string CreatePatientID()
+        /// <returns>ID/returns>
+        public int CreatePatientID()
         {
-            return string.Concat(CurrentPatient.GeneralInfo.Name.FirstName.AsSpan(0, 2), CurrentPatient.GeneralInfo.Name.LastName.AsSpan(0, 2)).ToLower() + CurrentPatient.GeneralInfo.DateOfBirth;
+            return CurrentPatient.ID = Patients.Count + 1;
         }
 
         /// <summary>
