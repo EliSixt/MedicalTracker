@@ -1,5 +1,4 @@
 ﻿using MedicalTracker;
-
 namespace MedicalTrackerBlazorApp.Data
 {
     public class DataService
@@ -34,34 +33,17 @@ namespace MedicalTrackerBlazorApp.Data
         /// Will add CurrentPatient into a Patients List, erase value in CurrentPatient variable, and
         /// update/override the local xml file.
         /// </summary>
-        public void AtEndSubmitAndAddPatient()
+        public void SubmitAndSerializePatient()
         {
             if (!Directory.Exists(@"C:\TMP"))
             {
                 _ = Directory.CreateDirectory(@"C:\TMP");
             }
-            Patient copyPatient = new(CurrentPatient);
-            bool duplicate = false;
 
-            foreach (Patient P in Patients)
-            {
-                duplicate = string.Equals(copyPatient.GeneralInfo.Name.FirstName, P.GeneralInfo.Name.FirstName, StringComparison.OrdinalIgnoreCase);
-                if (duplicate)
-                {
-                    break;
-                }
-                duplicate = string.Equals(copyPatient.GeneralInfo.Name.LastName, P.GeneralInfo.Name.LastName, StringComparison.CurrentCultureIgnoreCase);
-                if (duplicate)
-                {
-                    break;
-                }
-                if (copyPatient.GeneralInfo.DateOfBirth == P.GeneralInfo.DateOfBirth)
-                {
-                    duplicate = true;
-                    break;
-                }
-            }
-            if (!duplicate && !string.IsNullOrEmpty(copyPatient.GeneralInfo.Name.FirstName))
+            _ = CreatePatientID();
+            Patient copyPatient = new(CurrentPatient);
+
+            if (!HasDuplicate(Patients, copyPatient))
             {
                 Patients.Add(copyPatient);
                 CurrentPatient = new();
@@ -78,6 +60,46 @@ namespace MedicalTrackerBlazorApp.Data
             {
                 Patients = MedicalTracker.Program.XmlReader<List<Patient>>(filePathPatientsList);
             }
+        }
+
+        /// <summary>
+        /// Creates Int ID from the number of patients plus one.
+        /// </summary>
+        /// <returns>ID/returns>
+        public int CreatePatientID()
+        {
+            return CurrentPatient.ID = Patients.Count + 1;
+        }
+
+        /// <summary>
+        /// Checks list if there's an item thats the same as the provided object.
+        /// Null checks.
+        /// Checks if the list's tpe and the object's type are the same.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="objList">The List of items</param>
+        /// <param name="objToCheck">Object to compare</param>
+        /// <returns>Boolean</returns>
+        public bool HasDuplicate<T>(List<T> objList, T objToCheck)
+        {
+            if (objToCheck == null || objList == null || objList.GetType().Equals(objToCheck.GetType()))
+            {
+                return true;
+            }
+            foreach (T obj in objList)
+            {
+                if (obj.Equals(objToCheck))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        //TODO: Put this in the DataService and double checks before deleting. Save the new modified list onto a new xml List and make a backup list incase.
+        public void Delete(int indicator)
+        {
+            Patients.RemoveAt(indicator);
         }
     }
 }

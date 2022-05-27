@@ -158,21 +158,22 @@
 
         foreach (Medicine item in AlgyMedicines)
         {
-            duplicate = string.Equals(copyMed.BrandName, item.BrandName, StringComparison.OrdinalIgnoreCase);
-            if (duplicate)
-            {
-                //pop up a message telling the user that theres already the same value saved
-                break;
-            }
-            duplicate = string.Equals(copyMed.GenericName, item.GenericName, StringComparison.OrdinalIgnoreCase);
-            if (duplicate)
-            {
-                //pop up a message telling the user that theres already the same value saved
-                break;
-            }
+            //duplicate = string.Equals(copyMed.BrandName, item.BrandName, StringComparison.OrdinalIgnoreCase);
+            //if (duplicate)
+            //{
+            //    //pop up a message telling the user that theres already the same value saved
+            //    break;
+            //}
+            //duplicate = string.Equals(copyMed.GenericName, item.GenericName, StringComparison.OrdinalIgnoreCase);
+            //if (duplicate)
+            //{
+            //    //pop up a message telling the user that theres already the same value saved
+            //    break;
+            //}
+
         }
 
-        if (!duplicate && !String.IsNullOrEmpty(copyMed.BrandName))
+        if (!duplicate && !String.IsNullOrEmpty(copyMed.BrandName)) //TODO: delete
         {
             AlgyMedicines.Add(copyMed);
             AlgyMed = new();

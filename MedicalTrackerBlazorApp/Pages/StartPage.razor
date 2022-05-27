@@ -8,21 +8,9 @@
 
 @*<EditForm Model="Data.CurrentPatient.GeneralInfo">*@
 @*<DataAnnotationsValidator></DataAnnotationsValidator>*@
-@if (Data.Patients.Count > 0)
-{
-    <p>Here is a list of all accessible patients:</p>
 
-    @for (int i = 0; i < Data.Patients.Count; i++)
-    {
-        int indicator = i;
-        @*Patient indicatorPerson = @Data.Patients[i];*@
-        <div>
-            <div> @Data.Patients[i].GeneralInfo.Name, DOB: @Data.Patients[i].GeneralInfo.DateOfBirth</div>
-            <div @onclick="(() => Delete(indicator))">&times;</div>
-        </div>
-    }
+<ListOfSavedPatients></ListOfSavedPatients>
 
-}
 <button @onclick="CreatePatient">Create Patient</button>
 @if (CreatingANewPatient)
 {
@@ -33,7 +21,7 @@
                 //future components
     <br />
     <br />
-    <button @onclick="Data.AtEndSubmitAndAddPatient" type="submit"> Save Patient</button>
+    <button @onclick="Data.SubmitAndSerializePatient" type="submit"> Save Patient</button>
     CreatingANewPatient = false;
 }
 @*make it to where the user can erase and edit Patients in the list. Add dates when the patients were added?*@
@@ -47,10 +35,5 @@
     public void CreatePatient()
     {
         CreatingANewPatient = true;
-    }
-
-    public void Delete(int indicator)
-    {
-        Data.Patients.RemoveAt(indicator);
     }
 }
