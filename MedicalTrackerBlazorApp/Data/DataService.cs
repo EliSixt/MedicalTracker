@@ -40,7 +40,7 @@ namespace MedicalTrackerBlazorApp.Data
                 _ = Directory.CreateDirectory(@"C:\TMP");
             }
 
-            _ = CreatePatientID();
+            CreatePatientID();
             Patient copyPatient = new(CurrentPatient);
 
             if (!HasDuplicate(Patients, copyPatient))
@@ -63,12 +63,11 @@ namespace MedicalTrackerBlazorApp.Data
         }
 
         /// <summary>
-        /// Creates Int ID from the number of patients plus one.
-        /// </summary>
-        /// <returns>ID/returns>
-        public int CreatePatientID()
+        /// Creates an ID for current patient by finding the Max ID within the Patients list and adding one.
+        /// </summary> 
+        public void CreatePatientID()
         {
-            return CurrentPatient.ID = Patients.Count + 1;
+            CurrentPatient.ID = Patients.Max(x => x.ID++);
         }
 
         /// <summary>
