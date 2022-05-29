@@ -81,9 +81,9 @@ namespace MedicalTrackerBlazorApp.Data
         /// <returns>Boolean</returns>
         public bool HasDuplicate<T>(List<T> objList, T objToCheck)
         {
-            if (objToCheck == null || objList == null || objList.GetType().Equals(objToCheck.GetType()))
+            if (objToCheck == null || objList == null)
             {
-                return true;
+                return false;
             }
             foreach (T obj in objList)
             {
