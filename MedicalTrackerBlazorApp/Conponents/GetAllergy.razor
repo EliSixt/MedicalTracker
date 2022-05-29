@@ -173,20 +173,7 @@
     {
         Allergy CopyAllergy = new(Allergy);
 
-        //check for duplicate allergies first.
-
-        bool duplicate = false;
-
-        foreach (Allergy item in Data.CurrentPatient.Allergies)
-        {
-            duplicate = string.Equals(CopyAllergy.AlgyName, item.AlgyName, StringComparison.OrdinalIgnoreCase);
-            if (duplicate)
-            {
-                break;
-            }
-        }
-
-        if (!duplicate && !string.IsNullOrEmpty(CopyAllergy.AlgyName))
+        if (!Data.HasDuplicate(Data.CurrentPatient.Allergies, CopyAllergy))
         {
             Data.CurrentPatient.Allergies.Add(CopyAllergy);
 
