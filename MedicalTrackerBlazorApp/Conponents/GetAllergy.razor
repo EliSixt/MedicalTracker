@@ -112,7 +112,7 @@
     //add an editForm with a submit button and validation error messages in the class' properties
 
     /// <summary>
-    /// Creates a copySymptom from the current symptom.
+    /// Creates a copy of symptom.
     /// Prevents duplicate answers from being added onto the Symptoms list.
     /// If it passes it gets added onto Symptoms list.
     /// Deletes the contents of the symptom.
@@ -128,34 +128,16 @@
         }
     }
     /// <summary>
-    /// Makes sure and prevents duplicate answers from being added onto a medicine list
-    /// by comparing both BrandName and GenericName from two objects (ignoring the Case).
+    /// Creates a copy of AlgyMed.
+    /// Prevents duplicate answers from being added onto a medicine list.
     /// If it passes it gets added onto AlgyMedicines.
+    /// Deletes the contents of AlgyMed.
     /// </summary>
     public void AddMed()
     {
         Medicine copyMed = new(AlgyMed);
 
-        bool duplicate = false;
-
-        foreach (Medicine item in AlgyMedicines)
-        {
-            //duplicate = string.Equals(copyMed.BrandName, item.BrandName, StringComparison.OrdinalIgnoreCase);
-            //if (duplicate)
-            //{
-            //    //pop up a message telling the user that theres already the same value saved
-            //    break;
-            //}
-            //duplicate = string.Equals(copyMed.GenericName, item.GenericName, StringComparison.OrdinalIgnoreCase);
-            //if (duplicate)
-            //{
-            //    //pop up a message telling the user that theres already the same value saved
-            //    break;
-            //}
-
-        }
-
-        if (!duplicate && !String.IsNullOrEmpty(copyMed.BrandName)) //TODO: delete
+        if (!Data.HasDuplicate(AlgyMedicines, copyMed))
         {
             AlgyMedicines.Add(copyMed);
             AlgyMed = new();
