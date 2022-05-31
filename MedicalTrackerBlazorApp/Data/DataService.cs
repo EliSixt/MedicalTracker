@@ -11,11 +11,17 @@ namespace MedicalTrackerBlazorApp.Data
         {
             get
             {
-                return _patients.Count > 0;
+                if (_patients != null)
+                {
+                    return _patients.Count > 0;
+                }
+                return false;
             }
         }
 
-        public readonly string filePathPatientsList = @"C:\Users\Elias\OneDrive\TMP\patientsList.xml";
+        public readonly string filePathPatientsList = @"C:\Users\Elias\OneDrive\TMP\patientsList.xml"; //TODO: Find all references and replace them
+        public readonly string fileStoreDirectory = @"C:\Users\Elias\OneDrive\TMP\";
+        public readonly string fileNamePatients = @"patientsList.xml";
         public Patient CurrentPatient { get; set; } = new();
 
         private List<Patient> _patients = new();
@@ -35,13 +41,15 @@ namespace MedicalTrackerBlazorApp.Data
         /// </summary>
         public void SubmitAndSerializePatient()
         {
-            if (!Directory.Exists(@"C:\TMP"))
+            if (!Directory.Exists(fileStoreDirectory))
             {
-                _ = Directory.CreateDirectory(@"C:\TMP");
+                _ = Directory.CreateDirectory(fileStoreDirectory);
             }
 
             CreatePatientID();
             Patient copyPatient = new(CurrentPatient);
+
+            // copyPatient.ID = GetNextPatientID(); 
 
             if (!HasDuplicate(Patients, copyPatient))
             {
@@ -65,9 +73,9 @@ namespace MedicalTrackerBlazorApp.Data
         /// <summary>
         /// Creates an ID for current patient by finding the Max ID within the Patients list and adding one.
         /// </summary> 
-        public void CreatePatientID()
+        public void CreatePatientID() //TODO: Return a number instead of assigning a value
         {
-            CurrentPatient.ID = Patients.Max(x => x.ID++);
+            CurrentPatient.ID = Patients.Max(x => x.ID) + 1;
         }
 
         /// <summary>
@@ -87,7 +95,7 @@ namespace MedicalTrackerBlazorApp.Data
             }
             foreach (T obj in objList)
             {
-                if (obj.Equals(objToCheck))
+                if (obj != null && obj.Equals(objToCheck))
                 {
                     return true;
                 }
