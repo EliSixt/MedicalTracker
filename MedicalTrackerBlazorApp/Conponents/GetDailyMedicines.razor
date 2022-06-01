@@ -1,13 +1,13 @@
 ﻿<h3>GetDailyMedicines</h3>
 
-<GetMedicine @bind-Medicine="DailyDrug.Medicine" />
+<GetMedicine @bind-Medicine="DailyMed.Medicine" />
 <br />
 
 <div style="margin: 5px">
-    <input type="text" @bind="DailyDrug.DoseMg" placeholder="Dose Amount" /> @*Change dose amount*@
+    <input type="text" @bind="DailyMed.DoseMg" placeholder="Dose Amount" /> @*Change dose amount*@
 </div>
 <div style="margin: 5px">
-    <input type="text" @bind="DailyDrug.FrequencyOfDose" placeholder="How often/when to take drug" />
+    <input type="text" @bind="DailyMed.FrequencyOfDose" placeholder="How often/when to take drug" />
 </div>
 <div style="margin: 5px">
     <input type="time" @bind="TimeProxy" />
@@ -18,13 +18,13 @@
 <button @onclick="AddMedication">Add Medication</button>
 <br />
 
-@foreach (DailyMedicine item in Data.CurrentPatient.DailyMedication)
+@foreach (DailyMedicine item in Data.CurrentPatient.DailyMedication) //Temp
 {
     <li>@item</li>
 }
 @code {
     [Parameter]
-    public DailyMedicine DailyDrug { get; set; } = new();
+    public DailyMedicine DailyMed { get; set; } = new();
 
     [Parameter]
     public EventCallback<DailyMedicine> DailyDrugChanged { get; set; }
@@ -35,14 +35,6 @@
     {
         get => DateTime.Now.Date + LocalTime;
         set => LocalTime = value.TimeOfDay;
-
-        //{
-        //    //TimeSpan.TryParse(value, out DayToDayMedicine.TimeSpanOfDose);
-        //    //DayToDayMedicine.Time.TryParse(value, out DayToDayMedicine.TimeSpanOfDose );
-        //    TimeSpan.TryParse(value, out LocalTime);
-        //    DayToDayMedicine.TimeSpanOfDose = LocalTime;
-
-        //}
     }
     /// <summary>
     /// Confirms and adds the input time onto the current DailyMedicine variable.
@@ -50,20 +42,23 @@
     private void ConfirmTimeSpan()
     {
         //DayToDayMedicine.TimeSpanOfDose = LocalTime;
-        DailyDrug.TimeSpanOfDose = LocalTime;
-        DailyDrugChanged.InvokeAsync(DailyDrug);
-
+        DailyMed.TimeSpanOfDose = LocalTime;
+        DailyDrugChanged.InvokeAsync(DailyMed);
     }
 
     /// <summary>
+    /// Checks for duplicates
     /// Adds all the inputs of the DailyMedicine Variable into the list CurrentPatient.DailyMedication
     /// from the DataService. Earses DailyMedicine variable to start over.
     /// </summary>
     public void AddMedication()
     {
-        DailyMedicine CopyDailyDrug = new(DailyDrug);
-
-        Data.CurrentPatient.DailyMedication.Add(CopyDailyDrug);
-        DailyDrug = new();
+        DailyMedicine CopyDailyMed = new(DailyMed);
+        if (!Data.HasDuplicate(Data.CurrentPatient.DailyMedication, CopyDailyMed))
+        {
+            Data.CurrentPatient.DailyMedication.Add(CopyDailyMed);
+            DailyMed = new();
+        }
+        //Todo: tells user it has a duplicate
     }
 }

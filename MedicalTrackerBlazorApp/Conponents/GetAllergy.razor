@@ -29,7 +29,7 @@
     <button type="submit" @onclick="AddSymptom">Add Symptom</button>
     <br />
 
-    @foreach (Symptom item in Symptoms) @*this is temporary, to see list behavior*@
+    @foreach (Symptom item in Symptoms) @*Temp: to see list behavior*@
     {
         <li>
             @item
@@ -163,29 +163,4 @@
         }
 
     }
-
-    ///// <summary>
-    ///// Takes in a list, a string item(X) in the list used as a base, and a string item(Y) used to compare to.
-    ///// Loops through the list and compares item(X) from the list to item(Y), if X is equal to Y the method returns true.
-    ///// Ignores the case of both string items.
-    ///// </summary>
-    ///// <typeparam name="T">Type of the list.</typeparam>
-    ///// <param name="ListToCheck">list to check and loop through.</param>
-    ///// <param name="BaseItemFromList">Item from the list used as base.</param>
-    ///// <param name="ItemToCompare">Item from the list used to compare the base to.</param>
-    ///// <returns></returns>
-    //public static bool CheckForDuplicates<T>(List<T> ListToCheck, string BaseItemFromList, string ItemToCompare)
-    //{
-    //    bool duplicate = false;
-
-    //    foreach (T item in ListToCheck)
-    //    {
-    //        duplicate = string.Equals(ItemToCompare, BaseItemFromList, StringComparison.OrdinalIgnoreCase);
-    //        if (duplicate)
-    //        {
-    //            break;
-    //        }
-    //    }
-    //    return duplicate;
-    //}
 }
