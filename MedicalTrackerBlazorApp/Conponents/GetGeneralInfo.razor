@@ -48,27 +48,15 @@
 
     /// <summary>
     /// Prevents duplicate patients from being added into the Patients list
-    /// by comparing, GeneralInfo.Name.FirstName and GeneralInfo.Name.LastName, to the existing patients (ignoring the case).
+    /// by comparing GeneralInfo to all of the existing (List)Patients.GeneralInfo in the DataService.
     /// If it passes it gets allowed to be saved.
     /// </summary>
     public void SaveGeneralInfo()
     {
         GeneralInfo copyGeneralInfo = new(GeneralInfo);
 
-        bool duplicate = false;
-
-        foreach (Patient patient in Data.Patients)
+        if (!Data.HasDuplicate((Data.Patients.Select(x => x.GeneralInfo).ToList()), copyGeneralInfo))
         {
-            if (patient.GeneralInfo == copyGeneralInfo)
-            {
-                duplicate = true; //pop up a message telling the user that theres already the same value saved
-                break;
-            }
-        }
-
-        if (!duplicate && !string.IsNullOrEmpty(GeneralInfo.Name.FirstName))
-        {
-
             Data.CurrentPatient.GeneralInfo = copyGeneralInfo;
             GeneralInfo = new();
         }
