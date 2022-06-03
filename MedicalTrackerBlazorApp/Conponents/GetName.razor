@@ -12,21 +12,6 @@
 The name is: @NamesValue.FirstName @NamesValue.MiddleName @NamesValue.LastName!!!
 
 @code {
-    //private Name _namesValue { get; set; } = new();
-
-    //public Name NamesValue
-    //{
-    //    get => _namesValue;
-    //    set
-    //    {
-    //        if (_namesValue == NamesValue) return;
-
-    //        _namesValue = NamesValue;
-    //        NamesValueChanged.InvokeAsync(NamesValue);
-
-    //    }
-    //}
-
     [Parameter]
     public Name NamesValue { get; set; } = new();
 

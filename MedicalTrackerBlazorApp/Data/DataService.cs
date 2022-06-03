@@ -11,11 +11,7 @@ namespace MedicalTrackerBlazorApp.Data
         {
             get
             {
-                if (_patients != null)
-                {
-                    return _patients.Count > 0;
-                }
-                return false;
+                return _patients != null ? _patients.Count > 0 : false;
             }
         }
 

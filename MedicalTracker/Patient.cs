@@ -38,12 +38,7 @@ namespace MedicalTracker
         /// <returns>bool</returns>
         public override bool Equals(object obj)
         {
-            if ((obj == null) || this.GetType().Equals(obj.GetType()))
-            {
-                return false;
-            }
-
-            return GeneralInfo == ((Patient)obj).GeneralInfo;
+            return (obj == null) || this.GetType().Equals(obj.GetType()) ? false : GeneralInfo == ((Patient)obj).GeneralInfo;
         }
         /// <summary>
         /// Uses the .Equals function to determine if two patient objects are equal to one another.
