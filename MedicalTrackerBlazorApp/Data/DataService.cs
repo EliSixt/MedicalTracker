@@ -5,7 +5,7 @@ namespace MedicalTrackerBlazorApp.Data
     {
         public DataService()
         {
-            LoadExistingPatients();
+            LoadStartUp();
         }
         public bool PatientsLoaded
         {
@@ -13,6 +13,20 @@ namespace MedicalTrackerBlazorApp.Data
             {
                 return _patients != null ? _patients.Count > 0 : false;
             }
+        }
+
+        /// <summary>
+        /// Checks whether a directory exists, else it creates one.
+        /// Uses a method to check for existing local patient file and loads file.
+        /// </summary>
+        public void LoadStartUp()
+        {
+            if (!Directory.Exists(fileStoreDirectory))
+            {
+                _ = Directory.CreateDirectory(fileStoreDirectory);
+            }
+
+            LoadExistingPatients();
         }
 
         public readonly string filePathPatientsList = @"C:\Users\Elias\OneDrive\TMP\patientsList.xml"; //TODO: Find all references and replace them
@@ -30,22 +44,15 @@ namespace MedicalTrackerBlazorApp.Data
 
 
         /// <summary>
-        /// Checks whether a directory exists, else it creates one.
         /// Intended to use at the end, when all of the patient info has been filled out and ready to submit.
         /// Will add CurrentPatient into a Patients List, erase value in CurrentPatient variable, and
         /// update/override the local xml file.
         /// </summary>
         public void SubmitAndSerializePatient()
         {
-            if (!Directory.Exists(fileStoreDirectory))
-            {
-                _ = Directory.CreateDirectory(fileStoreDirectory);
-            }
-
-            CreatePatientID();
             Patient copyPatient = new(CurrentPatient);
 
-            // copyPatient.ID = GetNextPatientID(); 
+            copyPatient.ID = GetNextPatientID();
 
             if (!HasDuplicate(Patients, copyPatient))
             {
@@ -67,11 +74,12 @@ namespace MedicalTrackerBlazorApp.Data
         }
 
         /// <summary>
-        /// Creates an ID for current patient by finding the Max ID within the Patients list and adding one.
+        /// Returns an new int by finding the Max ID within the Patients list and adding one.
+        /// Intended to be used for patient IDs.
         /// </summary> 
-        public void CreatePatientID() //TODO: Return a number instead of assigning a value
+        public int GetNextPatientID()
         {
-            CurrentPatient.ID = Patients.Max(x => x.ID) + 1;
+            return Patients.Max(x => x.ID) + 1;
         }
 
         /// <summary>
