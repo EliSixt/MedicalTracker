@@ -38,7 +38,13 @@ namespace MedicalTracker
         /// <returns>bool</returns>
         public override bool Equals(object obj)
         {
-            return (obj == null) || this.GetType().Equals(obj.GetType()) ? false : GeneralInfo == ((Patient)obj).GeneralInfo;
+            //return (obj == null) || this.GetType().Equals(obj.GetType()) ? false : ((Patient)obj).GeneralInfo == GeneralInfo;
+            Patient item = obj as Patient;
+            if (item == null)
+            {
+                return false;
+            }
+            return PatientInfo.Name.Equals(item.PatientInfo.Name);
         }
         /// <summary>
         /// Uses the .Equals function to determine if two patient objects are equal to one another.
@@ -48,7 +54,13 @@ namespace MedicalTracker
         /// <returns>Bool</returns>
         public static bool operator ==(Patient obj1, Patient obj2)
         {
-            return obj1.Equals(obj2);
+            return (object)obj1 != null ? obj1.Equals(obj2) : (object)obj2 == null;
+
+            //if ((object)obj1 != null && (object)obj2 == null)
+            //{
+            //    return false;
+            //}
+            //return obj1.Equals(obj2);
         }
         /// <summary>
         ///  Uses the .Equals function to determine if two patient objects are not equal to one another.
@@ -66,7 +78,7 @@ namespace MedicalTracker
         /// <returns>HashCode</returns>
         public override int GetHashCode()
         {
-            return (GeneralInfo.Name.FirstName.ToLower() + GeneralInfo.Name.LastName.ToLower()).GetHashCode();
+            return (this.GeneralInfo.Name.FirstName.ToLower() + this.GeneralInfo.Name.LastName.ToLower()).GetHashCode();
         }
 
         /// <summary>

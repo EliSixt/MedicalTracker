@@ -59,7 +59,8 @@
         public override int GetHashCode()
         {
             //return (FirstName.ToLower() + LastName.ToLower()).GetHashCode();
-            return (FirstName.GetHashCode() ^ LastName.GetHashCode());
+            int num = (this.FirstName + this.LastName).GetHashCode();
+            return num;
         }
     }
 }
