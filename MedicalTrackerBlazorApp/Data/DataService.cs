@@ -57,14 +57,13 @@ namespace MedicalTrackerBlazorApp.Data
                 return copyPatient;
             }
             return null;
-
-
         }
 
         /// <summary>
         /// Intended to use at the end, when all of the patient info has been filled out and ready to submit.
         /// Will add CurrentPatient into a Patients List, erase value in CurrentPatient variable, and
         /// update/override the local xml file.
+        /// If the Patient.Count is less than or equal to 0 then it would add the currentPatient into the Patients list.
         /// </summary>
         public void SubmitAndSerializePatient()
         {
@@ -72,11 +71,19 @@ namespace MedicalTrackerBlazorApp.Data
 
             copyPatient.ID = GetNextPatientID();
 
+            if (Patients.Count <= 0)
+            {
+                Patients.Add(copyPatient);
+                CurrentPatient = new();
+                MedicalTracker.Program.XmlWriter(Patients, filePathPatientsList);
+                return;
+            }
             if (!HasDuplicate(Patients, copyPatient))
             {
                 Patients.Add(copyPatient);
                 CurrentPatient = new();
                 MedicalTracker.Program.XmlWriter(Patients, filePathPatientsList);
+                return;
             }
         }
         /// <summary>
@@ -87,7 +94,7 @@ namespace MedicalTrackerBlazorApp.Data
         {
             if (File.Exists(filePathPatientsList) && MedicalTracker.Program.XmlReader<List<Patient>>(filePathPatientsList) != null) //Exception Handling?
             {
-                Patients = MedicalTracker.Program.XmlReader<List<Patient>>(filePathPatientsList);
+                Patients = MedicalTracker.Program.XmlReader<List<Patient>>(filePathPatientsList); //TODO: try catch?
             }
         }
 
@@ -111,7 +118,11 @@ namespace MedicalTrackerBlazorApp.Data
         /// <returns>Boolean</returns>
         public bool HasDuplicate<T>(List<T> objList, T objToCheck)
         {
-            if (objToCheck == null || objList == null)
+            if (objToCheck is null && objList is null)
+            {
+                return true;
+            }
+            if (objToCheck is null || objList is null)
             {
                 return false;
             }

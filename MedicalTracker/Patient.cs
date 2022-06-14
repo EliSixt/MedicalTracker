@@ -40,11 +40,15 @@ namespace MedicalTracker
         {
             //return (obj == null) || this.GetType().Equals(obj.GetType()) ? false : ((Patient)obj).GeneralInfo == GeneralInfo;
             Patient item = obj as Patient;
-            if (item == null)
+            if (item is null && this is null)
+            {
+                return true;
+            }
+            if (item is null || this is null)
             {
                 return false;
             }
-            return PatientInfo.Name.Equals(item.PatientInfo.Name);
+            return this.GeneralInfo.Name.Equals(item.GeneralInfo.Name);
         }
         /// <summary>
         /// Uses the .Equals function to determine if two patient objects are equal to one another.
@@ -52,15 +56,15 @@ namespace MedicalTracker
         /// <param name="obj1"></param>
         /// <param name="obj2"></param>
         /// <returns>Bool</returns>
-        public static bool operator ==(Patient obj1, Patient obj2)
+        public static bool operator ==(Patient obj1, Patient obj2)  //TODO: null checks
         {
-            return (object)obj1 != null ? obj1.Equals(obj2) : (object)obj2 == null;
+            if (obj1 is null && obj2 is null)
+                return true;
 
-            //if ((object)obj1 != null && (object)obj2 == null)
-            //{
-            //    return false;
-            //}
-            //return obj1.Equals(obj2);
+            if (obj1 is null || obj2 is null)
+                return false;
+
+            return obj1.Equals(obj2);
         }
         /// <summary>
         ///  Uses the .Equals function to determine if two patient objects are not equal to one another.
@@ -70,6 +74,14 @@ namespace MedicalTracker
         /// <returns>Bool</returns>
         public static bool operator !=(Patient obj1, Patient obj2)
         {
+            if (obj1 is null && obj2 is null) //Both null so both are equal?
+            {
+                return false;
+            }
+            if (obj1 is null || obj2 is null) // One is null and one isn't, so they are not-equal, true?
+            {
+                return true;
+            }
             return !obj1.Equals(obj2);
         }
         /// <summary>

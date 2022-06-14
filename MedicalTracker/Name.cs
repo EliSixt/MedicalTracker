@@ -19,15 +19,20 @@
         /// <returns>Bool</returns>
         public override bool Equals(object obj)
         {
-            if ((obj == null) || this.GetType().Equals(obj.GetType()))
-            {
-                return false;
-            }
-            if (FirstName.ToLower() == ((Name)obj).FirstName.ToLower() || LastName.ToLower() == ((Name)obj).LastName.ToLower())
+            //if ((obj == null) || this.GetType().Equals(obj.GetType()))
+            //{
+            //    return false;
+            //}
+            Name item = obj as Name;
+            if (item is null && this is null)
             {
                 return true;
             }
-            return false;
+            if (item is null || this is null)
+            {
+                return false;
+            }
+            return (this.FirstName.ToLower() == item.FirstName.ToLower() && this.LastName.ToLower() == item.LastName.ToLower());
         }
 
         /// <summary>
