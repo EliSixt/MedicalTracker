@@ -40,16 +40,21 @@ namespace MedicalTracker
         public override bool Equals(object obj)
         {
             //return (obj == null) || this.GetType().Equals(obj.GetType()) ? false : ((Patient)obj).GeneralInfo == GeneralInfo;
-            Patient item = obj as Patient;
-            if (item is null && this is null)
+            if (this.GetType().Equals(obj.GetType()))
             {
-                return true;
+
+                Patient item = obj as Patient;
+                if (item is null && this is null)
+                {
+                    return true;
+                }
+                if (item is null || this is null)
+                {
+                    return false;
+                }
+                return this.GeneralInfo.Name.Equals(item.GeneralInfo.Name);
             }
-            if (item is null || this is null)
-            {
-                return false;
-            }
-            return this.GeneralInfo.Name.Equals(item.GeneralInfo.Name);
+            return false;
         }
 
         /// <summary>
