@@ -32,26 +32,30 @@ namespace MedicalTracker
                 $"EpiPenRequired: ${EpiPenRequired}, CPRRequired: ${CPRRequired}, Call911: ${Call911}, TreatmentRequired: ${TreatmentRequired}, AlgyTreatmentMedication: ${AlgyTreatmentMedication} ";
         }
         /// <summary>
-        /// Compares the hashcodes of two algyName and determines if they're equal.
+        /// Compares two allergy objects by using the .Equals function and determines if they're equal.
         /// </summary>
         /// <param name="allergy1"></param>
         /// <param name="allergy2"></param>
         /// <returns>Bool</returns>
         public static bool operator ==(Allergy allergy1, Allergy allergy2)
         {
+            if (allergy1 is null && allergy2 is null)
+                return true;
+
+            if (allergy1 is null || allergy2 is null)
+                return false;
+
             return allergy1.Equals(allergy2);
-            //return allergy1.AlgyName.ToLower().GetHashCode().Equals(allergy2.AlgyName.ToLower().GetHashCode());
         }
         /// <summary>
-        /// Compares the hashcodes of two algyName and determines if they're NOT equal.
+        /// Compares two allergy objects by using the .Equals function within the equality operator and determines if they're NOT equal.
         /// </summary>
         /// <param name="allergy1"></param>
         /// <param name="allergy2"></param>
         /// <returns>bool</returns>
         public static bool operator !=(Allergy allergy1, Allergy allergy2)
         {
-            return !allergy1.Equals(allergy2);
-            //return !(allergy1.AlgyName.ToLower().GetHashCode().Equals(allergy2.AlgyName.ToLower().GetHashCode()));
+            return !(allergy1 == allergy2);
         }
         /// <summary>
         /// Compares two Allergy objects. 
