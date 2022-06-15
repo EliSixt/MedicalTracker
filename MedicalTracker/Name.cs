@@ -43,6 +43,12 @@
         /// <returns>Bool</returns>
         public static bool operator ==(Name obj1, Name obj2)
         {
+            if (obj1 is null && obj2 is null)
+                return true;
+
+            if (obj1 is null || obj2 is null)
+                return false;
+
             return obj1.Equals(obj2);
         }
 
@@ -54,7 +60,7 @@
         /// <returns>Bool</returns>
         public static bool operator !=(Name obj1, Name obj2)
         {
-            return !obj1.Equals(obj2);
+            return !(obj1 == obj2);
         }
 
         /// <summary>

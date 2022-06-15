@@ -31,6 +31,7 @@ namespace MedicalTracker
         {
             return $"Patient: {PatientInfo.Name.FirstName} {PatientInfo.Name.LastName}";
         }
+
         /// <summary>
         /// Uses the GeneralInfo objects from Patient and returns if the two objects are the same or not.
         /// </summary>
@@ -50,6 +51,7 @@ namespace MedicalTracker
             }
             return this.GeneralInfo.Name.Equals(item.GeneralInfo.Name);
         }
+
         /// <summary>
         /// Uses the .Equals function to determine if two patient objects are equal to one another.
         /// </summary>
@@ -66,6 +68,7 @@ namespace MedicalTracker
 
             return obj1.Equals(obj2);
         }
+
         /// <summary>
         ///  Uses the .Equals function to determine if two patient objects are not equal to one another.
         /// </summary>
@@ -86,6 +89,7 @@ namespace MedicalTracker
 
             return !(obj1 == obj2);
         }
+
         /// <summary>
         /// Gets the hashcode of the firstName and lastName lowercased.
         /// </summary>
