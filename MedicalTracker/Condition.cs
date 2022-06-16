@@ -22,20 +22,33 @@ namespace MedicalTracker
         {
             return $"name = {ConditionName}, severity = {Severity}, sex = {Sex}, age = {Age}, country = {Country}, userID = {UserID}";
         }
+
         /// <summary>
-        /// Uses the ConditionName from two Condition objects and returns if the two objects are the same or not.
+        /// Checks if the obj is Null and of the same type,
+        /// uses the ConditionName from two Condition objects and returns if the two objects are the same or not.
         /// </summary>
         /// <param name="obj">Other object being compared</param>
         /// <returns>Bool</returns>
         public override bool Equals(object obj)
         {
-            if ((obj == null) || this.GetType().Equals(obj.GetType()))
+            if (this.GetType().Equals(obj.GetType()))
             {
-                return false;
+                Condition item = obj as Condition;
+                if (item is null && this is null)
+                {
+                    return true;
+                }
+                if (item is null || this is null)
+                {
+                    return false;
+                }
+                return this.ConditionName.ToLower().Equals(item.ConditionName.ToLower());
             }
-            return ConditionName.ToLower() == ((Condition)obj).ConditionName.ToLower();
+            return false;
         }
+
         /// <summary>
+        /// Null checks.
         /// Uses the .Equals function to determine if two Condition objects are equal to one another.
         /// </summary>
         /// <param name="condition1"></param>
@@ -43,18 +56,28 @@ namespace MedicalTracker
         /// <returns>Bool</returns>
         public static bool operator ==(Condition condition1, Condition condition2)
         {
+            if (condition1 is null && condition2 is null)
+            {
+                return true;
+            }
+            if (condition1 is null || condition2 is null)
+            {
+                return false;
+            }
             return condition1.Equals(condition2);
         }
+
         /// <summary>
-        /// Uses the .Equals function to determine if two condition objects are not equal to one another.
+        /// Uses the .Equals function within the Equality operator to determine if two condition objects are not equal to one another.
         /// </summary>
         /// <param name="condition1"></param>
         /// <param name="condition2"></param>
         /// <returns>Bool</returns>
         public static bool operator !=(Condition condition1, Condition condition2)
         {
-            return condition1.Equals(condition2);
+            return !(condition1 == condition2);
         }
+
         /// <summary>
         /// Gets the hashcode of ConditionName lowercased.
         /// </summary>

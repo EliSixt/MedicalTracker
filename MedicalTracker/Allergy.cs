@@ -40,10 +40,14 @@ namespace MedicalTracker
         public static bool operator ==(Allergy allergy1, Allergy allergy2)
         {
             if (allergy1 is null && allergy2 is null)
+            {
                 return true;
+            }
 
             if (allergy1 is null || allergy2 is null)
+            {
                 return false;
+            }
 
             return allergy1.Equals(allergy2);
         }
