@@ -82,16 +82,6 @@ namespace MedicalTracker
         /// <returns>Bool</returns>
         public static bool operator !=(Patient obj1, Patient obj2)
         {
-            //if (obj1 is null && obj2 is null) //Both null so both are equal?
-            //{
-            //    return false;
-            //}
-            //if (obj1 is null || obj2 is null) // One is null and one isn't, so they are not-equal, true?
-            //{
-            //    return true;
-            //}
-            //return !obj1.Equals(obj2);
-
             return !(obj1 == obj2);
         }
 

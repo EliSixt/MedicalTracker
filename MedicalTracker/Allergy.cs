@@ -65,13 +65,22 @@ namespace MedicalTracker
         /// <returns>Bool</returns>
         public override bool Equals(object obj)
         {
-            if ((obj == null) || this.GetType().Equals(obj.GetType()))
+            if (this.GetType().Equals(obj.GetType()))
             {
-                return false;
+                Allergy item = obj as Allergy;
+                if (item is null && this is null)
+                {
+                    return true;
+                }
+                if (item is null || this is null)
+                {
+                    return false;
+                }
+                return this.AlgyName.ToLower().Equals(item.AlgyName.ToLower());
             }
-
-            return AlgyName.ToLower() == ((Allergy)obj).AlgyName.ToLower();
+            return false;
         }
+
         /// <summary>
         /// Gets the hashcode of AlgyName lowercased.
         /// </summary>
