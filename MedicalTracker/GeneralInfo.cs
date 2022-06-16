@@ -27,45 +27,75 @@ namespace MedicalTracker
             return $"DateOfBirth:{DateOfBirth}, Age:{Age}, Weight:{Weight}, Height:{Height}, Languages:{Languages}" +
                 $"Ethnicity:{Ethnicity}, Race:{Race}, Gender:{Gender}, SexAtBirth:{SexAtBirth}.";
         }
+
         /// <summary>
+        /// Checks for same type and null checks.
         /// Uses the firstname lastname and DateOfBirth from two GeneralInfo objects and returns if the two objects are the same or not.
         /// </summary>
         /// <param name="obj">Other object being compared.</param>
         /// <returns>bool</returns>
         public override bool Equals(object obj)
         {
-            return (obj == null) || this.GetType().Equals(obj.GetType())
-                ? false
-                : (Name.FirstName + Name.LastName).ToLower() + DateOfBirth == (((GeneralInfo)obj).Name.FirstName + ((GeneralInfo)obj).Name.LastName).ToLower() + ((GeneralInfo)obj).DateOfBirth;
+            //return (obj == null) || this.GetType().Equals(obj.GetType())
+            //    ? false
+            //    : (Name.FirstName + Name.LastName).ToLower() + DateOfBirth == (((GeneralInfo)obj).Name.FirstName + ((GeneralInfo)obj).Name.LastName).ToLower() + ((GeneralInfo)obj).DateOfBirth;
+
+            if (this.GetType().Equals(obj.GetType()))
+            {
+                GeneralInfo item = obj as GeneralInfo;
+                if (item is null && this is null)
+                {
+                    return true;
+                }
+                if (item is null || this is null)
+                {
+                    return false;
+                }
+                return ((this.Name.FirstName + this.Name.LastName).ToLower() + this.DateOfBirth) == ((item.Name.FirstName + item.Name.LastName).ToLower() + item.DateOfBirth);
+            }
+            return false;
         }
+
         /// <summary>
-        /// Uses the .Equals function to determine if two GeneralInfo objects are equal to one another.
+        /// Null checks, uses the .Equals function to determine if two GeneralInfo objects are equal to one another.
         /// </summary>
         /// <param name="person1"></param>
         /// <param name="person2"></param>
         /// <returns>Bool</returns>
         public static bool operator ==(GeneralInfo person1, GeneralInfo person2)
         {
+            if (person1 is null && person2 is null)
+            {
+                return true;
+            }
+            if (person1 is null || person2 is null)
+            {
+                return false;
+            }
+
             return person1.Equals(person2);
         }
+
         /// <summary>
-        ///  Uses the .Equals function to determine if two GeneralInfo objects are not equal to one another.
+        ///  Uses the .Equals function within the equality operator to determine if two GeneralInfo objects are not equal to one another.
         /// </summary>
         /// <param name="person1"></param>
         /// <param name="person2"></param>
         /// <returns>Bool</returns>
         public static bool operator !=(GeneralInfo person1, GeneralInfo person2)
         {
-            return !person1.Equals(person2);
+            return !(person1 == person2);
         }
+
         /// <summary>
         /// Gets the hashcode of the firstName and lastName lowercased.
         /// </summary>
         /// <returns>HashCode</returns>
         public override int GetHashCode()
         {
-            return (Name.FirstName.ToLower() + Name.LastName.ToLower()).GetHashCode();
+            return (this.Name.FirstName.ToLower() + this.Name.LastName.ToLower()).GetHashCode();
         }
+
         /// <summary>
         /// Copy Constructor.
         /// </summary>
