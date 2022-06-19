@@ -27,10 +27,18 @@
         {
             if ((obj == null) || this.GetType().Equals(obj.GetType()))
             {
-                return false;
+                Symptom item = obj as Symptom;
+                if (item is null && this is null)
+                {
+                    return true;
+                }
+                if (item is null || this is null)
+                {
+                    return false;
+                }
+                return this.SymptomName.ToLower() == item.SymptomName.ToLower();
             }
-
-            return SymptomName.ToLower() == ((Symptom)obj).SymptomName.ToLower();
+            return false;
         }
         /// <summary>
         /// Uses the .Equals function to determine if two Symptom objects are not equal to one another.
@@ -40,7 +48,16 @@
         /// <returns></returns>
         public static bool operator !=(Symptom obj1, Symptom obj2)
         {
-            return !obj1.Equals(obj2);
+            if (obj1 is null && obj2 is null)
+            {
+                return true;
+            }
+            if (obj1 is null || obj2 is null)
+            {
+                return false;
+            }
+
+            return obj1.Equals(obj2);
         }
         /// <summary>
         /// Uses the .Equals function to determine if two Symptom objects are equal to one another.
@@ -50,7 +67,7 @@
         /// <returns></returns>
         public static bool operator ==(Symptom obj1, Symptom obj2)
         {
-            return obj1.Equals(obj2);
+            return !(obj1 == obj2);
         }
 
         /// <summary>
