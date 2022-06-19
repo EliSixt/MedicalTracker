@@ -31,13 +31,18 @@
         /// <returns>Bool</returns>
         public override bool Equals(object obj)
         {
-            if ((obj == null) || this.GetType().Equals(obj.GetType()))
+            if (this.GetType().Equals(obj.GetType()))
             {
-                return false;
-            }
-            if (GenericName.ToLower() == ((Medicine)obj).GenericName.ToLower() || BrandName.ToLower() == ((Medicine)obj).BrandName.ToLower())
-            {
-                return true;
+                Medicine item = obj as Medicine;
+                if (item is null && this is null)
+                {
+                    return true;
+                }
+                if (item is null || this is null)
+                {
+                    return false;
+                }
+                return (this.GenericName.ToLower() == item.GenericName.ToLower() || this.BrandName.ToLower() == item.BrandName.ToLower());
             }
             return false;
         }
@@ -50,6 +55,15 @@
         /// <returns>Bool</returns>
         public static bool operator ==(Medicine obj1, Medicine obj2)
         {
+            if (obj1 is null && obj2 is null)
+            {
+                return true;
+            }
+            if (obj1 is null || obj2 is null)
+            {
+                return false;
+            }
+
             return obj1.Equals(obj2);
         }
 
@@ -61,7 +75,7 @@
         /// <returns>Bool</returns>
         public static bool operator !=(Medicine obj1, Medicine obj2)
         {
-            return !obj1.Equals(obj2);
+            return !(obj1 == obj2);
         }
         /// <summary>
         /// Gets the hashcode of GenericName + BrandName lowercased.
