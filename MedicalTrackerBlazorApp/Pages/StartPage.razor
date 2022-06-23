@@ -6,6 +6,10 @@
     Helps you and your loved ones keep up with medicines, appointments, allegies, etc...
 </p>
 
+@*//TODO list:
+        //functinality to add appointment
+        //alert on upcoming routine
+        //alert/Get the next daily medicines*@
 @*<EditForm Model="Data.CurrentPatient.GeneralInfo">*@
 @*<DataAnnotationsValidator></DataAnnotationsValidator>*@
 
@@ -24,7 +28,7 @@
     <button @onclick="Data.SubmitAndSerializePatient" type="submit"> Save Patient</button>
     CreatingANewPatient = false;
 }
-@*make it to where the user can erase and edit Patients in the list. Add dates when the patients were added?*@
+@*TODO: make it to where the user can erase and edit Patients in the list. Add dates when the patients were added?*@
 @*</EditForm>*@
 @code {
     public bool CreatingANewPatient = false;
