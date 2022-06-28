@@ -18,6 +18,17 @@ namespace MedicalTrackerBlazorApp.Data
         }
 
         /// <summary>
+        /// Makes and returns a copy of a Patient object.
+        /// </summary>
+        /// <param name="currentPatient">Patient Object to copy.</param>
+        /// <returns>Patient copy</returns>
+        public Patient GetCurrentPatient()
+        {
+            Patient copyPatient = new(CurrentPatient);
+            return copyPatient;
+        }
+
+        /// <summary>
         /// Checks whether a directory exists, else it creates one.
         /// Uses a method to check for existing local patient file and loads file.
         /// </summary>
@@ -44,20 +55,6 @@ namespace MedicalTrackerBlazorApp.Data
             get => _patients;
             set => _patients = value;
         }
-        /// <summary>
-        /// Makes and returns a copy of a Patient object.
-        /// </summary>
-        /// <param name="currentPatient">Patient Object to copy.</param>
-        /// <returns>Patient copy</returns>
-        public Patient? GetCurrentPatient()
-        {
-            if (CurrentPatient != null)
-            {
-                Patient copyPatient = new(CurrentPatient);
-                return copyPatient;
-            }
-            return null;
-        }
 
         /// <summary>
         /// Intended to use at the end, when all of the patient info has been filled out and ready to submit.
@@ -69,10 +66,9 @@ namespace MedicalTrackerBlazorApp.Data
         {
             Patient copyPatient = new(CurrentPatient);
 
-            copyPatient.ID = GetNextPatientID();
-
             if (Patients.Count <= 0)
             {
+                copyPatient.ID = GetNextPatientID();
                 Patients.Add(copyPatient);
                 CurrentPatient = new();
                 MedicalTracker.Program.XmlWriter(Patients, filePathPatientsList);
@@ -80,12 +76,53 @@ namespace MedicalTrackerBlazorApp.Data
             }
             if (!HasDuplicate(Patients, copyPatient))
             {
+                copyPatient.ID = GetNextPatientID();
                 Patients.Add(copyPatient);
                 CurrentPatient = new();
                 MedicalTracker.Program.XmlWriter(Patients, filePathPatientsList);
                 return;
             }
         }
+
+        /// <summary>
+        /// Will check if only a designated value in a list got added, won't pass if any other items in that list got changed.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="unchangedList">Original list, unchanged.</param>
+        /// <param name="changedList">List where the new value was added.</param>
+        /// <param name="valueAdded">Value that is being compared and was added to a list.</param>
+        /// <returns>True if the valueAdded was the only item added.</returns>
+        public bool HasDifferenceOfAValue<T>(List<T> unchangedList, List<T> changedList, T valueAdded)
+        {
+            if (unchangedList == null && changedList == null)
+            {
+                return false;
+            }
+            if (unchangedList == null || changedList == null)
+            {
+                return true;
+            }
+            if (unchangedList.GetType() != changedList.GetType())
+            {
+                return false;
+            }
+            //if (!HasDuplicate(unchangedList, valueAdded) && HasDuplicate(changedList, valueAdded))
+            //{
+            //    return true;
+            //}
+
+            //var difference = changedList.Except(unchangedList);
+
+            var difference = unchangedList.Where(X => !changedList.Contains(X));
+
+            if (difference.Equals(valueAdded))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// Checks to see if the patient list file exists locally. 
         /// If true, it'll assign the stored values into a Patient list variable.
@@ -104,6 +141,7 @@ namespace MedicalTrackerBlazorApp.Data
         /// </summary> 
         public int GetNextPatientID()
         {
+            //check for 'leftover' IDs that were used and deleted?
             return Patients.Count <= 0 ? 1 : Patients.Max(x => x.ID) + 1;
         }
 

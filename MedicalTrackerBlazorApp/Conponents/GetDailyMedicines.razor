@@ -27,7 +27,7 @@
     public DailyMedicine DailyMed { get; set; } = new();
 
     [Parameter]
-    public EventCallback<DailyMedicine> DailyDrugChanged { get; set; }
+    public EventCallback<DailyMedicine> DailyMedChanged { get; set; }
 
     public TimeSpan LocalTime = TimeSpan.FromHours(0);
 
@@ -43,7 +43,7 @@
     {
         //DayToDayMedicine.TimeSpanOfDose = LocalTime;
         DailyMed.TimeSpanOfDose = LocalTime;
-        DailyDrugChanged.InvokeAsync(DailyMed);
+        DailyMedChanged.InvokeAsync(DailyMed);
     }
 
     /// <summary>
