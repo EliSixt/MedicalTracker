@@ -7,7 +7,7 @@
         public string StreetName { get; set; }
         public string City { get; set; }
         public string State { get; set; }
-        public int ZIPCode { get; set; }
+        public string ZIPCode { get; set; }
         public string Country { get; set; }
 
 

@@ -9,6 +9,8 @@ namespace MedicalTrackerBlazorApp.Data
         {
             SetupUp();
         }
+
+
         public bool PatientsLoaded
         {
             get
@@ -16,6 +18,7 @@ namespace MedicalTrackerBlazorApp.Data
                 return _patients != null ? _patients.Count > 0 : false;
             }
         }
+
 
         /// <summary>
         /// Makes and returns a copy of a Patient object.
@@ -27,6 +30,7 @@ namespace MedicalTrackerBlazorApp.Data
             Patient copyPatient = new(CurrentPatient);
             return copyPatient;
         }
+
 
         /// <summary>
         /// Checks whether a directory exists, else it creates one.
@@ -42,11 +46,17 @@ namespace MedicalTrackerBlazorApp.Data
             LoadExistingPatients();
         }
 
+
         public string filePathPatientsList = $"{fileStoreDirectory}{fileNamePatients}"; //TODO: Find all references and replace them
         public static string fileStoreDirectory = @"C:\Users\Elias\OneDrive\TMP\";
         public static string fileNamePatients = @"patientsList.xml";
 
-        public Patient CurrentPatient { get; set; } = new();
+        private Patient _currentPatient { get; set; } = new();
+        public Patient CurrentPatient
+        {
+            get => _currentPatient;
+            set => _currentPatient = value;
+        }
 
         private List<Patient> _patients = new();
 
@@ -55,6 +65,7 @@ namespace MedicalTrackerBlazorApp.Data
             get => _patients;
             set => _patients = value;
         }
+
 
         /// <summary>
         /// Intended to use at the end, when all of the patient info has been filled out and ready to submit.
@@ -66,23 +77,111 @@ namespace MedicalTrackerBlazorApp.Data
         {
             Patient copyPatient = new(CurrentPatient);
 
-            if (Patients.Count <= 0)
-            {
-                copyPatient.ID = GetNextPatientID();
-                Patients.Add(copyPatient);
-                CurrentPatient = new();
-                MedicalTracker.Program.XmlWriter(Patients, filePathPatientsList);
-                return;
-            }
             if (!HasDuplicate(Patients, copyPatient))
             {
                 copyPatient.ID = GetNextPatientID();
+
                 Patients.Add(copyPatient);
                 CurrentPatient = new();
                 MedicalTracker.Program.XmlWriter(Patients, filePathPatientsList);
-                return;
             }
         }
+
+
+        /// <summary>
+        /// Checks a patient object to see if it's filled with all the required info.
+        /// </summary>
+        /// <param name="patient">Patient object</param>
+        /// <returns>boolean, whether or not a patient object is filled.</returns>
+        public bool IsGeneralInfoFilled(Patient patient)
+        {
+            if (patient.GeneralInfo.Name.FirstName == null && patient.GeneralInfo.Name.LastName == null)
+            {
+                return false; //TODO: later on return what is specifically needed instead of a boolean.
+            }
+            if (patient.GeneralInfo.DateOfBirth <= DateOnly.MinValue)
+            {
+                return false;
+            }
+            if (patient.GeneralInfo.Age <= 0)
+            {
+                return false;
+            }
+            if (patient.GeneralInfo.Weight <= 0)
+            {
+                return false;
+            }
+            if (patient.GeneralInfo.Height <= 0)
+            {
+                return false;
+            }
+            if (!IsContactInfoFilled(patient.GeneralInfo.ContactInfo))
+            {
+                return false;
+            }
+            return true;
+        }
+
+
+        /// <summary>
+        /// Checks a Contact object to see if it's filled with all the required info.
+        /// </summary>
+        /// <param name="contact">Contact object</param>
+        /// <returns>Bool, whether or not the necessary info is filled out.</returns>
+        public bool IsContactInfoFilled(ContactInfo contact)
+        {
+            //TODO: later on return what is specifically needed instead of a boolean.
+            if (contact.Name.FirstName == null || contact.Name.LastName == null)
+            {
+                return false;
+            }
+            if (contact.MobilePhoneNum == null && contact.HomePhoneNum == null && contact.WorkPhoneNum == null)
+            {
+                return false;
+            }
+            if (!IsAddressInfoFilled(contact.Address))
+            {
+                return false; //TODO: this is in an if statement cause later on IsContactInfoFilled and IsAddressInfoFilled will return what is specifically needed to be filled out.
+            }
+            return true;
+        }
+
+
+        /// <summary>
+        /// Checks the Address object to see if it's filled with all the required info.
+        /// </summary>
+        /// <param name="address">Address object</param>
+        /// <returns>Bool, whether or not Address is info is filled.</returns>
+        public bool IsAddressInfoFilled(Address address)
+        {
+            //TODO: later on return what is specifically needed instead of a boolean.
+            if (address.BuildingNumber <= 0)
+            {
+                return false;
+            }
+            if (address.StreetName == null)
+            {
+                return false;
+            }
+            if (address.City == null)
+            {
+                return false;
+            }
+            if (address.State == null)
+            {
+                return false;
+            }
+            if (address.ZIPCode == null)
+            {
+                return false;
+            }
+            if (address.Country == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
 
         /// <summary>
         /// Will check if only a designated value in a list got added, won't pass if any other items in that list got changed.
@@ -123,6 +222,7 @@ namespace MedicalTrackerBlazorApp.Data
             return false;
         }
 
+
         /// <summary>
         /// Checks to see if the patient list file exists locally. 
         /// If true, it'll assign the stored values into a Patient list variable.
@@ -135,6 +235,7 @@ namespace MedicalTrackerBlazorApp.Data
             }
         }
 
+
         /// <summary>
         /// Returns an new int by finding the Max ID within the Patients list and adding one.
         /// Intended to be used for patient IDs.
@@ -145,10 +246,11 @@ namespace MedicalTrackerBlazorApp.Data
             return Patients.Count <= 0 ? 1 : Patients.Max(x => x.ID) + 1;
         }
 
+
         /// <summary>
         /// Checks list if there's an item thats the same as the provided object.
         /// Null checks.
-        /// Checks if the list's tpe and the object's type are the same.
+        /// Checks if the list's type and the object's type are the same.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="objList">The List of items</param>
@@ -173,6 +275,7 @@ namespace MedicalTrackerBlazorApp.Data
             }
             return false;
         }
+
 
         //TODO: Put this in the DataService and double checks before deleting. Save the new modified list onto a new xml List and make a backup list incase.
         /// <summary>
@@ -199,6 +302,8 @@ namespace MedicalTrackerBlazorApp.Data
             }
             return false;
         }
+
+
         ///// <summary>
         ///// Method that serializes a list<Object>.
         ///// </summary>
