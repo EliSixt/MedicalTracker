@@ -161,12 +161,11 @@
         {
             copyCurrentPatient.Allergies.Add(CopyAllergy); //make this have that extra wall of C&B
 
-            if(Data.HasDifferenceOfAValue(Data.GetCurrentPatient().Allergies, copyCurrentPatient.Allergies, CopyAllergy))
+            if (Data.HasDifferenceOfAValue(Data.GetCurrentPatient().Allergies, copyCurrentPatient.Allergies, CopyAllergy))
             {
                 //TODO: Add to currentPatient with a new method cause currentPatient will be private.
             }
             Allergy = new();
         }
-
     }
 }

@@ -89,97 +89,34 @@ namespace MedicalTrackerBlazorApp.Data
 
 
         /// <summary>
-        /// Checks a patient object to see if it's filled with all the required info.
+        /// Used whenever trying to add new items into the currentPatient.
+        /// First, copies the CurrentPatient. (Or Reassigns)
+        /// Second, uses a method to see if all items that are required are filled within that NewObject.
+        /// Third, iterates through the list of items (of CopyCurrentPatient) in which the newObject will be added into, to check for any existing duplicates.
+        /// If second and third pass, it will then add it onto the copyPatient and then it would replace the currentPatient.
         /// </summary>
-        /// <param name="patient">Patient object</param>
-        /// <returns>boolean, whether or not a patient object is filled.</returns>
-        public bool IsGeneralInfoFilled(Patient patient)
+        /// <typeparam name="T"></typeparam>
+        /// <param name="objListFromCopyCurrentPatient"></param>
+        /// <param name="newObj"></param>
+        /// <param name="copyCurrentPatient"></param>
+        /// <param name="methodParameter"></param>
+        /// <param name="method"></param>
+        /// <returns>bool</returns>
+        public bool CheckReviewNewDataAndUpdateCurrentPatient<T>(List<T> objListFromCopyCurrentPatient, T newObj, Patient copyCurrentPatient, T methodParameter, Func<object, bool> method)
         {
-            if (patient.GeneralInfo.Name.FirstName == null && patient.GeneralInfo.Name.LastName == null)
-            {
-                return false; //TODO: later on return what is specifically needed instead of a boolean.
-            }
-            if (patient.GeneralInfo.DateOfBirth <= DateOnly.MinValue)
-            {
-                return false;
-            }
-            if (patient.GeneralInfo.Age <= 0)
-            {
-                return false;
-            }
-            if (patient.GeneralInfo.Weight <= 0)
-            {
-                return false;
-            }
-            if (patient.GeneralInfo.Height <= 0)
-            {
-                return false;
-            }
-            if (!IsContactInfoFilled(patient.GeneralInfo.ContactInfo))
-            {
-                return false;
-            }
-            return true;
-        }
+            copyCurrentPatient = new(GetCurrentPatient());
 
+            bool isValid = method(methodParameter);
 
-        /// <summary>
-        /// Checks a Contact object to see if it's filled with all the required info.
-        /// </summary>
-        /// <param name="contact">Contact object</param>
-        /// <returns>Bool, whether or not the necessary info is filled out.</returns>
-        public bool IsContactInfoFilled(ContactInfo contact)
-        {
-            //TODO: later on return what is specifically needed instead of a boolean.
-            if (contact.Name.FirstName == null || contact.Name.LastName == null)
+            if (!HasDuplicate(objListFromCopyCurrentPatient, newObj) && isValid)
             {
-                return false;
-            }
-            if (contact.MobilePhoneNum == null && contact.HomePhoneNum == null && contact.WorkPhoneNum == null)
-            {
-                return false;
-            }
-            if (!IsAddressInfoFilled(contact.Address))
-            {
-                return false; //TODO: this is in an if statement cause later on IsContactInfoFilled and IsAddressInfoFilled will return what is specifically needed to be filled out.
-            }
-            return true;
-        }
+                objListFromCopyCurrentPatient.Add(newObj);
 
-
-        /// <summary>
-        /// Checks the Address object to see if it's filled with all the required info.
-        /// </summary>
-        /// <param name="address">Address object</param>
-        /// <returns>Bool, whether or not Address is info is filled.</returns>
-        public bool IsAddressInfoFilled(Address address)
-        {
-            //TODO: later on return what is specifically needed instead of a boolean.
-            if (address.BuildingNumber <= 0)
-            {
-                return false;
+                //TODO: working on this with GetGeneralInfo first
+                //****Add to currentPatient here*****
+                return true;//to check success
             }
-            if (address.StreetName == null)
-            {
-                return false;
-            }
-            if (address.City == null)
-            {
-                return false;
-            }
-            if (address.State == null)
-            {
-                return false;
-            }
-            if (address.ZIPCode == null)
-            {
-                return false;
-            }
-            if (address.Country == null)
-            {
-                return false;
-            }
-            return true;
+            return false;
         }
 
 
@@ -329,6 +266,101 @@ namespace MedicalTrackerBlazorApp.Data
         //    using StreamReader tx = new(aFilePath);
         //    return (T)xmlSerializer.Deserialize(tx);
         //}
+
+
+        /// <summary>
+        /// Checks a patient object to see if it's filled with all the required info.
+        /// </summary>
+        /// <param name="patient">Patient object</param>
+        /// <returns>boolean, whether or not a patient object is filled.</returns>
+        public bool IsGeneralInfoFilled(Patient patient)
+        {
+            if (patient.GeneralInfo.Name.FirstName == null && patient.GeneralInfo.Name.LastName == null)
+            {
+                return false; //TODO: later on return what is specifically needed instead of a boolean.
+            }
+            if (patient.GeneralInfo.DateOfBirth <= DateOnly.MinValue)
+            {
+                return false;
+            }
+            if (patient.GeneralInfo.Age <= 0)
+            {
+                return false;
+            }
+            if (patient.GeneralInfo.Weight <= 0)
+            {
+                return false;
+            }
+            if (patient.GeneralInfo.Height <= 0)
+            {
+                return false;
+            }
+            if (!IsContactInfoFilled(patient.GeneralInfo.ContactInfo))
+            {
+                return false;
+            }
+            return true;
+        }
+
+
+        /// <summary>
+        /// Checks a Contact object to see if it's filled with all the required info.
+        /// </summary>
+        /// <param name="contact">Contact object</param>
+        /// <returns>Bool, whether or not the necessary info is filled out.</returns>
+        public bool IsContactInfoFilled(ContactInfo contact)
+        {
+            //TODO: later on return what is specifically needed instead of a boolean.
+            if (contact.Name.FirstName == null || contact.Name.LastName == null)
+            {
+                return false;
+            }
+            if (contact.MobilePhoneNum == null && contact.HomePhoneNum == null && contact.WorkPhoneNum == null)
+            {
+                return false;
+            }
+            if (!IsAddressInfoFilled(contact.Address))
+            {
+                return false; //TODO: this is in an if statement cause later on IsContactInfoFilled and IsAddressInfoFilled will return what is specifically needed to be filled out.
+            }
+            return true;
+        }
+
+
+        /// <summary>
+        /// Checks the Address object to see if it's filled with all the required info.
+        /// </summary>
+        /// <param name="address">Address object</param>
+        /// <returns>Bool, whether or not Address is info is filled.</returns>
+        public bool IsAddressInfoFilled(Address address)
+        {
+            //TODO: later on return what is specifically needed instead of a boolean.
+            if (address.BuildingNumber <= 0)
+            {
+                return false;
+            }
+            if (address.StreetName == null)
+            {
+                return false;
+            }
+            if (address.City == null)
+            {
+                return false;
+            }
+            if (address.State == null)
+            {
+                return false;
+            }
+            if (address.ZIPCode == null)
+            {
+                return false;
+            }
+            if (address.Country == null)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }
 

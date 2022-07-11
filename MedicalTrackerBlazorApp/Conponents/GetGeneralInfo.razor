@@ -55,10 +55,14 @@
     {
         GeneralInfo copyGeneralInfo = new(GeneralInfo);
 
+        Patient copyPatient = new(Data.GetCurrentPatient());
+
         if (!Data.HasDuplicate((Data.Patients.Select(x => x.GeneralInfo).ToList()), copyGeneralInfo))
         {
             Data.CurrentPatient.GeneralInfo = copyGeneralInfo;
             GeneralInfo = new();
         }
+
+        //Data.CheckReviewNewDataAndUpdateCurrentPatient(Data.Patients.Select(x => x.GeneralInfo).ToList(), copyGeneralInfo, copyPatient, Data.IsGeneralInfoFilled(copyPatient));
     }
 }

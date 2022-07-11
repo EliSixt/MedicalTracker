@@ -415,13 +415,13 @@ namespace MedicalTracker
             practicePatient.PatientInfo.Address.StreetName = "CoolStreet Blvd";
             practicePatient.PatientInfo.Address.City = "louisville";
             practicePatient.PatientInfo.Address.State = "kentucky";
-            practicePatient.PatientInfo.Address.ZIPCode = 41234;
+            practicePatient.PatientInfo.Address.ZIPCode = "41234";
 
             //emergency contacts
             practicePatient.EmergencyContacts.Add(new ContactInfo
             {
                 Name = new Name { FirstName = "Jose", LastName = "Swaln", MiddleName = "R" },
-                Address = new Address { City = "louisville", State = "kentucky", StreetName = "Lincoln", BuildingNumber = 89999, ZIPCode = 44444 },
+                Address = new Address { City = "louisville", State = "kentucky", StreetName = "Lincoln", BuildingNumber = 89999, ZIPCode = "44444" },
                 Email = "something@gmail.com",
                 MobilePhoneNum = "5048790990",
                 HomePhoneNum = "777-777-7777"
@@ -429,7 +429,7 @@ namespace MedicalTracker
             practicePatient.EmergencyContacts.Add(new ContactInfo
             {
                 Name = new Name { FirstName = "Frank", LastName = "Dogs", MiddleName = "R" },
-                Address = new Address { City = "louisville", State = "kentucky", StreetName = "Hotdog", BuildingNumber = 1234, ZIPCode = 12345 },
+                Address = new Address { City = "louisville", State = "kentucky", StreetName = "Hotdog", BuildingNumber = 1234, ZIPCode = "12345" },
                 Email = "HotDogs@gmail.com",
                 MobilePhoneNum = "5001231234",
                 HomePhoneNum = "123-123-1234"
@@ -439,7 +439,7 @@ namespace MedicalTracker
             practicePatient.EmergencyContacts.Add(new ContactInfo
             {
                 Name = new Name { FirstName = "John", LastName = "Smith", MiddleName = "umbrela" },
-                Address = new Address { City = "louisville", State = "kentucky", StreetName = "Lindon", BuildingNumber = 89923, ZIPCode = 44454 },
+                Address = new Address { City = "louisville", State = "kentucky", StreetName = "Lindon", BuildingNumber = 89923, ZIPCode = "44454" },
                 Email = "JohnSmith@gmail.com",
                 MobilePhoneNum = "5048791234",
                 HomePhoneNum = "777-210-5432"
@@ -447,7 +447,7 @@ namespace MedicalTracker
             practicePatient.EmergencyContacts.Add(new ContactInfo
             {
                 Name = new Name { FirstName = "Mike", LastName = "Mouse", MiddleName = "Emph" },
-                Address = new Address { City = "louisville", State = "kentucky", StreetName = "Hills", BuildingNumber = 8888, ZIPCode = 47767 },
+                Address = new Address { City = "louisville", State = "kentucky", StreetName = "Hills", BuildingNumber = 8888, ZIPCode = "47767" },
                 Email = "Disneyy@gmail.com",
                 MobilePhoneNum = "502-345-7777",
                 HomePhoneNum = "999-888-7777"
