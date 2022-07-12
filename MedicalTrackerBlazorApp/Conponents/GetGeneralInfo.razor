@@ -62,7 +62,8 @@
             Data.CurrentPatient.GeneralInfo = copyGeneralInfo;
             GeneralInfo = new();
         }
-
-        //Data.CheckReviewNewDataAndUpdateCurrentPatient(Data.Patients.Select(x => x.GeneralInfo).ToList(), copyGeneralInfo, copyPatient, Data.IsGeneralInfoFilled(copyPatient));
+        bool success;
+        //success = Data.CheckReviewNewDataAndUpdateCurrentPatient(Data.Patients.Select(x => x.GeneralInfo).ToList(), copyGeneralInfo, copyPatient, Data.IsGeneralInfoFilled(copyPatient));
+        //success = Data.CheckReviewNewDataAndUpdateCurrentPatient(Data.Patients.Select(x => x.GeneralInfo).ToList(), copyGeneralInfo, copyPatient, copyGeneralInfo, Data.IsGeneralInfoFilled(copyGeneralInfo));
     }
 }

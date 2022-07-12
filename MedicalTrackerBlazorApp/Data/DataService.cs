@@ -102,13 +102,13 @@ namespace MedicalTrackerBlazorApp.Data
         /// <param name="methodParameter"></param>
         /// <param name="method"></param>
         /// <returns>bool</returns>
-        public bool CheckReviewNewDataAndUpdateCurrentPatient<T>(List<T> objListFromCopyCurrentPatient, T newObj, Patient copyCurrentPatient, T methodParameter, Func<object, bool> method)
+        public bool CheckReviewNewDataAndUpdateCurrentPatient<T>(List<T> objListFromCopyCurrentPatient, T newObj, Patient copyCurrentPatient, T methodParameter, Func<T, bool> method)
         {
             copyCurrentPatient = new(GetCurrentPatient());
 
-            bool isValid = method(methodParameter);
+            bool objectCompletedAndFilled = method(methodParameter); //is object is filled or not
 
-            if (!HasDuplicate(objListFromCopyCurrentPatient, newObj) && isValid)
+            if (!HasDuplicate(objListFromCopyCurrentPatient, newObj) && objectCompletedAndFilled) //Check for duplicates and if it's filled
             {
                 objListFromCopyCurrentPatient.Add(newObj);
 
@@ -271,31 +271,31 @@ namespace MedicalTrackerBlazorApp.Data
         /// <summary>
         /// Checks a patient object to see if it's filled with all the required info.
         /// </summary>
-        /// <param name="patient">Patient object</param>
+        /// <param name="GeneralInfo">Patient object</param>
         /// <returns>boolean, whether or not a patient object is filled.</returns>
-        public bool IsGeneralInfoFilled(Patient patient)
+        public bool IsGeneralInfoFilled(GeneralInfo GeneralInfo)
         {
-            if (patient.GeneralInfo.Name.FirstName == null && patient.GeneralInfo.Name.LastName == null)
+            if (GeneralInfo.Name.FirstName == null && GeneralInfo.Name.LastName == null)
             {
                 return false; //TODO: later on return what is specifically needed instead of a boolean.
             }
-            if (patient.GeneralInfo.DateOfBirth <= DateOnly.MinValue)
+            if (GeneralInfo.DateOfBirth <= DateOnly.MinValue)
             {
                 return false;
             }
-            if (patient.GeneralInfo.Age <= 0)
+            if (GeneralInfo.Age <= 0)
             {
                 return false;
             }
-            if (patient.GeneralInfo.Weight <= 0)
+            if (GeneralInfo.Weight <= 0)
             {
                 return false;
             }
-            if (patient.GeneralInfo.Height <= 0)
+            if (GeneralInfo.Height <= 0)
             {
                 return false;
             }
-            if (!IsContactInfoFilled(patient.GeneralInfo.ContactInfo))
+            if (!IsContactInfoFilled(GeneralInfo.ContactInfo))
             {
                 return false;
             }
