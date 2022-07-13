@@ -102,23 +102,54 @@ namespace MedicalTrackerBlazorApp.Data
         /// <param name="methodParameter"></param>
         /// <param name="method"></param>
         /// <returns>bool</returns>
-        public bool CheckReviewNewDataAndUpdateCurrentPatient<T>(List<T> objListFromCopyCurrentPatient, T newObj, Patient copyCurrentPatient, T methodParameter, Func<T, bool> method)
+        public bool CheckReviewNewDataAndUpdateCurrentPatient<T>(List<T> objListFromCopyCurrentPatient, T newObj, Patient copyCurrentPatient)
         {
-            copyCurrentPatient = new(GetCurrentPatient());
+            List<T> unchangedCopyOfObjListFromCopyCurrentPatient = new(objListFromCopyCurrentPatient);
 
-            bool objectCompletedAndFilled = method(methodParameter); //is object is filled or not
+            copyCurrentPatient = new(GetCurrentPatient());//refresh copyCurrentPatient
 
-            if (!HasDuplicate(objListFromCopyCurrentPatient, newObj) && objectCompletedAndFilled) //Check for duplicates and if it's filled
+            if (!HasDuplicate(objListFromCopyCurrentPatient, newObj))//checks for duplicates
             {
                 objListFromCopyCurrentPatient.Add(newObj);
 
-                //TODO: working on this with GetGeneralInfo first
-                //****Add to currentPatient here*****
-                return true;//to check success
+                if (HasDifferenceOfAValue(unchangedCopyOfObjListFromCopyCurrentPatient, objListFromCopyCurrentPatient, newObj))//Checks if only the newObject value gets changed
+                {
+
+                    CurrentPatient = new(copyCurrentPatient); //TODO: method to reassign/declare value for currentPatient.
+
+                    return true;//to check success
+                }
+
             }
             return false;
         }
 
+        /// <summary>
+        /// Checks if the GeneralInfo obj is filled with the required info.
+        /// Prevents duplicate patients from being added into the Patients list
+        /// by comparing GeneralInfo to all of the existing (List)Patients.GeneralInfo in the DataService.
+        /// If it passes it gets allowed to be submitted and saved.
+        /// </summary>
+        public void SaveGeneralInfo(GeneralInfo generalInfo)
+        {
+            GeneralInfo copyGeneralInfo = new(generalInfo);
+
+            Patient copyCurrentPatient = new(GetCurrentPatient());
+
+            if (IsGeneralInfoFilled(generalInfo))//Checks to see if the GeneralInfo obj is filled
+            {
+               bool success = CheckReviewNewDataAndUpdateCurrentPatient((Patients.Select(x => x.GeneralInfo).ToList()), generalInfo, copyCurrentPatient); //checks for duplicate and if only the new value gets added.
+            }
+
+            //if (!HasDuplicate((Patients.Select(x => x.GeneralInfo).ToList()), copyGeneralInfo))
+            //{
+            //    CurrentPatient.GeneralInfo = copyGeneralInfo;
+            //    generalInfo = new();
+            //}
+            //bool success;
+            //success = Data.CheckReviewNewDataAndUpdateCurrentPatient(Data.Patients.Select(x => x.GeneralInfo).ToList(), copyGeneralInfo, copyPatient, Data.IsGeneralInfoFilled(copyPatient));
+            //success = Data.CheckReviewNewDataAndUpdateCurrentPatient(Data.Patients.Select(x => x.GeneralInfo).ToList(), copyGeneralInfo, copyPatient, copyGeneralInfo, Data.IsGeneralInfoFilled(copyGeneralInfo));
+        }
 
         /// <summary>
         /// Will check if only a designated value in a list got added, won't pass if any other items in that list got changed.
