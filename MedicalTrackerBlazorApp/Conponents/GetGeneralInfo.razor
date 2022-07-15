@@ -32,7 +32,7 @@
     <input type="text" @bind="GeneralInfo.SexAtBirth" placeholder="Sex at Birth" />@*SexAtBirth*@
 </div>
 
-<button @onclick="() => Data.SaveGeneralInfo(GeneralInfo)">Submit General Info</button>
+<button @onclick="SaveButtonGeneralInfo">Submit General Info</button>
 
 
     General Info: @GeneralInfo.
@@ -45,6 +45,18 @@
     [Parameter]
     public EventCallback<GeneralInfo> GeneralInfoChanged { get; set; }
 
+    /// <summary>
+    /// This calls on SaveGeneralInfo method from the Dataservice.
+    /// If it's successful it'll clear the fields in GeneralInfo.
+    /// </summary>
+    public void SaveButtonGeneralInfo()
+    {
+        bool success = Data.SaveGeneralInfo(GeneralInfo);
+        if (success)
+        {
+            GeneralInfo = new();
+        }
+    }
 
     ///// <summary>
     ///// Prevents duplicate patients from being added into the Patients list
@@ -66,4 +78,5 @@
     //    //success = Data.CheckReviewNewDataAndUpdateCurrentPatient(Data.Patients.Select(x => x.GeneralInfo).ToList(), copyGeneralInfo, copyPatient, Data.IsGeneralInfoFilled(copyPatient));
     //    //success = Data.CheckReviewNewDataAndUpdateCurrentPatient(Data.Patients.Select(x => x.GeneralInfo).ToList(), copyGeneralInfo, copyPatient, copyGeneralInfo, Data.IsGeneralInfoFilled(copyGeneralInfo));
     //}
+
 }

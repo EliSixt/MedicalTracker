@@ -130,7 +130,7 @@ namespace MedicalTrackerBlazorApp.Data
         /// by comparing GeneralInfo to all of the existing (List)Patients.GeneralInfo in the DataService.
         /// If it passes it gets allowed to be submitted and saved.
         /// </summary>
-        public void SaveGeneralInfo(GeneralInfo generalInfo)
+        public bool SaveGeneralInfo(GeneralInfo generalInfo)
         {
             GeneralInfo copyGeneralInfo = new(generalInfo);
 
@@ -138,8 +138,11 @@ namespace MedicalTrackerBlazorApp.Data
 
             if (IsGeneralInfoFilled(generalInfo))//Checks to see if the GeneralInfo obj is filled
             {
-               bool success = CheckReviewNewDataAndUpdateCurrentPatient((Patients.Select(x => x.GeneralInfo).ToList()), generalInfo, copyCurrentPatient); //checks for duplicate and if only the new value gets added.
+                //checks for duplicate and if only the new value gets added.
+                return CheckReviewNewDataAndUpdateCurrentPatient((Patients.Select(x => x.GeneralInfo).ToList()), generalInfo, copyCurrentPatient);
             }
+
+            return false;
 
             //if (!HasDuplicate((Patients.Select(x => x.GeneralInfo).ToList()), copyGeneralInfo))
             //{
