@@ -32,7 +32,7 @@
     <input type="text" @bind="GeneralInfo.SexAtBirth" placeholder="Sex at Birth" />@*SexAtBirth*@
 </div>
 
-<button @onclick="SaveButtonGeneralInfo">Submit General Info</button>
+<button @onclick="SaveButtonForGeneralInfo">Submit General Info</button>
 
 
     General Info: @GeneralInfo.
@@ -49,7 +49,7 @@
     /// This calls on SaveGeneralInfo method from the Dataservice.
     /// If it's successful it'll clear the fields in GeneralInfo.
     /// </summary>
-    public void SaveButtonGeneralInfo()
+    public void SaveButtonForGeneralInfo()
     {
         bool success = Data.SaveGeneralInfo(GeneralInfo);
         if (success)
