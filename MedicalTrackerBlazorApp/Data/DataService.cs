@@ -290,37 +290,31 @@ namespace MedicalTrackerBlazorApp.Data
             }
 
             return false;
-
-            //if (!HasDuplicate((Patients.Select(x => x.GeneralInfo).ToList()), copyGeneralInfo))
-            //{
-            //    CurrentPatient.GeneralInfo = copyGeneralInfo;
-            //    generalInfo = new();
-            //}
-            //bool success;
-            //success = Data.CheckReviewNewDataAndUpdateCurrentPatient(Data.Patients.Select(x => x.GeneralInfo).ToList(), copyGeneralInfo, copyPatient, Data.IsGeneralInfoFilled(copyPatient));
-            //success = Data.CheckReviewNewDataAndUpdateCurrentPatient(Data.Patients.Select(x => x.GeneralInfo).ToList(), copyGeneralInfo, copyPatient, copyGeneralInfo, Data.IsGeneralInfoFilled(copyGeneralInfo));
         }
 
 
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="allergy"></param>
-        ///// <returns></returns>
-        //public bool SaveAllergy(Allergy allergy)
-        //{
-        //    Allergy copyAllergy = new(allergy);
+        /// <summary>
+        /// Checks if an allergy obj is filled with the required info.
+        /// Prevents duplicate allergy from being added into the allergies list
+        /// by comparing the allergy to all of the existing (List)allergies in the currentPatient.
+        /// If it passes it gets allowed to be submitted and saved. 
+        /// </summary>
+        /// <param name="allergy"></param>
+        /// <returns>bool, whether it's successful or not</returns>
+        public bool SaveAllergy(Allergy allergy)
+        {
+            Allergy copyAllergy = new(allergy);
 
-        //    Patient copyCurrentPatient = new(GetCurrentPatient());
+            Patient copyCurrentPatient = new(GetCurrentPatient());
 
-        //    if (IsAllergyInfoFilled(copyAllergy))//Checks to see if the allergy obj is filled
-        //    {
-        //        //checks for duplicate and if only the new value gets added.
-        //        return CheckReviewNewDataAndUpdateCurrentPatient(copyCurrentPatient.Allergies, copyAllergy);
-        //    }
+            if (IsAllergyInfoFilled(copyAllergy))//Checks to see if the allergy obj is filled
+            {
+                //checks for duplicate and if only the new value gets added.
+                return CheckReviewNewDataAndUpdateCurrentPatient(copyCurrentPatient.Allergies, copyAllergy);
+            }
 
-        //    return false;
-        //}
+            return false;
+        }
 
         //Working on IsAllergyInfoFilled method
 
