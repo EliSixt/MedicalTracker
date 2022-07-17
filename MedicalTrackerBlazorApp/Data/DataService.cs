@@ -324,35 +324,79 @@ namespace MedicalTrackerBlazorApp.Data
 
         //Working on IsAllergyInfoFilled method
 
+        /// <summary>
+        /// Checks an allergy object to see if it's filled with all the required info.
+        /// </summary>
+        /// <param name="allergyInfo"></param>
+        /// <returns>boolean, whether or not the allergy is filled.</returns>
+        public bool IsAllergyInfoFilled(Allergy allergyInfo)
+        {
+            if (string.IsNullOrEmpty(allergyInfo.AlgyName))
+            {
+                return false;
+            }
+            if (!allergyInfo.IslifeThreatening.HasValue)
+            {
+                return false;
+            }
+            if (string.IsNullOrEmpty(allergyInfo.CommonReactions))
+            {
+                return false;
+            }
+            if (allergyInfo.SymptomsLeadingToLifeThreatening.Count <= 0)
+            {
+                return false;
+            }
+            if (!allergyInfo.EpiPenRequired.HasValue)
+            {
+                return false;
+            }
+            if (!allergyInfo.CPRRequired.HasValue)
+            {
+                return false;
+            }
+            if (!allergyInfo.Call911.HasValue)
+            {
+                return false;
+            }
+            if (allergyInfo.TreatmentRequired.HasValue)
+            {
+                if (allergyInfo.AlgyTreatmentMedication.Count <= 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
 
         /// <summary>
         /// Checks a patient object to see if it's filled with all the required info.
         /// </summary>
-        /// <param name="GeneralInfo">Patient object</param>
+        /// <param name="generalInfo">Patient object</param>
         /// <returns>boolean, whether or not a patient object is filled.</returns>
-        public bool IsGeneralInfoFilled(GeneralInfo GeneralInfo)
+        public bool IsGeneralInfoFilled(GeneralInfo generalInfo)
         {
-            if (GeneralInfo.Name.FirstName == null && GeneralInfo.Name.LastName == null)
+            if (generalInfo.Name.FirstName == null && generalInfo.Name.LastName == null)
             {
                 return false; //TODO: later on return what is specifically needed instead of a boolean.
             }
-            if (GeneralInfo.DateOfBirth <= DateOnly.MinValue)
+            if (generalInfo.DateOfBirth <= DateOnly.MinValue)
             {
                 return false;
             }
-            if (GeneralInfo.Age <= 0)
+            if (generalInfo.Age <= 0)
             {
                 return false;
             }
-            if (GeneralInfo.Weight <= 0)
+            if (generalInfo.Weight <= 0)
             {
                 return false;
             }
-            if (GeneralInfo.Height <= 0)
+            if (generalInfo.Height <= 0)
             {
                 return false;
             }
-            if (!IsContactInfoFilled(GeneralInfo.ContactInfo))
+            if (!IsContactInfoFilled(generalInfo.ContactInfo))
             {
                 return false;
             }
