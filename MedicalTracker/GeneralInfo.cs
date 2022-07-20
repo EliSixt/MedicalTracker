@@ -124,11 +124,10 @@ namespace MedicalTracker
             {
                 return false;
             }
-            //HACK: dont cehck contactinfo
-            //if (!IsContactInfoFilled(generalInfo.ContactInfo))
-            //{
-            //    return false;
-            //}
+            if (!ContactInfo.Validate())
+            {
+                return false;
+            }
             return true;
 
         }
