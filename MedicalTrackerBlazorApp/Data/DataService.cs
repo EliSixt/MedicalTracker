@@ -313,30 +313,7 @@ namespace MedicalTrackerBlazorApp.Data
             return false;
         }
 
-
-        /// <summary>
-        /// Checks a Contact object to see if it's filled with all the required info.
-        /// </summary>
-        /// <param name="contact">Contact object</param>
-        /// <returns>Bool, whether or not the necessary info is filled out.</returns>
-        public bool IsContactInfoFilled(ContactInfo contact)
-        {
-            //TODO: later on return what is specifically needed instead of a boolean.
-            if (contact.Name.FirstName == null || contact.Name.LastName == null)
-            {
-                return false;
-            }
-            if (contact.MobilePhoneNum == null && contact.HomePhoneNum == null && contact.WorkPhoneNum == null)
-            {
-                return false;
-            }
-            if (!IsAddressInfoFilled(contact.Address))
-            {
-                return false; //TODO: this is in an if statement cause later on IsContactInfoFilled and IsAddressInfoFilled will return what is specifically needed to be filled out.
-            }
-            return true;
-        }
-
+        //TODO: SaveContactInfo Method
 
         /// <summary>
         /// Checks the Address object to see if it's filled with all the required info.
