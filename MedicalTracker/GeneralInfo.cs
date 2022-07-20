@@ -17,7 +17,7 @@ namespace MedicalTracker
         public string Gender { get; set; }
         [Required]
         public string SexAtBirth { get; set; }
-        public ContactInfo ContactInfo { get; set; } = new();
+        //public ContactInfo ContactInfo { get; set; } = new(); //Already have PatientInfo in the Patient class. Dont need this.
 
         /// <summary>
         /// Overrides string for GeneralInfo.
@@ -124,10 +124,10 @@ namespace MedicalTracker
             {
                 return false;
             }
-            if (!ContactInfo.Validate())
-            {
-                return false;
-            }
+            //if (!ContactInfo.Validate())
+            //{
+            //    return false;
+            //}
             return true;
 
         }

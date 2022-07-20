@@ -319,6 +319,12 @@ namespace MedicalTrackerBlazorApp.Data
         //{
         //    ContactInfo copyContactInfo = new(contact);
 
+        //    Patient copyCurrentPatient = new(GetCurrentPatient());
+
+        //    if (copyContactInfo.Validate())
+        //    {
+        //        return CheckReviewNewDataAndUpdateCurrentPatient(copyCurrentPatient.)
+        //    }
 
         //    return false;
         //}
