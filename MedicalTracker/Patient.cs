@@ -10,7 +10,7 @@ namespace MedicalTracker
         // history of past medicine?
         //Appointment Alerts?
         public int ID { get; set; }
-        public ContactInfo PatientInfo { get; set; } = new(); //This and GeneralInfo both have a Name input for the same patient
+        public ContactInfo ContactInfoOfPatient { get; set; } = new(); //This and GeneralInfo both have a Name input for the same patient
         public GeneralInfo GeneralInfo { get; set; } = new(); // I could make a small BMI calculator? 
         public List<ContactInfo> EmergencyContacts { get; set; } = new();
         public List<ContactInfo> Caretakers { get; set; } = new();
@@ -29,7 +29,7 @@ namespace MedicalTracker
         /// <returns>Displays all the variables of Patient and their values.</returns>
         public override string ToString()
         {
-            return $"Patient: {PatientInfo.Name.FirstName} {PatientInfo.Name.LastName}";
+            return $"Patient: {ContactInfoOfPatient.Name.FirstName} {ContactInfoOfPatient.Name.LastName}";
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace MedicalTracker
         public Patient(Patient originalPatient)
         {
             ID = originalPatient.ID;
-            PatientInfo = originalPatient.PatientInfo;
+            ContactInfoOfPatient = originalPatient.ContactInfoOfPatient;
             GeneralInfo = originalPatient.GeneralInfo;
             EmergencyContacts = originalPatient.EmergencyContacts;
             Caretakers = originalPatient.Caretakers;

@@ -313,21 +313,26 @@ namespace MedicalTrackerBlazorApp.Data
             return false;
         }
 
-        //TODO: SaveContactInfo Method
+        /// <summary>
+        /// Checks if a ContactInfo object is filled with the required info.
+        /// Prevents duplicate Contacts from being added into the given list.
+        /// If both pass checks pass, it then gets added onto the given list.
+        /// Else returns false.
+        /// </summary>
+        /// <param name="contact"></param>
+        /// <param name="contactsList"></param>
+        /// <returns>Returns true if ContactInfo Obj was added into the list.</returns>
+        public bool SaveContactInfo(ContactInfo contact, List<ContactInfo> contactsList)
+        {
+            ContactInfo copyContact = new(contact);
 
-        //public bool SaveContactInfo(ContactInfo contact)
-        //{
-        //    ContactInfo copyContactInfo = new(contact);
+            if (copyContact.Validate())
+            {
+                return CheckReviewNewDataAndUpdateCurrentPatient(contactsList, contact);
+            }
 
-        //    Patient copyCurrentPatient = new(GetCurrentPatient());
-
-        //    if (copyContactInfo.Validate())
-        //    {
-        //        return CheckReviewNewDataAndUpdateCurrentPatient(copyCurrentPatient.)
-        //    }
-
-        //    return false;
-        //}
+            return false;
+        }
     }
 }
 

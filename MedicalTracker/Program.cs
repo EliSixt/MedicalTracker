@@ -405,17 +405,17 @@ namespace MedicalTracker
         {
             Patient practicePatient = new();
 
-            practicePatient.PatientInfo.Name.FirstName = "Larry";
-            practicePatient.PatientInfo.Name.MiddleName = "zoomy";
-            practicePatient.PatientInfo.Name.LastName = "Quincey";
+            practicePatient.ContactInfoOfPatient.Name.FirstName = "Larry";
+            practicePatient.ContactInfoOfPatient.Name.MiddleName = "zoomy";
+            practicePatient.ContactInfoOfPatient.Name.LastName = "Quincey";
 
-            practicePatient.PatientInfo.MobilePhoneNum = "502-800-8080";
-            practicePatient.PatientInfo.Email = "LarryIsCool@gmail.com";
-            practicePatient.PatientInfo.Address.BuildingNumber = 8080;
-            practicePatient.PatientInfo.Address.StreetName = "CoolStreet Blvd";
-            practicePatient.PatientInfo.Address.City = "louisville";
-            practicePatient.PatientInfo.Address.State = "kentucky";
-            practicePatient.PatientInfo.Address.ZIPCode = "41234";
+            practicePatient.ContactInfoOfPatient.MobilePhoneNum = "502-800-8080";
+            practicePatient.ContactInfoOfPatient.Email = "LarryIsCool@gmail.com";
+            practicePatient.ContactInfoOfPatient.Address.BuildingNumber = 8080;
+            practicePatient.ContactInfoOfPatient.Address.StreetName = "CoolStreet Blvd";
+            practicePatient.ContactInfoOfPatient.Address.City = "louisville";
+            practicePatient.ContactInfoOfPatient.Address.State = "kentucky";
+            practicePatient.ContactInfoOfPatient.Address.ZIPCode = "41234";
 
             //emergency contacts
             practicePatient.EmergencyContacts.Add(new ContactInfo
