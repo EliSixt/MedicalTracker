@@ -265,7 +265,7 @@ namespace MedicalTrackerBlazorApp.Data
         //}
 
         public void Example(IValidateable obj)
-        { 
+        {
 
         }
 
@@ -304,63 +304,14 @@ namespace MedicalTrackerBlazorApp.Data
 
             Patient copyCurrentPatient = new(GetCurrentPatient());
 
-            if (IsAllergyInfoFilled(copyAllergy))//Checks to see if the allergy obj is filled
+            if (copyAllergy.Validate())//Checks to see if the allergy obj is filled (Validates itself)
             {
                 //checks for duplicate and if only the new value gets added.
-                //return CheckReviewNewDataAndUpdateCurrentPatient(copyCurrentPatient.Allergies, copyAllergy);
+                return CheckReviewNewDataAndUpdateCurrentPatient(copyCurrentPatient.Allergies, copyAllergy);
             }
 
             return false;
         }
-
-        //Working on IsAllergyInfoFilled method
-
-        /// <summary>
-        /// Checks an allergy object to see if it's filled with all the required info.
-        /// </summary>
-        /// <param name="allergyInfo"></param>
-        /// <returns>boolean, whether or not the allergy is filled.</returns>
-        public bool IsAllergyInfoFilled(Allergy allergyInfo)
-        {
-            if (string.IsNullOrEmpty(allergyInfo.AlgyName))
-            {
-                return false;
-            }
-            if (!allergyInfo.IslifeThreatening.HasValue)
-            {
-                return false;
-            }
-            if (string.IsNullOrEmpty(allergyInfo.CommonReactions))
-            {
-                return false;
-            }
-            if (allergyInfo.SymptomsLeadingToLifeThreatening.Count <= 0)
-            {
-                return false;
-            }
-            if (!allergyInfo.EpiPenRequired.HasValue)
-            {
-                return false;
-            }
-            if (!allergyInfo.CPRRequired.HasValue)
-            {
-                return false;
-            }
-            if (!allergyInfo.Call911.HasValue)
-            {
-                return false;
-            }
-            if (allergyInfo.TreatmentRequired.HasValue)
-            {
-                if (allergyInfo.AlgyTreatmentMedication.Count <= 0)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-
 
 
         /// <summary>

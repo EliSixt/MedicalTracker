@@ -2,7 +2,7 @@
 
 namespace MedicalTracker
 {
-    public class Allergy
+    public class Allergy : IValidateable
     {
         public bool IngestionOnly { get; set; }
         public string AlgyName { get; set; }//food,drug,latex,insect,mold,pet,pollen,other..
@@ -92,6 +92,50 @@ namespace MedicalTracker
         public override int GetHashCode()
         {
             return AlgyName.ToLower().GetHashCode();
+        }
+
+        /// <summary>
+        /// Checks an allergy object to see if it's filled with all the required info.
+        /// </summary>
+        /// <returns>boolean, whether or not the allergy is filled.</returns>
+        public bool Validate()
+        {
+            if (string.IsNullOrEmpty(AlgyName))
+            {
+                return false;
+            }
+            if (!IslifeThreatening.HasValue)
+            {
+                return false;
+            }
+            if (string.IsNullOrEmpty(CommonReactions))
+            {
+                return false;
+            }
+            if (SymptomsLeadingToLifeThreatening.Count <= 0)
+            {
+                return false;
+            }
+            if (!EpiPenRequired.HasValue)
+            {
+                return false;
+            }
+            if (!CPRRequired.HasValue)
+            {
+                return false;
+            }
+            if (!Call911.HasValue)
+            {
+                return false;
+            }
+            if (TreatmentRequired.HasValue)
+            {
+                if (AlgyTreatmentMedication.Count <= 0)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         /// <summary>
