@@ -41,5 +41,24 @@
             }
             return true;
         }
+
+        /// <summary>
+        /// Copy Constructor.
+        /// </summary>
+        /// <param name="originalContact"></param>
+        public ContactInfo(ContactInfo originalContact)
+        {
+            TitleOrRelationship = originalContact.TitleOrRelationship;
+            Name = originalContact.Name;
+            MobilePhoneNum = originalContact.MobilePhoneNum;
+            HomePhoneNum = originalContact.HomePhoneNum;
+            WorkPhoneNum = originalContact.WorkPhoneNum;
+            Email = originalContact.Email;
+            Address = originalContact.Address;
+        }
+
+        public ContactInfo()
+        {
+        }
     }
 }

@@ -315,6 +315,13 @@ namespace MedicalTrackerBlazorApp.Data
 
         //TODO: SaveContactInfo Method
 
+        //public bool SaveContactInfo(ContactInfo contact)
+        //{
+        //    ContactInfo copyContactInfo = new(contact);
+
+
+        //    return false;
+        //}
     }
 }
 

@@ -141,22 +141,22 @@ namespace MedicalTracker
         /// <summary>
         /// Copy constructor
         /// </summary>
-        /// <param name="OriginalAllergy"></param>
-        public Allergy(Allergy OriginalAllergy)
+        /// <param name="originalAllergy"></param>
+        public Allergy(Allergy originalAllergy)
         {
-            IngestionOnly = OriginalAllergy.IngestionOnly;
-            AlgyName = OriginalAllergy.AlgyName;
-            ConfirmedTestedAlgyType = OriginalAllergy.ConfirmedTestedAlgyType;
-            CommonReactions = OriginalAllergy.CommonReactions;
-            IslifeThreatening = OriginalAllergy.IslifeThreatening;
+            IngestionOnly = originalAllergy.IngestionOnly;
+            AlgyName = originalAllergy.AlgyName;
+            ConfirmedTestedAlgyType = originalAllergy.ConfirmedTestedAlgyType;
+            CommonReactions = originalAllergy.CommonReactions;
+            IslifeThreatening = originalAllergy.IslifeThreatening;
             //SymptomsLeadingToLifeThreatening = new List<Symptom>(SymptomsLeadingToLifeThreatening);
-            SymptomsLeadingToLifeThreatening = OriginalAllergy.SymptomsLeadingToLifeThreatening;
-            EpiPenRequired = OriginalAllergy.EpiPenRequired;
-            CPRRequired = OriginalAllergy.CPRRequired;
-            Call911 = OriginalAllergy.Call911;
-            TreatmentRequired = OriginalAllergy.TreatmentRequired;
+            SymptomsLeadingToLifeThreatening = originalAllergy.SymptomsLeadingToLifeThreatening;
+            EpiPenRequired = originalAllergy.EpiPenRequired;
+            CPRRequired = originalAllergy.CPRRequired;
+            Call911 = originalAllergy.Call911;
+            TreatmentRequired = originalAllergy.TreatmentRequired;
             //AlgyTreatmentMedication = new List<Medicine>(AlgyTreatmentMedication);
-            AlgyTreatmentMedication = OriginalAllergy.AlgyTreatmentMedication;
+            AlgyTreatmentMedication = originalAllergy.AlgyTreatmentMedication;
         }
 
         public Allergy()
