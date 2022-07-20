@@ -17,7 +17,7 @@
     The method will check for duplicates then submit those text inputs into a list of SymptomsLeadingToLifeThreatening.
     Then add/update that list into the current patient's Allergy.SymptomsLeadingToLifeThreatening.
 *@
-@if (Allergy.IslifeThreatening)
+@if (Allergy.IslifeThreatening == true)
 {
     <p style="font-size:small">Add Symptoms leading to life threatening:</p>
     <div style="margin: 5px">
@@ -62,7 +62,7 @@
     The method will check for duplicates through the medicine names then submit the input into a list of Medicine (AlgyTreatmentMedication) used for or against the Allergy.
     Then add/update that list into the current patient's Allergy.AlgyTreatmentMedication.
 *@
-@if (Allergy.TreatmentRequired)
+@if (Allergy.TreatmentRequired == true)
 {
     <GetMedicine @bind-Medicine="AlgyMed" />
     <br />

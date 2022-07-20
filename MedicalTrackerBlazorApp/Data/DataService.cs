@@ -89,20 +89,17 @@ namespace MedicalTrackerBlazorApp.Data
 
 
         /// <summary>
-        /// Used whenever trying to add new items into the currentPatient.
-        /// First, copies the CurrentPatient. (Or Reassigns)
-        /// Second, uses a method to see if all items that are required are filled within that NewObject.
-        /// Third, iterates through the list of items (of CopyCurrentPatient) in which the newObject will be added into, to check for any existing duplicates.
-        /// If second and third pass, it will then add it onto the copyPatient and then it would replace the currentPatient.
+        /// Used whenever trying to add new items into the (or override/replace) currentPatient.
+        /// Copies the CurrentPatient.
+        /// Iterates through the list of items (of CopyCurrentPatient) in which the newObject will be added into, to check for any existing duplicates.
+        /// Uses a method to see if all items that are required are filled within that NewObject.
+        /// If second and third pass, it will then replace the currentPatient with the updated copyPatient.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="objListFromCopyCurrentPatient"></param>
         /// <param name="newObj"></param>
-        /// <param name="copyCurrentPatient"></param>
-        /// <param name="methodParameter"></param>
-        /// <param name="method"></param>
         /// <returns>bool</returns>
-        public bool CheckReviewNewDataAndUpdateCurrentPatient<T>(List<T> objListFromCopyCurrentPatient, T newObj)
+        public bool CheckReviewNewDataAndUpdateCurrentPatient<T>(List<T> objListFromCopyCurrentPatient, T newObj) where T : IValidateable
         {
             List<T> unchangedCopyOfObjListFromCopyCurrentPatient = new(objListFromCopyCurrentPatient);
 
@@ -112,14 +109,9 @@ namespace MedicalTrackerBlazorApp.Data
             {
                 objListFromCopyCurrentPatient.Add(newObj);
 
-                if (HasDifferenceOfAValue(unchangedCopyOfObjListFromCopyCurrentPatient, objListFromCopyCurrentPatient, newObj))//Checks if only the newObject value gets changed
-                {
+                CurrentPatient = new(copyCurrentPatient); //TODO: method to reassign/declare value for currentPatient.
 
-                    CurrentPatient = new(copyCurrentPatient); //TODO: method to reassign/declare value for currentPatient.
-
-                    return true;//to check success
-                }
-
+                return true;//to check success
             }
             return false;
         }
@@ -272,6 +264,11 @@ namespace MedicalTrackerBlazorApp.Data
         //    return (T)xmlSerializer.Deserialize(tx);
         //}
 
+        public void Example(IValidateable obj)
+        { 
+
+        }
+
 
         /// <summary>
         /// Checks if the GeneralInfo obj is filled with the required info.
@@ -283,7 +280,7 @@ namespace MedicalTrackerBlazorApp.Data
         {
             GeneralInfo copyGeneralInfo = new(generalInfo);
 
-            if (IsGeneralInfoFilled(copyGeneralInfo))//Checks to see if the GeneralInfo obj is filled
+            if (copyGeneralInfo.Validate())//Checks to see if the GeneralInfo obj is filled (Validates itself)
             {
                 //checks for duplicate and if only the new value gets added.
                 return CheckReviewNewDataAndUpdateCurrentPatient((Patients.Select(x => x.GeneralInfo).ToList()), copyGeneralInfo);
@@ -310,7 +307,7 @@ namespace MedicalTrackerBlazorApp.Data
             if (IsAllergyInfoFilled(copyAllergy))//Checks to see if the allergy obj is filled
             {
                 //checks for duplicate and if only the new value gets added.
-                return CheckReviewNewDataAndUpdateCurrentPatient(copyCurrentPatient.Allergies, copyAllergy);
+                //return CheckReviewNewDataAndUpdateCurrentPatient(copyCurrentPatient.Allergies, copyAllergy);
             }
 
             return false;
@@ -363,39 +360,7 @@ namespace MedicalTrackerBlazorApp.Data
             return true;
         }
 
-        /// <summary>
-        /// Checks a patient object to see if it's filled with all the required info.
-        /// </summary>
-        /// <param name="generalInfo">Patient object</param>
-        /// <returns>boolean, whether or not a patient object is filled.</returns>
-        public bool IsGeneralInfoFilled(GeneralInfo generalInfo)
-        {
-            if (generalInfo.Name.FirstName == null && generalInfo.Name.LastName == null)
-            {
-                return false; //TODO: later on return what is specifically needed instead of a boolean.
-            }
-            if (generalInfo.DateOfBirth <= DateOnly.MinValue)
-            {
-                return false;
-            }
-            if (generalInfo.Age <= 0)
-            {
-                return false;
-            }
-            if (generalInfo.Weight <= 0)
-            {
-                return false;
-            }
-            if (generalInfo.Height <= 0)
-            {
-                return false;
-            }
-            if (!IsContactInfoFilled(generalInfo.ContactInfo))
-            {
-                return false;
-            }
-            return true;
-        }
+
 
 
         /// <summary>

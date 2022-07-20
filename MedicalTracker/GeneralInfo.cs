@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 namespace MedicalTracker
 {
-    public class GeneralInfo
+    public class GeneralInfo : IValidateable
     {
         [Required]
         public Name Name { get; set; } = new();
@@ -95,6 +95,38 @@ namespace MedicalTracker
         public override int GetHashCode()
         {
             return (this.Name.FirstName.ToLower() + this.Name.LastName.ToLower()).GetHashCode();
+        }
+
+        public bool Validate()
+        {
+
+            if (Name.FirstName == null && Name.LastName == null)
+            {
+                return false; //TODO: later on return what is specifically needed instead of a boolean.
+            }
+            if (DateOfBirth <= DateOnly.MinValue)
+            {
+                return false;
+            }
+            if (Age <= 0)
+            {
+                return false;
+            }
+            if (Weight <= 0)
+            {
+                return false;
+            }
+            if (Height <= 0)
+            {
+                return false;
+            }
+            //HACK: dont cehck contactinfo
+            //if (!IsContactInfoFilled(generalInfo.ContactInfo))
+            //{
+            //    return false;
+            //}
+            return true;
+
         }
 
         /// <summary>
