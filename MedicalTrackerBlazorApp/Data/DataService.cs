@@ -116,6 +116,34 @@ namespace MedicalTrackerBlazorApp.Data
             return false;
         }
 
+        /// <summary>
+        /// Checks list if there's an item thats the same as the provided object.
+        /// Null checks.
+        /// Checks if the list's type and the object's type are the same.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="objList">The List of items</param>
+        /// <param name="objToCheck">Object to compare</param>
+        /// <returns>Boolean</returns>
+        public bool HasDuplicate<T>(List<T> objList, T objToCheck)
+        {
+            if (objToCheck is null && objList is null)
+            {
+                return true;
+            }
+            if (objToCheck is null || objList is null)
+            {
+                return false;
+            }
+            foreach (T obj in objList)
+            {
+                if (obj != null && obj.Equals(objToCheck))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         /// <summary>
         /// Will check if only a designated value in a list got added, won't pass if any other items in that list got changed.
@@ -181,34 +209,6 @@ namespace MedicalTrackerBlazorApp.Data
         }
 
 
-        /// <summary>
-        /// Checks list if there's an item thats the same as the provided object.
-        /// Null checks.
-        /// Checks if the list's type and the object's type are the same.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="objList">The List of items</param>
-        /// <param name="objToCheck">Object to compare</param>
-        /// <returns>Boolean</returns>
-        public bool HasDuplicate<T>(List<T> objList, T objToCheck)
-        {
-            if (objToCheck is null && objList is null)
-            {
-                return true;
-            }
-            if (objToCheck is null || objList is null)
-            {
-                return false;
-            }
-            foreach (T obj in objList)
-            {
-                if (obj != null && obj.Equals(objToCheck))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
 
 
         //TODO: Put this in the DataService and double checks before deleting. Save the new modified list onto a new xml List and make a backup list incase.

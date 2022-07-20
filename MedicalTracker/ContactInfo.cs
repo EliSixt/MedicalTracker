@@ -35,10 +35,10 @@
             {
                 return false;
             }
-            //if (!IsAddressInfoFilled(contact.Address))
-            //{
-            //    return false; //TODO: this is in an if statement cause later on IsContactInfoFilled and IsAddressInfoFilled will return what is specifically needed to be filled out.
-            //}
+            if (!Address.Validate())
+            {
+                return false;
+            }
             return true;
         }
     }
