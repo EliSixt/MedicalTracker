@@ -315,40 +315,6 @@ namespace MedicalTrackerBlazorApp.Data
 
         //TODO: SaveContactInfo Method
 
-        /// <summary>
-        /// Checks the Address object to see if it's filled with all the required info.
-        /// </summary>
-        /// <param name="address">Address object</param>
-        /// <returns>Bool, whether or not Address is info is filled.</returns>
-        public bool IsAddressInfoFilled(Address address)
-        {
-            //TODO: later on return what is specifically needed instead of a boolean.
-            if (address.BuildingNumber <= 0)
-            {
-                return false;
-            }
-            if (address.StreetName == null)
-            {
-                return false;
-            }
-            if (address.City == null)
-            {
-                return false;
-            }
-            if (address.State == null)
-            {
-                return false;
-            }
-            if (address.ZIPCode == null)
-            {
-                return false;
-            }
-            if (address.Country == null)
-            {
-                return false;
-            }
-            return true;
-        }
     }
 }
 

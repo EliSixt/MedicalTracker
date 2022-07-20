@@ -1,6 +1,6 @@
 ﻿namespace MedicalTracker
 {
-    public class Address
+    public class Address : IValidateable
     {
         public int BuildingNumber { get; set; }
         //public int ApptNumber { get; set; }
@@ -18,6 +18,36 @@
         public override string ToString()
         {
             return $" {BuildingNumber} {StreetName}, {City}, {State}, {ZIPCode}, {Country}";
+        }
+
+        public bool Validate()
+        {
+            //TODO: later on return what is specifically needed instead of a boolean.
+            if (BuildingNumber <= 0)
+            {
+                return false;
+            }
+            if (StreetName == null)
+            {
+                return false;
+            }
+            if (City == null)
+            {
+                return false;
+            }
+            if (State == null)
+            {
+                return false;
+            }
+            if (ZIPCode == null)
+            {
+                return false;
+            }
+            if (Country == null)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
