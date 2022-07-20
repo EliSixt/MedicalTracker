@@ -97,6 +97,10 @@ namespace MedicalTracker
             return (this.Name.FirstName.ToLower() + this.Name.LastName.ToLower()).GetHashCode();
         }
 
+        /// <summary>
+        /// Checks if all the info from a GeneralInfo is filled.
+        /// </summary>
+        /// <returns>Returns true if filled.</returns>
         public bool Validate()
         {
 
