@@ -117,7 +117,7 @@
     /// If it passes it gets added onto Symptoms list.
     /// Deletes the contents of the symptom.
     /// </summary>
-    public void AddSymptom()
+    public void AddSymptom() //TODO : add to DataService
     {
         Symptom copySymptom = new(Symptom);
 
@@ -127,13 +127,15 @@
             Symptom = new();
         }
     }
+
+
     /// <summary>
     /// Creates a copy of AlgyMed.
     /// Prevents duplicate answers from being added onto a medicine list.
     /// If it passes it gets added onto AlgyMedicines.
     /// Deletes the contents of AlgyMed.
     /// </summary>
-    public void AddMed()
+    public void AddMed() //TODO : add to DataService
     {
         Medicine copyMed = new(AlgyMed);
 
@@ -151,7 +153,7 @@
     /// Checks for any duplicates in the list<allergy> of the dataservice by comparing allergy names.
     /// Ignores case.
     /// </summary>
-    public void OnSubmitAllergy()
+    public void OnSubmitAllergy() //TODO: Change this to add Check method from dataService
     {
         Allergy CopyAllergy = new(Allergy);
 

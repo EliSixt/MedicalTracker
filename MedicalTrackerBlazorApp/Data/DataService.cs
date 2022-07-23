@@ -92,7 +92,7 @@ namespace MedicalTrackerBlazorApp.Data
         /// Used whenever trying to add new items into the (or override/replace) currentPatient.
         /// Copies the CurrentPatient.
         /// Iterates through the list of items (of CopyCurrentPatient) in which the newObject will be added into, to check for any existing duplicates.
-        /// Uses a method to see if all items that are required are filled within that NewObject.
+        /// Uses Ivalidateable to see if all items that are required are filled within that NewObject.
         /// If second and third pass, it will then replace the currentPatient with the updated copyPatient.
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -101,8 +101,6 @@ namespace MedicalTrackerBlazorApp.Data
         /// <returns>bool</returns>
         public bool CheckReviewNewDataAndUpdateCurrentPatient<T>(List<T> objListFromCopyCurrentPatient, T newObj) where T : IValidateable
         {
-            List<T> unchangedCopyOfObjListFromCopyCurrentPatient = new(objListFromCopyCurrentPatient);
-
             Patient copyCurrentPatient = new(GetCurrentPatient());//refresh copyCurrentPatient
 
             if (!HasDuplicate(objListFromCopyCurrentPatient, newObj))//checks for duplicates
@@ -208,9 +206,6 @@ namespace MedicalTrackerBlazorApp.Data
             return Patients.Count <= 0 ? 1 : Patients.Max(x => x.ID) + 1;
         }
 
-
-
-
         //TODO: Put this in the DataService and double checks before deleting. Save the new modified list onto a new xml List and make a backup list incase.
         /// <summary>
         ///  check if the parameter's input exists as a patient.ID
@@ -269,6 +264,23 @@ namespace MedicalTrackerBlazorApp.Data
 
         }
 
+        ///// <summary>
+        ///// Creates a copy of symptom.
+        ///// Prevents duplicate answers from being added onto the Symptoms list.
+        ///// If it passes it gets added onto Symptoms list.
+        ///// Deletes the contents of the symptom.
+        ///// </summary>
+        //public bool AddSymptom(List<Symptom> symptoms, Symptom symptom) where Symptom : IValidateable
+        //{
+        //    Symptom copySymptom = new(symptom);
+
+        //    if (!HasDuplicate(symptoms, copySymptom))
+        //    {
+        //        Symptoms.Add(copySymptom);
+        //        return true;
+        //    }
+        //    return false;
+        //}
 
         /// <summary>
         /// Checks if the GeneralInfo obj is filled with the required info.
@@ -313,6 +325,10 @@ namespace MedicalTrackerBlazorApp.Data
             return false;
         }
 
+
+
+        //Question: How can i use this with the GetContactInfo Component in both EmergencyContacts and Caretakers?
+
         /// <summary>
         /// Checks if a ContactInfo object is filled with the required info.
         /// Prevents duplicate Contacts from being added into the given list.
@@ -330,7 +346,6 @@ namespace MedicalTrackerBlazorApp.Data
             {
                 return CheckReviewNewDataAndUpdateCurrentPatient(contactsList, contact);
             }
-
             return false;
         }
     }
