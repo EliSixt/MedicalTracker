@@ -264,23 +264,34 @@ namespace MedicalTrackerBlazorApp.Data
 
         }
 
-        ///// <summary>
-        ///// Creates a copy of symptom.
-        ///// Prevents duplicate answers from being added onto the Symptoms list.
-        ///// If it passes it gets added onto Symptoms list.
-        ///// Deletes the contents of the symptom.
-        ///// </summary>
-        //public bool AddSymptom(List<Symptom> symptoms, Symptom symptom) where Symptom : IValidateable
+        //public bool AddValidatable(List<IValidateable> itemList, IValidateable item)
         //{
-        //    Symptom copySymptom = new(symptom);
-
-        //    if (!HasDuplicate(symptoms, copySymptom))
+        //    if (item.Validate())
         //    {
-        //        Symptoms.Add(copySymptom);
-        //        return true;
+
         //    }
-        //    return false;
+        //    throw new NotImplementedException();
         //}
+
+
+
+        /// <summary>
+        /// Creates a copy of symptom.
+        /// Prevents duplicate answers from being added onto the Symptoms list.
+        /// If it passes it gets added onto Symptoms list.
+        /// Deletes the contents of the symptom.
+        /// </summary>
+        public bool AddSymptom(List<Symptom> symptoms, Symptom symptom)
+        {
+            Symptom copySymptom = new(symptom);
+
+            if (!HasDuplicate(symptoms, copySymptom))
+            {
+                symptoms.Add(copySymptom);
+                return true;
+            }
+            return false;
+        }
 
         /// <summary>
         /// Checks if the GeneralInfo obj is filled with the required info.
