@@ -2,7 +2,7 @@
 
 namespace MedicalTracker
 {
-    public class Allergy : IValidateable
+    public class Allergy : IValidateable, ICloneable
     {
         public bool IngestionOnly { get; set; }
         public string AlgyName { get; set; }//food,drug,latex,insect,mold,pet,pollen,other..
@@ -136,6 +136,17 @@ namespace MedicalTracker
                 }
             }
             return true;
+        }
+
+
+        /// <summary>
+        /// Creates a new copy/clone of itself by calling the Copy Constructor.
+        /// </summary>
+        /// <param name="allergy"></param>
+        /// <returns>cloned object</returns>
+        public object Clone()
+        {
+            return new Allergy(this);
         }
 
         /// <summary>
