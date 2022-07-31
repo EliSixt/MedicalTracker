@@ -32,8 +32,6 @@
 
 
         /// <summary>
-        /// Constrains to only accept types that implement the ICloneable interface.
-        /// Clones the item that is going to be added to the list.
         /// Checks the list for any duplicate of the item being added.
         /// If no duplicates are found, then the item gets added to the list.
         /// </summary>
@@ -41,13 +39,11 @@
         /// <param name="value"></param>
         /// <param name="item"></param>
         /// <returns>True if duplicate and does NOT add to the list, false if no duplicate and adds to a list.</returns>
-        public static bool AddWithoutDuplicates<T>(this List<T> value, T item) where T : ICloneable
+        public static bool AddWithoutDuplicates<T>(this List<T> value, T item)
         {
-            T newItem = (T)item.Clone();
-
-            if (!value.HasDuplicate(newItem))
+            if (!value.HasDuplicate(item))
             {
-                value.Add(newItem);
+                value.Add(item);
                 return true;
             }
             return false;
