@@ -1,6 +1,6 @@
 ﻿namespace MedicalTracker
 {
-    public class Medicine
+    public class Medicine : IValidateable
     {
         //generic name and brand name??
         //warning, use, dose, 
@@ -85,6 +85,54 @@
         {
             return (GenericName.ToLower() + BrandName.ToLower()).GetHashCode();
         }
+
+
+        /// <summary>
+        /// Checks a Medicine object to see if it's filled with all the required info.
+        /// </summary>
+        /// <returns>True if all necessary info is filled.</returns>
+        public bool Validate()
+        {
+            if (string.IsNullOrEmpty(BrandName))
+            {
+                return false;
+            }
+            if (string.IsNullOrEmpty(GenericName))
+            {
+                return false;
+            }
+            if (string.IsNullOrEmpty(Description))
+            {
+                return false;
+            }
+            if (string.IsNullOrEmpty(Warnings))
+            {
+                return false;
+            }
+            if (string.IsNullOrEmpty(CommmonSideEffects))
+            {
+                return false;
+            }
+            if (string.IsNullOrEmpty(Directions))
+            {
+                return false;
+            }
+            if (string.IsNullOrEmpty(Purposes))
+            {
+                return false;
+            }
+            if (string.IsNullOrEmpty(AllergyAlerts))
+            {
+                return false;
+            }
+            if (string.IsNullOrEmpty(WarningsBeforeUse))
+            {
+                return false;
+            }
+            return true;
+        }
+
+
         /// <summary>
         /// Copy Constructor
         /// </summary>
