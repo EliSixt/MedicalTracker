@@ -2,23 +2,23 @@
 
 namespace MedicalTracker
 {
-    public class Allergy
+    public class Allergy : IValidateable, ICloneable
     {
         public bool IngestionOnly { get; set; }
         public string AlgyName { get; set; }//food,drug,latex,insect,mold,pet,pollen,other..
-        public bool ConfirmedTestedAlgyType { get; set; } //dont think this is necessary
+        public bool? ConfirmedTestedAlgyType { get; set; } //dont think this is necessary
         public string CommonReactions { get; set; }//list? This should go after IsLifeThreatening in UI, if its true then the user might input duplicates. Redundant.
         //life threatening?? action plan..
-        public bool IslifeThreatening { get; set; }
+        public bool? IslifeThreatening { get; set; }
         public List<Symptom> SymptomsLeadingToLifeThreatening { get; set; } = new(); //changed to list, limit character input for brief descriptions
         //if having symptomsLeadintoLifeThreatening
         //do
-        public bool EpiPenRequired { get; set; }
+        public bool? EpiPenRequired { get; set; }
         //then do
-        public bool CPRRequired { get; set; }
-        public bool Call911 { get; set; }
+        public bool? CPRRequired { get; set; }
+        public bool? Call911 { get; set; }
         //else
-        public bool TreatmentRequired { get; set; }
+        public bool? TreatmentRequired { get; set; }
         public List<Medicine> AlgyTreatmentMedication { get; set; } = new();
 
         /// <summary>
@@ -95,24 +95,79 @@ namespace MedicalTracker
         }
 
         /// <summary>
+        /// Checks an allergy object to see if it's filled with all the required info.
+        /// </summary>
+        /// <returns>boolean, whether or not the allergy is filled.</returns>
+        public bool Validate()
+        {
+            if (string.IsNullOrEmpty(AlgyName))
+            {
+                return false;
+            }
+            if (!IslifeThreatening.HasValue)
+            {
+                return false;
+            }
+            if (string.IsNullOrEmpty(CommonReactions))
+            {
+                return false;
+            }
+            if (SymptomsLeadingToLifeThreatening.Count <= 0)
+            {
+                return false;
+            }
+            if (!EpiPenRequired.HasValue)
+            {
+                return false;
+            }
+            if (!CPRRequired.HasValue)
+            {
+                return false;
+            }
+            if (!Call911.HasValue)
+            {
+                return false;
+            }
+            if (TreatmentRequired.HasValue)
+            {
+                if (AlgyTreatmentMedication.Count <= 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
+        /// <summary>
+        /// Creates a new copy/clone of itself by calling the Copy Constructor.
+        /// </summary>
+        /// <param name="allergy"></param>
+        /// <returns>cloned object</returns>
+        public object Clone()
+        {
+            return new Allergy(this);
+        }
+
+        /// <summary>
         /// Copy constructor
         /// </summary>
-        /// <param name="OriginalAllergy"></param>
-        public Allergy(Allergy OriginalAllergy)
+        /// <param name="originalAllergy"></param>
+        public Allergy(Allergy originalAllergy)
         {
-            IngestionOnly = OriginalAllergy.IngestionOnly;
-            AlgyName = OriginalAllergy.AlgyName;
-            ConfirmedTestedAlgyType = OriginalAllergy.ConfirmedTestedAlgyType;
-            CommonReactions = OriginalAllergy.CommonReactions;
-            IslifeThreatening = OriginalAllergy.IslifeThreatening;
+            IngestionOnly = originalAllergy.IngestionOnly;
+            AlgyName = originalAllergy.AlgyName;
+            ConfirmedTestedAlgyType = originalAllergy.ConfirmedTestedAlgyType;
+            CommonReactions = originalAllergy.CommonReactions;
+            IslifeThreatening = originalAllergy.IslifeThreatening;
             //SymptomsLeadingToLifeThreatening = new List<Symptom>(SymptomsLeadingToLifeThreatening);
-            SymptomsLeadingToLifeThreatening = OriginalAllergy.SymptomsLeadingToLifeThreatening;
-            EpiPenRequired = OriginalAllergy.EpiPenRequired;
-            CPRRequired = OriginalAllergy.CPRRequired;
-            Call911 = OriginalAllergy.Call911;
-            TreatmentRequired = OriginalAllergy.TreatmentRequired;
+            SymptomsLeadingToLifeThreatening = originalAllergy.SymptomsLeadingToLifeThreatening;
+            EpiPenRequired = originalAllergy.EpiPenRequired;
+            CPRRequired = originalAllergy.CPRRequired;
+            Call911 = originalAllergy.Call911;
+            TreatmentRequired = originalAllergy.TreatmentRequired;
             //AlgyTreatmentMedication = new List<Medicine>(AlgyTreatmentMedication);
-            AlgyTreatmentMedication = OriginalAllergy.AlgyTreatmentMedication;
+            AlgyTreatmentMedication = originalAllergy.AlgyTreatmentMedication;
         }
 
         public Allergy()

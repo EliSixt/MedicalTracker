@@ -1,6 +1,6 @@
 ﻿namespace MedicalTracker
 {
-    public class Symptom
+    public class Symptom : IValidateable
     {
         public string UserID { get; set; }
         public string SymptomName { get; set; }
@@ -77,6 +77,27 @@
         public override int GetHashCode()
         {
             return SymptomName.ToLower().GetHashCode();
+        }
+
+        /// <summary>
+        /// Checks a Symptom object to see if it's filled with all the required info.
+        /// </summary>
+        /// <returns>Returns true if the object is filled.</returns>
+        public bool Validate()
+        {
+            if (string.IsNullOrEmpty(SymptomName))
+            {
+                return false;
+            }
+            if (string.IsNullOrEmpty(Severity))
+            {
+                return false;
+            }
+            if (string.IsNullOrEmpty(SymptomDescription))
+            {
+                return false;
+            }
+            return true;
         }
 
         /// <summary>

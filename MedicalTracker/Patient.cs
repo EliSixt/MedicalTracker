@@ -10,16 +10,16 @@ namespace MedicalTracker
         // history of past medicine?
         //Appointment Alerts?
         public int ID { get; set; }
-        public ContactInfo PatientInfo { get; set; } = new(); //component made
-        public GeneralInfo GeneralInfo { get; set; } = new(); // I could make a small BMI calculator? Component Made
-        public List<ContactInfo> EmergencyContacts { get; set; } = new();//list of contact Info? Do I make a component or do i just leave it into a page orrrr??
+        public ContactInfo ContactInfoOfPatient { get; set; } = new(); //This and GeneralInfo both have a Name input for the same patient
+        public GeneralInfo GeneralInfo { get; set; } = new(); // I could make a small BMI calculator? 
+        public List<ContactInfo> EmergencyContacts { get; set; } = new();
         public List<ContactInfo> Caretakers { get; set; } = new();
         public List<Allergy> Allergies { get; set; } = new();
         public List<Medicine> EmergencyMedications { get; set; } = new();//like an epipen
         public List<DailyMedicine> DailyMedication { get; set; } = new();
         public List<Appointment> Appointments { get; set; } = new();
         public List<MedicalHistory> MedicalHistory { get; set; } = new();
-        public List<Symptom> Symptoms { get; set; }
+        public List<Symptom> Symptoms { get; set; }//"active"
         public List<UnusualSymptoms> UnusualSymptoms { get; set; } = new(); //check this and change
         public List<AdditionalNeeds> AdditionalNeeds { get; set; } = new();//check this and change
 
@@ -29,7 +29,7 @@ namespace MedicalTracker
         /// <returns>Displays all the variables of Patient and their values.</returns>
         public override string ToString()
         {
-            return $"Patient: {PatientInfo.Name.FirstName} {PatientInfo.Name.LastName}";
+            return $"Patient: {ContactInfoOfPatient.Name.FirstName} {ContactInfoOfPatient.Name.LastName}";
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace MedicalTracker
         public Patient(Patient originalPatient)
         {
             ID = originalPatient.ID;
-            PatientInfo = originalPatient.PatientInfo;
+            ContactInfoOfPatient = originalPatient.ContactInfoOfPatient;
             GeneralInfo = originalPatient.GeneralInfo;
             EmergencyContacts = originalPatient.EmergencyContacts;
             Caretakers = originalPatient.Caretakers;

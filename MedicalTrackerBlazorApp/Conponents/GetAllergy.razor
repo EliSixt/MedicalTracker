@@ -17,7 +17,7 @@
     The method will check for duplicates then submit those text inputs into a list of SymptomsLeadingToLifeThreatening.
     Then add/update that list into the current patient's Allergy.SymptomsLeadingToLifeThreatening.
 *@
-@if (Allergy.IslifeThreatening)
+@if (Allergy.IslifeThreatening == true)
 {
     <p style="font-size:small">Add Symptoms leading to life threatening:</p>
     <div style="margin: 5px">
@@ -62,7 +62,7 @@
     The method will check for duplicates through the medicine names then submit the input into a list of Medicine (AlgyTreatmentMedication) used for or against the Allergy.
     Then add/update that list into the current patient's Allergy.AlgyTreatmentMedication.
 *@
-@if (Allergy.TreatmentRequired)
+@if (Allergy.TreatmentRequired == true)
 {
     <GetMedicine @bind-Medicine="AlgyMed" />
     <br />
@@ -117,7 +117,7 @@
     /// If it passes it gets added onto Symptoms list.
     /// Deletes the contents of the symptom.
     /// </summary>
-    public void AddSymptom()
+    public void AddSymptom() //TODO : add to DataService
     {
         Symptom copySymptom = new(Symptom);
 
@@ -127,13 +127,15 @@
             Symptom = new();
         }
     }
+
+
     /// <summary>
     /// Creates a copy of AlgyMed.
     /// Prevents duplicate answers from being added onto a medicine list.
     /// If it passes it gets added onto AlgyMedicines.
     /// Deletes the contents of AlgyMed.
     /// </summary>
-    public void AddMed()
+    public void AddMed() //TODO : add to DataService
     {
         Medicine copyMed = new(AlgyMed);
 
@@ -151,16 +153,21 @@
     /// Checks for any duplicates in the list<allergy> of the dataservice by comparing allergy names.
     /// Ignores case.
     /// </summary>
-    public void OnSubmitAllergy()
+    public void OnSubmitAllergy() //TODO: Change this to add Check method from dataService
     {
         Allergy CopyAllergy = new(Allergy);
 
-        if (!Data.HasDuplicate(Data.CurrentPatient.Allergies, CopyAllergy))
-        {
-            Data.CurrentPatient.Allergies.Add(CopyAllergy);
+        Patient copyCurrentPatient = new(Data.GetCurrentPatient());
 
+        if (!Data.HasDuplicate(copyCurrentPatient.Allergies, CopyAllergy))
+        {
+            copyCurrentPatient.Allergies.Add(CopyAllergy); //make this have that extra wall of C&B
+
+            if (Data.HasDifferenceOfAValue(Data.GetCurrentPatient().Allergies, copyCurrentPatient.Allergies, CopyAllergy))
+            {
+                //TODO: Add to currentPatient with a new method cause currentPatient will be private.
+            }
             Allergy = new();
         }
-
     }
 }

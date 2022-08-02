@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 namespace MedicalTracker
 {
-    public class GeneralInfo
+    public class GeneralInfo : IValidateable
     {
         [Required]
         public Name Name { get; set; } = new();
@@ -17,6 +17,7 @@ namespace MedicalTracker
         public string Gender { get; set; }
         [Required]
         public string SexAtBirth { get; set; }
+        //public ContactInfo ContactInfo { get; set; } = new(); //Already have PatientInfo in the Patient class. Dont need this.
 
         /// <summary>
         /// Overrides string for GeneralInfo.
@@ -94,6 +95,41 @@ namespace MedicalTracker
         public override int GetHashCode()
         {
             return (this.Name.FirstName.ToLower() + this.Name.LastName.ToLower()).GetHashCode();
+        }
+
+        /// <summary>
+        /// Checks if all the info from a GeneralInfo is filled.
+        /// </summary>
+        /// <returns>Returns true if filled.</returns>
+        public bool Validate()
+        {
+
+            if (Name.FirstName == null && Name.LastName == null)
+            {
+                return false; //TODO: later on return what is specifically needed instead of a boolean.
+            }
+            if (DateOfBirth <= DateOnly.MinValue)
+            {
+                return false;
+            }
+            if (Age <= 0)
+            {
+                return false;
+            }
+            if (Weight <= 0)
+            {
+                return false;
+            }
+            if (Height <= 0)
+            {
+                return false;
+            }
+            //if (!ContactInfo.Validate())
+            //{
+            //    return false;
+            //}
+            return true;
+
         }
 
         /// <summary>

@@ -1,6 +1,6 @@
 ﻿namespace MedicalTracker
 {
-    public class ContactInfo
+    public class ContactInfo : IValidateable
     {
         public string TitleOrRelationship { get; set; }
         public Name Name { get; set; } = new();
@@ -20,5 +20,45 @@
             return $"Name: {Name.FirstName} {Name.LastName}, Title/Relation: {TitleOrRelationship}";
         }
 
+        /// <summary>
+        /// Checks a Contact object to see if it's filled with all the required info.
+        /// </summary>
+        /// <returns>Returns true if the object is filled.</returns>
+        public bool Validate()
+        {
+            //TODO: later on return what is specifically needed instead of a boolean.
+            if (Name.FirstName == null || Name.LastName == null)
+            {
+                return false;
+            }
+            if (MobilePhoneNum == null && HomePhoneNum == null && WorkPhoneNum == null)
+            {
+                return false;
+            }
+            if (!Address.Validate())
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Copy Constructor.
+        /// </summary>
+        /// <param name="originalContact"></param>
+        public ContactInfo(ContactInfo originalContact)
+        {
+            TitleOrRelationship = originalContact.TitleOrRelationship;
+            Name = originalContact.Name;
+            MobilePhoneNum = originalContact.MobilePhoneNum;
+            HomePhoneNum = originalContact.HomePhoneNum;
+            WorkPhoneNum = originalContact.WorkPhoneNum;
+            Email = originalContact.Email;
+            Address = originalContact.Address;
+        }
+
+        public ContactInfo()
+        {
+        }
     }
 }

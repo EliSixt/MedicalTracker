@@ -9,6 +9,8 @@ namespace MedicalTrackerBlazorApp.Data
         {
             SetupUp();
         }
+
+
         public bool PatientsLoaded
         {
             get
@@ -16,6 +18,19 @@ namespace MedicalTrackerBlazorApp.Data
                 return _patients != null ? _patients.Count > 0 : false;
             }
         }
+
+
+        /// <summary>
+        /// Makes and returns a copy of a Patient object.
+        /// </summary>
+        /// <param name="currentPatient">Patient Object to copy.</param>
+        /// <returns>Patient copy</returns>
+        public Patient GetCurrentPatient()
+        {
+            Patient copyPatient = new(CurrentPatient);
+            return copyPatient;
+        }
+
 
         /// <summary>
         /// Checks whether a directory exists, else it creates one.
@@ -31,11 +46,17 @@ namespace MedicalTrackerBlazorApp.Data
             LoadExistingPatients();
         }
 
+
         public string filePathPatientsList = $"{fileStoreDirectory}{fileNamePatients}"; //TODO: Find all references and replace them
         public static string fileStoreDirectory = @"C:\Users\Elias\OneDrive\TMP\";
         public static string fileNamePatients = @"patientsList.xml";
 
-        public Patient CurrentPatient { get; set; } = new();
+        private Patient _currentPatient { get; set; } = new();
+        public Patient CurrentPatient
+        {
+            get => _currentPatient;
+            set => _currentPatient = value;
+        }
 
         private List<Patient> _patients = new();
 
@@ -44,20 +65,7 @@ namespace MedicalTrackerBlazorApp.Data
             get => _patients;
             set => _patients = value;
         }
-        /// <summary>
-        /// Makes and returns a copy of a Patient object.
-        /// </summary>
-        /// <param name="currentPatient">Patient Object to copy.</param>
-        /// <returns>Patient copy</returns>
-        public Patient? GetCurrentPatient()
-        {
-            if (CurrentPatient != null)
-            {
-                Patient copyPatient = new(CurrentPatient);
-                return copyPatient;
-            }
-            return null;
-        }
+
 
         /// <summary>
         /// Intended to use at the end, when all of the patient info has been filled out and ready to submit.
@@ -69,48 +77,47 @@ namespace MedicalTrackerBlazorApp.Data
         {
             Patient copyPatient = new(CurrentPatient);
 
-            copyPatient.ID = GetNextPatientID();
-
-            if (Patients.Count <= 0)
-            {
-                Patients.Add(copyPatient);
-                CurrentPatient = new();
-                MedicalTracker.Program.XmlWriter(Patients, filePathPatientsList);
-                return;
-            }
             if (!HasDuplicate(Patients, copyPatient))
             {
+                copyPatient.ID = GetNextPatientID();
+
                 Patients.Add(copyPatient);
                 CurrentPatient = new();
                 MedicalTracker.Program.XmlWriter(Patients, filePathPatientsList);
-                return;
-            }
-        }
-        /// <summary>
-        /// Checks to see if the patient list file exists locally. 
-        /// If true, it'll assign the stored values into a Patient list variable.
-        /// </summary>
-        public void LoadExistingPatients()
-        {
-            if (File.Exists(filePathPatientsList) && MedicalTracker.Program.XmlReader<List<Patient>>(filePathPatientsList) != null) //Exception Handling?
-            {
-                Patients = MedicalTracker.Program.XmlReader<List<Patient>>(filePathPatientsList); //TODO: try catch?
             }
         }
 
+
         /// <summary>
-        /// Returns an new int by finding the Max ID within the Patients list and adding one.
-        /// Intended to be used for patient IDs.
-        /// </summary> 
-        public int GetNextPatientID()
+        /// Used whenever trying to add new items into the (or override/replace) currentPatient.
+        /// Copies the CurrentPatient.
+        /// Iterates through the list of items (of CopyCurrentPatient) in which the newObject will be added into, to check for any existing duplicates.
+        /// Uses Ivalidateable to see if all items that are required are filled within that NewObject.
+        /// If second and third pass, it will then replace the currentPatient with the updated copyPatient.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="objListFromCopyCurrentPatient"></param>
+        /// <param name="newObj"></param>
+        /// <returns>bool</returns>
+        public bool CheckReviewNewDataAndUpdateCurrentPatient<T>(List<T> objListFromCopyCurrentPatient, T newObj) where T : IValidateable
         {
-            return Patients.Count <= 0 ? 1 : Patients.Max(x => x.ID) + 1;
+            Patient copyCurrentPatient = new(GetCurrentPatient());//refresh copyCurrentPatient
+
+            if (!HasDuplicate(objListFromCopyCurrentPatient, newObj))//checks for duplicates
+            {
+                objListFromCopyCurrentPatient.Add(newObj);
+
+                CurrentPatient = new(copyCurrentPatient); //TODO: method to reassign/declare value for currentPatient.
+
+                return true;//to check success
+            }
+            return false;
         }
 
         /// <summary>
         /// Checks list if there's an item thats the same as the provided object.
         /// Null checks.
-        /// Checks if the list's tpe and the object's type are the same.
+        /// Checks if the list's type and the object's type are the same.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="objList">The List of items</param>
@@ -134,6 +141,69 @@ namespace MedicalTrackerBlazorApp.Data
                 }
             }
             return false;
+        }
+
+        /// <summary>
+        /// Will check if only a designated value in a list got added, won't pass if any other items in that list got changed.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="unchangedList">Original list, unchanged.</param>
+        /// <param name="changedList">List where the new value was added.</param>
+        /// <param name="valueAdded">Value that is being compared and was added to a list.</param>
+        /// <returns>True if the valueAdded was the only item added.</returns>
+        public bool HasDifferenceOfAValue<T>(List<T> unchangedList, List<T> changedList, T valueAdded)
+        {
+            if (unchangedList == null && changedList == null)
+            {
+                return false;
+            }
+            if (unchangedList == null || changedList == null)
+            {
+                return true;
+            }
+            if (unchangedList.GetType() != changedList.GetType())
+            {
+                return false;
+            }
+            //if (!HasDuplicate(unchangedList, valueAdded) && HasDuplicate(changedList, valueAdded))
+            //{
+            //    return true;
+            //}
+
+            //var difference = changedList.Except(unchangedList);
+
+            var difference = unchangedList.Where(X => !changedList.Contains(X));
+
+            if (difference.Equals(valueAdded))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+
+        /// <summary>
+        /// Checks to see if the patient list file exists locally. 
+        /// If true, it'll assign the stored values into a Patient list variable.
+        /// </summary>
+        public void LoadExistingPatients()
+        {
+            if (File.Exists(filePathPatientsList) && MedicalTracker.Program.XmlReader<List<Patient>>(filePathPatientsList) != null) //Exception Handling?
+            {
+                Patients = MedicalTracker.Program.XmlReader<List<Patient>>(filePathPatientsList); //TODO: try catch?
+            }
+        }
+
+
+        /// <summary>
+        /// Returns an new int by finding the Max ID within the Patients list and adding one.
+        /// Intended to be used for patient IDs.
+        /// </summary> 
+        public int GetNextPatientID()
+        {
+            //check for 'leftover' IDs that were used and deleted?
+            return Patients.Count <= 0 ? 1 : Patients.Max(x => x.ID) + 1;
         }
 
         //TODO: Put this in the DataService and double checks before deleting. Save the new modified list onto a new xml List and make a backup list incase.
@@ -161,6 +231,8 @@ namespace MedicalTrackerBlazorApp.Data
             }
             return false;
         }
+
+
         ///// <summary>
         ///// Method that serializes a list<Object>.
         ///// </summary>
@@ -186,6 +258,107 @@ namespace MedicalTrackerBlazorApp.Data
         //    using StreamReader tx = new(aFilePath);
         //    return (T)xmlSerializer.Deserialize(tx);
         //}
+
+        public void Example(IValidateable obj)
+        {
+
+        }
+
+        //public bool AddValidatable(List<IValidateable> itemList, IValidateable item)
+        //{
+        //    if (item.Validate())
+        //    {
+
+        //    }
+        //    throw new NotImplementedException();
+        //}
+
+
+
+        /// <summary>
+        /// Creates a copy of symptom.
+        /// Prevents duplicate answers from being added onto the Symptoms list.
+        /// If it passes it gets added onto Symptoms list.
+        /// Deletes the contents of the symptom.
+        /// </summary>
+        public bool AddSymptom(List<Symptom> symptoms, Symptom symptom)
+        {
+            Symptom copySymptom = new(symptom);
+
+            if (!HasDuplicate(symptoms, copySymptom))
+            {
+                symptoms.Add(copySymptom);
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Checks if the GeneralInfo obj is filled with the required info.
+        /// Prevents duplicate patients from being added into the Patients list
+        /// by comparing GeneralInfo to all of the existing (List)Patients.GeneralInfo in the DataService.
+        /// If it passes it gets allowed to be submitted and saved.
+        /// </summary>
+        public bool SaveGeneralInfo(GeneralInfo generalInfo)
+        {
+            GeneralInfo copyGeneralInfo = new(generalInfo);
+
+            if (copyGeneralInfo.Validate())//Checks to see if the GeneralInfo obj is filled (Validates itself)
+            {
+                //checks for duplicate and if only the new value gets added.
+                return CheckReviewNewDataAndUpdateCurrentPatient((Patients.Select(x => x.GeneralInfo).ToList()), copyGeneralInfo);
+            }
+
+            return false;
+        }
+
+
+        /// <summary>
+        /// Checks if an allergy obj is filled with the required info.
+        /// Prevents duplicate allergy from being added into the allergies list
+        /// by comparing the allergy to all of the existing (List)allergies in the currentPatient.
+        /// If it passes it gets allowed to be submitted and saved. 
+        /// </summary>
+        /// <param name="allergy"></param>
+        /// <returns>bool, whether it's successful or not</returns>
+        public bool SaveAllergy(Allergy allergy)
+        {
+            Allergy copyAllergy = new(allergy);
+
+            Patient copyCurrentPatient = new(GetCurrentPatient());
+
+            if (copyAllergy.Validate())//Checks to see if the allergy obj is filled (Validates itself)
+            {
+                //checks for duplicate and if only the new value gets added.
+                return CheckReviewNewDataAndUpdateCurrentPatient(copyCurrentPatient.Allergies, copyAllergy);
+            }
+
+            return false;
+        }
+
+
+
+        //Question: How can i use this with the GetContactInfo Component in both EmergencyContacts and Caretakers?
+
+        /// <summary>
+        /// Checks if a ContactInfo object is filled with the required info.
+        /// Prevents duplicate Contacts from being added into the given list.
+        /// If both pass checks pass, it then gets added onto the given list.
+        /// Else returns false.
+        /// </summary>
+        /// <param name="contact"></param>
+        /// <param name="contactsList"></param>
+        /// <returns>Returns true if ContactInfo Obj was added into the list.</returns>
+        public bool SaveContactInfo(ContactInfo contact, List<ContactInfo> contactsList)
+        {
+            ContactInfo copyContact = new(contact);
+
+            if (copyContact.Validate())
+            {
+                return CheckReviewNewDataAndUpdateCurrentPatient(contactsList, contact);
+            }
+            return false;
+        }
     }
 }
 

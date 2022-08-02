@@ -31,8 +31,10 @@
 <div style="margin: 5px">
     <input type="text" @bind="GeneralInfo.SexAtBirth" placeholder="Sex at Birth" />@*SexAtBirth*@
 </div>
-
-<button @onclick="SaveGeneralInfo">Submit General Info</button>
+@*<div style="margin: 5px">
+    <GetContactInfo @bind-Contact="GeneralInfo.ContactInfo" />
+</div>*@
+<button @onclick="SaveButtonForGeneralInfo">Submit General Info</button>
 
 
     General Info: @GeneralInfo.
@@ -45,20 +47,38 @@
     [Parameter]
     public EventCallback<GeneralInfo> GeneralInfoChanged { get; set; }
 
-
     /// <summary>
-    /// Prevents duplicate patients from being added into the Patients list
-    /// by comparing GeneralInfo to all of the existing (List)Patients.GeneralInfo in the DataService.
-    /// If it passes it gets allowed to be saved.
+    /// This calls on SaveGeneralInfo method from the Dataservice.
+    /// If it's successful it'll clear the fields in GeneralInfo.
     /// </summary>
-    public void SaveGeneralInfo()
+    public void SaveButtonForGeneralInfo()
     {
-        GeneralInfo copyGeneralInfo = new(GeneralInfo);
-
-        if (!Data.HasDuplicate((Data.Patients.Select(x => x.GeneralInfo).ToList()), copyGeneralInfo))
+        bool success = Data.SaveGeneralInfo(GeneralInfo);
+        if (success)
         {
-            Data.CurrentPatient.GeneralInfo = copyGeneralInfo;
             GeneralInfo = new();
         }
     }
+
+    ///// <summary>
+    ///// Prevents duplicate patients from being added into the Patients list
+    ///// by comparing GeneralInfo to all of the existing (List)Patients.GeneralInfo in the DataService.
+    ///// If it passes it gets allowed to be saved.
+    ///// </summary>
+    //public void SaveGeneralInfo()
+    //{
+    //    GeneralInfo copyGeneralInfo = new(GeneralInfo);
+
+    //    Patient copyPatient = new(Data.GetCurrentPatient());
+
+    //    if (!Data.HasDuplicate((Data.Patients.Select(x => x.GeneralInfo).ToList()), copyGeneralInfo))
+    //    {
+    //        Data.CurrentPatient.GeneralInfo = copyGeneralInfo;
+    //        GeneralInfo = new();
+    //    }
+    //    bool success;
+    //    //success = Data.CheckReviewNewDataAndUpdateCurrentPatient(Data.Patients.Select(x => x.GeneralInfo).ToList(), copyGeneralInfo, copyPatient, Data.IsGeneralInfoFilled(copyPatient));
+    //    //success = Data.CheckReviewNewDataAndUpdateCurrentPatient(Data.Patients.Select(x => x.GeneralInfo).ToList(), copyGeneralInfo, copyPatient, copyGeneralInfo, Data.IsGeneralInfoFilled(copyGeneralInfo));
+    //}
+
 }
