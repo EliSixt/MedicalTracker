@@ -275,10 +275,10 @@ namespace MedicalTrackerBlazorApp.Data
 
 
         /// <summary>
-        /// Creates a copy of symptom.
+        /// Creates a copy of the symptom object.
+        /// Checks if the symptom object being added if it's filled through a validate check. 
         /// Prevents duplicate answers from being added onto the Symptoms list.
-        /// If it passes it gets added onto Symptoms list.
-        /// Deletes the contents of the symptom.
+        /// If it passes it gets added to the provided Symptoms list.
         /// </summary>
         public bool AddSymptom(List<Symptom> symptoms, Symptom symptom)
         {
@@ -294,8 +294,8 @@ namespace MedicalTrackerBlazorApp.Data
 
 
         /// <summary>
-        /// Creates a copy of AlgyMed.
-        /// Checks if the medicine object being added is filled through a validate check. 
+        /// Creates a copy of the medicine object.
+        /// Checks if the medicine object being added if it's filled through a validate check. 
         /// Prevents duplicate answers from being added onto the medicine list.
         /// If it passes it gets added to the provided medicine list.
         /// </summary>
