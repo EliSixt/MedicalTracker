@@ -293,26 +293,26 @@ namespace MedicalTrackerBlazorApp.Data
         }
 
 
-        ///// <summary>
-        ///// Creates a copy of AlgyMed.
-        ///// Prevents duplicate answers from being added onto a medicine list.
-        ///// If it passes it gets added onto AlgyMedicines.
-        ///// Deletes the contents of AlgyMed.
-        ///// </summary>
-        ///// <param name="medicines"></param>
-        ///// <param name="medicine"></param>
-        ///// <returns></returns>
-        //public bool AddMed(List<Medicine> medicines, Medicine medicine)
-        //{
-        //    Medicine copyMed = new(medicine);
+        /// <summary>
+        /// Creates a copy of AlgyMed.
+        /// Checks if the medicine object being added is filled through a validate check. 
+        /// Prevents duplicate answers from being added onto the medicine list.
+        /// If it passes it gets added to the provided medicine list.
+        /// </summary>
+        /// <param name="medicines"></param>
+        /// <param name="medicine"></param>
+        /// <returns></returns>
+        public bool AddMed(List<Medicine> medicines, Medicine medicine)
+        {
+            Medicine copyMed = new(medicine);
 
-        //    if (***validateMedicine*** !HasDuplicate(medicines, copyMed))
-        //    {
-        //        medicines.Add(copyMed);
-        //        return true;
-        //    }
-        //    return false;
-        //}
+            if (copyMed.Validate() && !HasDuplicate(medicines, copyMed))
+            {
+                medicines.Add(copyMed);
+                return true;
+            }
+            return false;
+        }
 
         /// <summary>
         /// Checks if the GeneralInfo obj is filled with the required info.
