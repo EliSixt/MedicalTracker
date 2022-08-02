@@ -274,7 +274,6 @@ namespace MedicalTrackerBlazorApp.Data
         //}
 
 
-
         /// <summary>
         /// Creates a copy of symptom.
         /// Prevents duplicate answers from being added onto the Symptoms list.
@@ -285,13 +284,35 @@ namespace MedicalTrackerBlazorApp.Data
         {
             Symptom copySymptom = new(symptom);
 
-            if (!HasDuplicate(symptoms, copySymptom))
+            if (copySymptom.Validate() && !HasDuplicate(symptoms, copySymptom))
             {
                 symptoms.Add(copySymptom);
                 return true;
             }
             return false;
         }
+
+
+        ///// <summary>
+        ///// Creates a copy of AlgyMed.
+        ///// Prevents duplicate answers from being added onto a medicine list.
+        ///// If it passes it gets added onto AlgyMedicines.
+        ///// Deletes the contents of AlgyMed.
+        ///// </summary>
+        ///// <param name="medicines"></param>
+        ///// <param name="medicine"></param>
+        ///// <returns></returns>
+        //public bool AddMed(List<Medicine> medicines, Medicine medicine)
+        //{
+        //    Medicine copyMed = new(medicine);
+
+        //    if (***validateMedicine*** !HasDuplicate(medicines, copyMed))
+        //    {
+        //        medicines.Add(copyMed);
+        //        return true;
+        //    }
+        //    return false;
+        //}
 
         /// <summary>
         /// Checks if the GeneralInfo obj is filled with the required info.
