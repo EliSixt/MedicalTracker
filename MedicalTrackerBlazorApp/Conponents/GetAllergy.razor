@@ -66,7 +66,7 @@
 {
     <GetMedicine @bind-Medicine="AlgyMed" />
     <br />
-    <button type="submit" @onclick="AddMed">Add</button>
+    <button type="submit" @onclick="ButtonToAddAllergyMedicine">Add</button>
     @foreach (Medicine item in AlgyMedicines) @*this is temporary, to see list behavior*@
     {
         <li>@item</li>
@@ -128,23 +128,19 @@
         }
     }
 
-
     /// <summary>
-    /// Creates a copy of AlgyMed.
-    /// Prevents duplicate answers from being added onto a medicine list.
-    /// If it passes it gets added onto AlgyMedicines.
-    /// Deletes the contents of AlgyMed.
+    /// Calls the AddMed method from the DataService.
+    /// Checks for duplicates and checks validity.
+    /// If successful it'll clear the fields for AlgyMed.
     /// </summary>
-    public void AddMed() //TODO : add to DataService
+    public void ButtonToAddAllergyMedicine()
     {
-        Medicine copyMed = new(AlgyMed);
-
-        if (!Data.HasDuplicate(AlgyMedicines, copyMed))
+        if (Data.AddMed(AlgyMedicines, AlgyMed))
         {
-            AlgyMedicines.Add(copyMed);
             AlgyMed = new();
         }
     }
+
 
     @*add a submit button at the end to add this Allergy into the List<Allergy> within Patient under a service*@
 
