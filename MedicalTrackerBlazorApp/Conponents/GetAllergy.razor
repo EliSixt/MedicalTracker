@@ -75,7 +75,7 @@
 <br />
 <br />
 
-<button type="submit" @onclick="OnSubmitAllergy">Submit Allergy</button>
+<button type="submit" @onclick="ButtonToSubmitAllergy">Submit Allergy</button>
 
 @foreach (Allergy item in Data.CurrentPatient.Allergies)
 {
@@ -88,28 +88,25 @@
     [Parameter]
     public EventCallback<Allergy> AllergyChanged { get; set; }
 
+
     public Medicine AlgyMed = new();
-    //private List<Medicine> _algyMeds = new();
-    public List<Medicine> AlgyMedicines //Add this to Allergy object and then to service with the submit button.
+    public List<Medicine> AlgyMedicines
     {
         get => Allergy.AlgyTreatmentMedication;
         set => Allergy.AlgyTreatmentMedication = value;
     }
 
+
     [Parameter]
     public Symptom Symptom { get; set; } = new();
     [Parameter]
     public EventCallback<Symptom> SymptomChanged { get; set; }
-    //private List<Symptom> _symptoms {  get; set; } = new();
-    public List<Symptom> Symptoms //Add this to Allergy object with a submit button
+    public List<Symptom> Symptoms
     {
         get => Allergy.SymptomsLeadingToLifeThreatening;
         set => Allergy.SymptomsLeadingToLifeThreatening = value;
     }
 
-    //add a button method, adding each of the inputs onto a list (kinda like AddMeds()),
-    // then bind it to Allergy.SymptomsLeadingToLifeThreatening and service here
-    //add an editForm with a submit button and validation error messages in the class' properties
 
     /// <summary>
     /// Calls the AddSymptom method from the DataService.
@@ -139,27 +136,15 @@
     }
 
 
-    @*add a submit button at the end to add this Allergy into the List<Allergy> within Patient under a service*@
-
     /// <summary>
-    /// Adds Allergy variable into the list<allergy> of the CurrentPatient from the DataService.
-    /// Checks for any duplicates in the list<allergy> of the dataservice by comparing allergy names.
-    /// Ignores case.
+    /// This calls SaveAllergy method from the DataService.
+    /// Meant to be binded to a save/submit button at the end of the allergy component.
+    /// Checks if allergy is filled, prevents duplicates, and (if successful) saves it to the currentPatient.
     /// </summary>
-    public void OnSubmitAllergy() //TODO: Change this to add Check method from dataService
+    public void ButtonToSubmitAllergy()
     {
-        Allergy CopyAllergy = new(Allergy);
-
-        Patient copyCurrentPatient = new(Data.GetCurrentPatient());
-
-        if (!Data.HasDuplicate(copyCurrentPatient.Allergies, CopyAllergy))
+        if (Data.SaveAllergy(Allergy))
         {
-            copyCurrentPatient.Allergies.Add(CopyAllergy); //make this have that extra wall of C&B
-
-            if (Data.HasDifferenceOfAValue(Data.GetCurrentPatient().Allergies, copyCurrentPatient.Allergies, CopyAllergy))
-            {
-                //TODO: Add to currentPatient with a new method cause currentPatient will be private.
-            }
             Allergy = new();
         }
     }
