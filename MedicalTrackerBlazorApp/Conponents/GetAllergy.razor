@@ -26,7 +26,7 @@
     <div style="margin: 5px">
         <input type="text" @bind="Symptom.SymptomDescription" placeholder="Symptom Description" />
     </div>
-    <button type="submit" @onclick="AddSymptom">Add Symptom</button>
+    <button type="submit" @onclick="ButtonToAddSymptom">Add Symptom</button>
     <br />
 
     @foreach (Symptom item in Symptoms) @*Temp: to see list behavior*@
@@ -112,21 +112,18 @@
     //add an editForm with a submit button and validation error messages in the class' properties
 
     /// <summary>
-    /// Creates a copy of symptom.
-    /// Prevents duplicate answers from being added onto the Symptoms list.
-    /// If it passes it gets added onto Symptoms list.
-    /// Deletes the contents of the symptom.
+    /// Calls the AddSymptom method from the DataService.
+    /// Checks for duplicates and checks validity.
+    /// If successful it'll clear the fields for Symptom.
     /// </summary>
-    public void AddSymptom() //TODO : add to DataService
+    public void ButtonToAddSymptom()
     {
-        Symptom copySymptom = new(Symptom);
-
-        if (!Data.HasDuplicate(Symptoms, copySymptom))
+        if (Data.AddSymptom(Symptoms, Symptom))
         {
-            Symptoms.Add(copySymptom);
             Symptom = new();
         }
     }
+
 
     /// <summary>
     /// Calls the AddMed method from the DataService.
