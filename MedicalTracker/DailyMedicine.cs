@@ -2,7 +2,7 @@
 
 namespace MedicalTracker
 {
-    public class DailyMedicine
+    public class DailyMedicine : IValidateable
     {
         public Medicine Medicine { get; set; } = new();
         public string DoseMg { get; set; }//medication taken at one time
@@ -19,6 +19,28 @@ namespace MedicalTracker
         public override string ToString()
         {
             return $"Medicine: {Medicine}, DoseMg: {DoseMg}, Frequency of Dose: {FrequencyOfDose}, Time between dose: {TimeSpanOfDose}";
+        }
+
+
+        /// <summary>
+        /// Checks a DailyMedicine object if it's filled with all the required info.
+        /// </summary>
+        /// <returns>True if all necessary info is filled.</returns>
+        public bool Validate()
+        {
+            if (!Medicine.Validate())
+            {
+                return false;
+            }
+            if (string.IsNullOrEmpty(DoseMg))
+            {
+                return false;
+            }
+            if (TimeSpanOfDose <= TimeSpan.MinValue)
+            {
+                return false;
+            }
+            return true;
         }
 
         public DailyMedicine(DailyMedicine OrginalDailyMedicine)
