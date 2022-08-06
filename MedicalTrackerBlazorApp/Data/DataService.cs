@@ -314,6 +314,25 @@ namespace MedicalTrackerBlazorApp.Data
             return false;
         }
 
+
+        /// <summary>
+        /// Checks if DailyMedicine object is filled with the required info.
+        /// Prevents duplicate Daily meds from being added into the DailyMedicine list inside CurrentPatient.
+        /// Submits/Saves into Current Patient.
+        /// </summary>
+        /// <param name="dailyMedicine"></param>
+        /// <returns>True if it got saved into the current patient.</returns>
+        public bool SaveDailyMedication(DailyMedicine dailyMedicine)
+        {
+            Patient copyCurrentPatient = new(GetCurrentPatient());
+            DailyMedicine CopyDailyMed = new(dailyMedicine);
+            if (CopyDailyMed.Validate())
+            {
+                return CheckReviewNewDataAndUpdateCurrentPatient(copyCurrentPatient.DailyMedication, CopyDailyMed);
+            }
+            return false;
+        }
+
         /// <summary>
         /// Checks if the GeneralInfo obj is filled with the required info.
         /// Prevents duplicate patients from being added into the Patients list
