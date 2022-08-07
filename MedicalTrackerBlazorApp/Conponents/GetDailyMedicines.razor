@@ -15,7 +15,7 @@
 <div style="margin: 5px">
     <button @onclick="ConfirmTimeSpan">Bind TimeSpan</button>
 </div>
-<button @onclick="AddMedication">Add Medication</button>
+<button @onclick="ButtonToAddDailyMedication">Add Medication</button>
 <br />
 
 @foreach (DailyMedicine item in Data.CurrentPatient.DailyMedication) //Temp
@@ -46,29 +46,17 @@
         DailyMedChanged.InvokeAsync(DailyMed);
     }
 
+   
     /// <summary>
     /// Checks for duplicates
     /// Adds all the inputs of the DailyMedicine Variable into the list CurrentPatient.DailyMedication
     /// from the DataService. Earses DailyMedicine variable to start over.
     /// </summary>
-    public void AddMedication()
+    public void ButtonToAddDailyMedication()
     {
-        DailyMedicine CopyDailyMed = new(DailyMed);
-        if (!Data.HasDuplicate(Data.CurrentPatient.DailyMedication, CopyDailyMed))
+        if (Data.AddDailyMedication(Data.CurrentPatient.DailyMedication, DailyMed))
         {
-            Data.CurrentPatient.DailyMedication.Add(CopyDailyMed);
             DailyMed = new();
         }
     }
-
-
-    //TODO: Valiidate DailyMedication and create a new method in DataService to add a dailyMed without duplicates. Replace AddMedication() too.
-
-    //public void ButtonToAddMedication()
-    //{
-    //    if (DailyMedication Method then -> Data.CurrentPatient.DailyMedication, DailyMed))
-    //    {
-
-    //    }
-    //}
 }

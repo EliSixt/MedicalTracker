@@ -314,21 +314,25 @@ namespace MedicalTrackerBlazorApp.Data
             return false;
         }
 
+        // Question: Is there a better way to add things into current patient? I just keep overriding the currentpatient with a new (changed) patient.
+        // Work-on: CheckReviewNewDataAndUpdateCurrentPatient method. Try to incoporate patient obj as a parameter?
+
 
         /// <summary>
         /// Checks if DailyMedicine object is filled with the required info.
         /// Prevents duplicate Daily meds from being added into the DailyMedicine list inside CurrentPatient.
         /// Submits/Saves into Current Patient.
         /// </summary>
+        /// <param name="dailyMedicines"></param>
         /// <param name="dailyMedicine"></param>
         /// <returns>True if it got saved into the current patient.</returns>
-        public bool SaveDailyMedication(DailyMedicine dailyMedicine)
+        public bool AddDailyMedication(List<DailyMedicine> dailyMedicines, DailyMedicine dailyMedicine)
         {
-            Patient copyCurrentPatient = new(GetCurrentPatient());
             DailyMedicine CopyDailyMed = new(dailyMedicine);
+
             if (CopyDailyMed.Validate())
             {
-                return CheckReviewNewDataAndUpdateCurrentPatient(copyCurrentPatient.DailyMedication, CopyDailyMed);
+                return CheckReviewNewDataAndUpdateCurrentPatient(dailyMedicines, CopyDailyMed);
             }
             return false;
         }
