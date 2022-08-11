@@ -77,7 +77,7 @@ namespace MedicalTrackerBlazorApp.Data
         {
             Patient copyPatient = new(CurrentPatient);
 
-            if (!HasDuplicate(Patients, copyPatient))
+            if (!Patients.HasDuplicate(copyPatient))
             {
                 copyPatient.ID = GetNextPatientID();
 
@@ -86,6 +86,8 @@ namespace MedicalTrackerBlazorApp.Data
                 MedicalTracker.Program.XmlWriter(Patients, filePathPatientsList);
             }
         }
+
+        //solving the issue of adding an obj to a disignated list of the current patient.
 
 
         /// <summary>
@@ -96,52 +98,24 @@ namespace MedicalTrackerBlazorApp.Data
         /// If second and third pass, it will then replace the currentPatient with the updated copyPatient.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="objListFromCopyCurrentPatient"></param>
+        /// <param name="objListFromPatient"></param>
         /// <param name="newObj"></param>
-        /// <returns>bool</returns>
-        public bool CheckReviewNewDataAndUpdateCurrentPatient<T>(List<T> objListFromCopyCurrentPatient, T newObj) where T : IValidateable
+        /// <returns>True if successful</returns>
+        public bool AddItemToCurrentPatient<T>(List<T> objListFromPatient, T newObj) where T : IValidateable
         {
-            Patient copyCurrentPatient = new(GetCurrentPatient());//refresh copyCurrentPatient
+            Patient patient = new(GetCurrentPatient());//refresh copyCurrentPatient
 
-            if (!HasDuplicate(objListFromCopyCurrentPatient, newObj))//checks for duplicates
+            if (!objListFromPatient.HasDuplicate(newObj))//checks for duplicates
             {
-                objListFromCopyCurrentPatient.Add(newObj);
+                objListFromPatient.Add(newObj);
 
-                CurrentPatient = new(copyCurrentPatient); //TODO: method to reassign/declare value for currentPatient.
+                CurrentPatient = new(patient); //TODO: method to reassign/declare value for currentPatient.
 
                 return true;//to check success
             }
             return false;
         }
 
-        /// <summary>
-        /// Checks list if there's an item thats the same as the provided object.
-        /// Null checks.
-        /// Checks if the list's type and the object's type are the same.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="objList">The List of items</param>
-        /// <param name="objToCheck">Object to compare</param>
-        /// <returns>Boolean</returns>
-        public bool HasDuplicate<T>(List<T> objList, T objToCheck)
-        {
-            if (objToCheck is null && objList is null)
-            {
-                return true;
-            }
-            if (objToCheck is null || objList is null)
-            {
-                return false;
-            }
-            foreach (T obj in objList)
-            {
-                if (obj != null && obj.Equals(objToCheck))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
 
         /// <summary>
         /// Will check if only a designated value in a list got added, won't pass if any other items in that list got changed.
@@ -284,7 +258,7 @@ namespace MedicalTrackerBlazorApp.Data
         {
             Symptom copySymptom = new(symptom);
 
-            if (copySymptom.Validate() && !HasDuplicate(symptoms, copySymptom))
+            if (copySymptom.Validate() && !symptoms.HasDuplicate(symptom))
             {
                 symptoms.Add(copySymptom);
                 return true;
@@ -306,16 +280,13 @@ namespace MedicalTrackerBlazorApp.Data
         {
             Medicine copyMed = new(medicine);
 
-            if (copyMed.Validate() && !HasDuplicate(medicines, copyMed))
+            if (copyMed.Validate() && !medicines.HasDuplicate(copyMed))
             {
                 medicines.Add(copyMed);
                 return true;
             }
             return false;
         }
-
-        // Question: Is there a better way to add things into current patient? I just keep overriding the currentpatient with a new (changed) patient.
-        // Work-on: CheckReviewNewDataAndUpdateCurrentPatient method. Try to incoporate patient obj as a parameter?
 
 
         /// <summary>
@@ -332,7 +303,7 @@ namespace MedicalTrackerBlazorApp.Data
 
             if (CopyDailyMed.Validate())
             {
-                return CheckReviewNewDataAndUpdateCurrentPatient(dailyMedicines, CopyDailyMed);
+                return AddItemToCurrentPatient(dailyMedicines, CopyDailyMed);
             }
             return false;
         }
@@ -350,7 +321,7 @@ namespace MedicalTrackerBlazorApp.Data
             if (copyGeneralInfo.Validate())//Checks to see if the GeneralInfo obj is filled (Validates itself)
             {
                 //checks for duplicate and if only the new value gets added.
-                return CheckReviewNewDataAndUpdateCurrentPatient((Patients.Select(x => x.GeneralInfo).ToList()), copyGeneralInfo);
+                return AddItemToCurrentPatient((Patients.Select(x => x.GeneralInfo).ToList()), copyGeneralInfo);
             }
 
             return false;
@@ -374,15 +345,12 @@ namespace MedicalTrackerBlazorApp.Data
             if (copyAllergy.Validate())//Checks to see if the allergy obj is filled (Validates itself)
             {
                 //checks for duplicate and if only the new value gets added.
-                return CheckReviewNewDataAndUpdateCurrentPatient(copyCurrentPatient.Allergies, copyAllergy);
+                return AddItemToCurrentPatient(copyCurrentPatient.Allergies, copyAllergy);
             }
 
             return false;
         }
 
-
-
-        //Question: How can i use this with the GetContactInfo Component in both EmergencyContacts and Caretakers?
 
         /// <summary>
         /// Checks if a ContactInfo object is filled with the required info.
@@ -399,7 +367,7 @@ namespace MedicalTrackerBlazorApp.Data
 
             if (copyContact.Validate())
             {
-                return CheckReviewNewDataAndUpdateCurrentPatient(contactsList, contact);
+                return AddItemToCurrentPatient(contactsList, contact);
             }
             return false;
         }
