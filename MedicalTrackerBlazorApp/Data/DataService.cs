@@ -31,6 +31,18 @@ namespace MedicalTrackerBlazorApp.Data
             return copyPatient;
         }
 
+        /// <summary>
+        /// Takes in a Patient object and replaces the current patient with it.
+        /// Intended to use when modifing the Current Patient.
+        /// </summary>
+        /// <param name="updatedPatient"></param>
+        public void SetCurrentPatient(Patient updatedPatient)
+        {
+            if (updatedPatient.GeneralInfo.Validate()) //null check
+            {
+                CurrentPatient = new(updatedPatient);
+            }
+        }
 
         /// <summary>
         /// Checks whether a directory exists, else it creates one.

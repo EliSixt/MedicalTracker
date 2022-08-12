@@ -59,26 +59,4 @@
             GeneralInfo = new();
         }
     }
-
-    ///// <summary>
-    ///// Prevents duplicate patients from being added into the Patients list
-    ///// by comparing GeneralInfo to all of the existing (List)Patients.GeneralInfo in the DataService.
-    ///// If it passes it gets allowed to be saved.
-    ///// </summary>
-    //public void SaveGeneralInfo()
-    //{
-    //    GeneralInfo copyGeneralInfo = new(GeneralInfo);
-
-    //    Patient copyPatient = new(Data.GetCurrentPatient());
-
-    //    if (!Data.HasDuplicate((Data.Patients.Select(x => x.GeneralInfo).ToList()), copyGeneralInfo))
-    //    {
-    //        Data.CurrentPatient.GeneralInfo = copyGeneralInfo;
-    //        GeneralInfo = new();
-    //    }
-    //    bool success;
-    //    //success = Data.CheckReviewNewDataAndUpdateCurrentPatient(Data.Patients.Select(x => x.GeneralInfo).ToList(), copyGeneralInfo, copyPatient, Data.IsGeneralInfoFilled(copyPatient));
-    //    //success = Data.CheckReviewNewDataAndUpdateCurrentPatient(Data.Patients.Select(x => x.GeneralInfo).ToList(), copyGeneralInfo, copyPatient, copyGeneralInfo, Data.IsGeneralInfoFilled(copyGeneralInfo));
-    //}
-
 }
