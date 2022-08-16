@@ -383,6 +383,10 @@ namespace MedicalTrackerBlazorApp.Data
             }
             return false;
         }
+
+
+        //Working on semaphore, tie to decouple the INs and OUTs of currentpatient
+        //SemaphoreSlim gate = new SemaphoreSlim(1);
     }
 }
 
