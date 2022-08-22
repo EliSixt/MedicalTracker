@@ -58,10 +58,22 @@ namespace MedicalTrackerBlazorApp.Data
             LoadExistingPatients();
         }
 
+        //public void GenerateExcelList()
+        //{
+
+        //}
+
 
         public string filePathPatientsList = $"{fileStoreDirectory}{fileNamePatients}"; //TODO: Find all references and replace them
         public static string fileStoreDirectory = @"C:\Users\Elias\OneDrive\TMP\";
         public static string fileNamePatients = @"patientsList.xml";
+
+        public static string fileNameSymptoms = @"symptomsData.xml";
+        public static string fileNameCondition = @"conditionsData.xml";
+        public string filePathConditions = $"{fileStoreDirectory}{fileNameCondition}";
+        public string filePathSymptoms = $"{fileStoreDirectory}{fileNameSymptoms}";
+        //string filePathPatientsList = @"C:\Users\Elias\OneDrive\TMP\patientsList.xml";
+        //string testFilePath = @"C:\TMP\testFile.xml";
 
         private Patient _currentPatient { get; set; } = new();
         public Patient CurrentPatient

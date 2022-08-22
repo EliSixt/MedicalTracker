@@ -7,6 +7,25 @@ namespace MedicalTrackerBlazorApp.Data
 {
     public class ExcelListGenerator
     {
+        List<Condition> conditionsList = new();
+        List<Symptom> symptomsList = new();
+        List<Condition> conditionsWithSymptoms = new();
+
+
+        //This a test for serializing to a local file
+        //Directory.CreateDirectory(@"C:\TMP");
+        //List<string> testFile = new List<string>();
+        //testFile.Add("This is a test to make sure i dont get a directory access denied exception.");
+
+
+        ////Copies information from a specific excelSheet and adds it onto an object of ExcelList,
+        ////returned 2 lists through excelList, and serializes those lists into separate files.
+        //string xlsxFile = @"C:\Users\elias\OneDrive\Documents\PeoplewithSymptomsAndConditions.xlsx";
+
+        //ExcelLists excelLists = new ExcelLists();
+        //excelLists = ExcelObjectGenerator(xlsxFile, filePathConditions, filePathSymptoms);
+
+
         /// <summary>
         /// Method that serializes a list<Object>.
         /// </summary>
@@ -30,7 +49,7 @@ namespace MedicalTrackerBlazorApp.Data
         {
             XmlSerializer xmlSerializer = new(typeof(T));
             using TextReader tx = new StreamReader(aFilePath);
-            T? t = (T)xmlSerializer.Deserialize(tx);
+            T? t = (T?)xmlSerializer.Deserialize(tx);
             if (t != null)
             {
                 return t;

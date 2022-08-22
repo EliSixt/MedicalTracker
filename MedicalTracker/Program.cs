@@ -14,6 +14,7 @@ namespace MedicalTracker
         {
             string filePathConditions = @"C:\Users\Elias\OneDrive\TMP\conditionsData.xml";
             string filePathSymptoms = @"C:\Users\Elias\OneDrive\TMP\symptomsData.xml";
+
             //string filePathPatientsList = @"C:\Users\Elias\OneDrive\TMP\patientsList.xml";
             //string testFilePath = @"C:\TMP\testFile.xml";
 
