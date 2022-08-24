@@ -19,30 +19,54 @@ namespace MedicalTrackerBlazorApp.Data
             }
         }
 
+        public bool flag; //switch/flag for currentPatient set accessibility
 
-        /// <summary>
-        /// Makes and returns a copy of a Patient object.
-        /// </summary>
-        /// <param name="currentPatient">Patient Object to copy.</param>
-        /// <returns>Patient copy</returns>
-        public Patient GetCurrentPatient()
+        private Patient _currentPatient { get; set; } = new();
+        public Patient CurrentPatient
         {
-            Patient copyPatient = new(CurrentPatient);
-            return copyPatient;
+            get => _currentPatient;
+            //protected set => _currentPatient = value;
+            protected internal set
+            {
+                if (flag)
+                {
+                    _currentPatient = value;
+                    flag = false;
+                }
+            }
+        }
+
+        private List<Patient> _patients = new();
+
+        public List<Patient> Patients
+        {
+            get => _patients;
+            set => _patients = value;
         }
 
         /// <summary>
         /// Takes in a Patient object and replaces the current patient with it.
         /// Intended to use when modifing the Current Patient.
         /// </summary>
-        /// <param name="updatedPatient"></param>
-        public void SetCurrentPatient(Patient updatedPatient)
+        /// <param name="changedPatient"></param>
+        /// <returns></returns>
+        public Patient SetCurrentPatient(Patient changedPatient)
         {
-            if (updatedPatient.GeneralInfo.Validate()) //null check
-            {
-                CurrentPatient = new(updatedPatient);
-            }
+            flag = true;
+            return CurrentPatient = new(changedPatient);
+
         }
+        /// <summary>
+        /// Makes and returns a copy of a Patient object.
+        /// </summary>
+        /// <param name="currentPatient">Patient Object to copy.</param>
+        /// <returns>Patient copy</returns>
+        public Patient GetCopyCurrentPatient()
+        {
+            Patient copyPatient = new(CurrentPatient);
+            return copyPatient;
+        }
+
 
         /// <summary>
         /// Checks whether a directory exists, else it creates one.
@@ -60,7 +84,7 @@ namespace MedicalTrackerBlazorApp.Data
 
         //public void GenerateExcelList()
         //{
-
+        //TODO: Insert all the steps to make the symptom and condition lists from the excel file here so they can be stored.
         //}
 
 
@@ -75,20 +99,6 @@ namespace MedicalTrackerBlazorApp.Data
         //string filePathPatientsList = @"C:\Users\Elias\OneDrive\TMP\patientsList.xml";
         //string testFilePath = @"C:\TMP\testFile.xml";
 
-        private Patient _currentPatient { get; set; } = new();
-        public Patient CurrentPatient
-        {
-            get => _currentPatient;
-            set => _currentPatient = value;
-        }
-
-        private List<Patient> _patients = new();
-
-        public List<Patient> Patients
-        {
-            get => _patients;
-            set => _patients = value;
-        }
 
 
         /// <summary>
@@ -99,7 +109,7 @@ namespace MedicalTrackerBlazorApp.Data
         /// </summary>
         public void SubmitAndSerializePatient()
         {
-            Patient copyPatient = new(CurrentPatient);
+            Patient copyPatient = GetCopyCurrentPatient();
 
             if (!Patients.HasDuplicate(copyPatient))
             {
@@ -127,7 +137,7 @@ namespace MedicalTrackerBlazorApp.Data
         /// <returns>True if successful</returns>
         public bool AddItemToCurrentPatient<T>(List<T> objListFromPatient, T newObj) where T : IValidateable
         {
-            Patient patient = new(GetCurrentPatient());//refresh copyCurrentPatient
+            Patient patient = GetCopyCurrentPatient();
 
             if (!objListFromPatient.HasDuplicate(newObj))//checks for duplicates
             {
@@ -364,7 +374,7 @@ namespace MedicalTrackerBlazorApp.Data
         {
             Allergy copyAllergy = new(allergy);
 
-            Patient copyCurrentPatient = new(GetCurrentPatient());
+            Patient copyCurrentPatient = new(GetCopyCurrentPatient());
 
             if (copyAllergy.Validate())//Checks to see if the allergy obj is filled (Validates itself)
             {
