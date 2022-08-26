@@ -19,7 +19,7 @@ namespace MedicalTrackerBlazorApp.Data
             }
         }
 
-        public bool flag; //switch/flag for currentPatient set accessibility
+        public bool flag = false; //switch/flag for currentPatient set accessibility
 
         private Patient _currentPatient { get; set; } = new();
         public Patient CurrentPatient
@@ -50,10 +50,10 @@ namespace MedicalTrackerBlazorApp.Data
         /// </summary>
         /// <param name="changedPatient"></param>
         /// <returns></returns>
-        public Patient SetCurrentPatient(Patient changedPatient)
+        public void SetCurrentPatient(Patient changedPatient)
         {
             flag = true;
-            return CurrentPatient = new(changedPatient);
+            CurrentPatient = new(changedPatient);
 
         }
         /// <summary>
@@ -116,7 +116,8 @@ namespace MedicalTrackerBlazorApp.Data
                 copyPatient.ID = GetNextPatientID();
 
                 Patients.Add(copyPatient);
-                CurrentPatient = new();
+                Patient newPatient = new();
+                SetCurrentPatient(newPatient);
                 MedicalTracker.Program.XmlWriter(Patients, filePathPatientsList);
             }
         }
@@ -143,7 +144,7 @@ namespace MedicalTrackerBlazorApp.Data
             {
                 objListFromPatient.Add(newObj);
 
-                CurrentPatient = new(patient); //TODO: method to reassign/declare value for currentPatient.
+                SetCurrentPatient(patient);
 
                 return true;//to check success
             }
@@ -197,7 +198,7 @@ namespace MedicalTrackerBlazorApp.Data
         /// </summary>
         public void LoadExistingPatients()
         {
-            if (File.Exists(filePathPatientsList) && MedicalTracker.Program.XmlReader<List<Patient>>(filePathPatientsList) != null) //Exception Handling?
+            if (File.Exists(filePathPatientsList) && MedicalTracker.Program.XmlReader<List<Patient>>(filePathPatientsList) != null)
             {
                 Patients = MedicalTracker.Program.XmlReader<List<Patient>>(filePathPatientsList); //TODO: try catch?
             }
@@ -374,7 +375,7 @@ namespace MedicalTrackerBlazorApp.Data
         {
             Allergy copyAllergy = new(allergy);
 
-            Patient copyCurrentPatient = new(GetCopyCurrentPatient());
+            Patient copyCurrentPatient = GetCopyCurrentPatient();
 
             if (copyAllergy.Validate())//Checks to see if the allergy obj is filled (Validates itself)
             {
@@ -407,8 +408,7 @@ namespace MedicalTrackerBlazorApp.Data
         }
 
 
-        //Working on semaphore, tie to decouple the INs and OUTs of currentpatient
-        //SemaphoreSlim gate = new SemaphoreSlim(1);
+        
     }
 }
 
