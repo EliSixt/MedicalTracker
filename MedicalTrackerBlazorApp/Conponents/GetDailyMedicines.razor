@@ -1,27 +1,34 @@
-﻿<h3>GetDailyMedicines</h3>
+﻿<div style="border:solid 3px red">
 
-<GetMedicine @bind-Medicine="DailyMed.Medicine" />
-<br />
+    <h3>GetDailyMedicines</h3>
 
-<div style="margin: 5px">
-    <input type="text" @bind="DailyMed.DoseMg" placeholder="Dose Amount" /> @*Change dose amount*@
-</div>
-<div style="margin: 5px">
-    <input type="text" @bind="DailyMed.FrequencyOfDose" placeholder="How often/when to take drug" />
-</div>
-<div style="margin: 5px">
-    <input type="time" @bind="TimeProxy" />
-</div>
-<div style="margin: 5px">
-    <button @onclick="ConfirmTimeSpan">Bind TimeSpan</button>
-</div>
-<button @onclick="ButtonToAddDailyMedication">Add Medication</button>
-<br />
+    <div style="margin: 5px">
 
-@foreach (DailyMedicine item in Data.CurrentPatient.DailyMedication) //Temp
-{
-    <li>@item</li>
-}
+        <GetMedicine @bind-Medicine="DailyMed.Medicine" />
+        <br />
+    </div>
+
+    <div style="margin: 5px">
+        <input type="text" @bind="DailyMed.DoseMg" placeholder="Dose Amount" /> @*Change dose amount*@
+    </div>
+    <div style="margin: 5px">
+        <input type="text" @bind="DailyMed.FrequencyOfDose" placeholder="How often/when to take drug" />
+    </div>
+    <div style="margin: 5px">
+        <input type="time" @bind="TimeProxy" />
+    </div>
+    <div style="margin: 5px">
+        <button @onclick="ConfirmTimeSpan">Bind TimeSpan</button>
+    </div>
+    <button @onclick="ButtonToAddDailyMedication">Add Medication</button>
+    <br />
+
+    @foreach (DailyMedicine item in Data.CurrentPatient.DailyMedication) //Temp
+    {
+        <li>@item</li>
+    }
+</div>
+
 @code {
     [Parameter]
     public DailyMedicine DailyMed { get; set; } = new();
@@ -46,7 +53,7 @@
         DailyMedChanged.InvokeAsync(DailyMed);
     }
 
-   
+
     /// <summary>
     /// Checks for duplicates
     /// Adds all the inputs of the DailyMedicine Variable into the list CurrentPatient.DailyMedication

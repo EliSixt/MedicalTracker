@@ -1,86 +1,88 @@
-﻿<h3>GetAllergy</h3>
-<div style="margin: 5px">
-    Name of the Allergy
-    <br />
-    <input type="text" @bind="Allergy.AlgyName" placeholder="Allergy Name" />@*AlgyName*@
-</div>
-<div style="margin: 5px">
-    <p style="font-size:small">Description of Allergy Reactions:</p>
-    <input type="text" @bind="Allergy.CommonReactions" placeholder="List all of the Allergy Reactions" />@*BriefDescriptionOfReactions, make this into a little list with a submit button as well. Look into validation*@
-</div>
-<div style="margin: 5px">
-    <input type="checkbox" @bind="Allergy.IslifeThreatening" /> Life Threatening @*IsLifeThreatening*@
-</div>
+﻿<div style="border:solid 3px green">
+    <h3>GetAllergy</h3>
+    <div style="margin: 5px">
+        Name of the Allergy
+        <br />
+        <input type="text" @bind="Allergy.AlgyName" placeholder="Allergy Name" />@*AlgyName*@
+    </div>
+    <div style="margin: 5px">
+        <p style="font-size:small">Description of Allergy Reactions:</p>
+        <input type="text" @bind="Allergy.CommonReactions" placeholder="List all of the Allergy Reactions" />@*BriefDescriptionOfReactions, make this into a little list with a submit button as well. Look into validation*@
+    </div>
+    <div style="margin: 5px">
+        <input type="checkbox" @bind="Allergy.IslifeThreatening" /> Life Threatening @*IsLifeThreatening*@
+    </div>
 
 
-@*If IsLifeThreatening, it will show text boxes to input symptom and and that symptom description with a submit button binded to a method.
+    @*If IsLifeThreatening, it will show text boxes to input symptom and and that symptom description with a submit button binded to a method.
     The method will check for duplicates then submit those text inputs into a list of SymptomsLeadingToLifeThreatening.
     Then add/update that list into the current patient's Allergy.SymptomsLeadingToLifeThreatening.
-*@
-@if (Allergy.IslifeThreatening == true)
-{
-    <p style="font-size:small">Add Symptoms leading to life threatening:</p>
-    <div style="margin: 5px">
-        <input type="text" @bind="Symptom.SymptomName" placeholder="Symptom Name" />@*SymptomsLeadingToLifeThreatening*@
-    </div>
-    <div style="margin: 5px">
-        <input type="text" @bind="Symptom.SymptomDescription" placeholder="Symptom Description" />
-    </div>
-    <button type="submit" @onclick="ButtonToAddSymptom">Add Symptom</button>
-    <br />
-
-    @foreach (Symptom item in Symptoms) @*Temp: to see list behavior*@
+    *@
+    @if (Allergy.IslifeThreatening == true)
     {
-        <li>
-            @item
-        </li>
+        <p style="font-size:small">Add Symptoms leading to life threatening:</p>
+        <div style="margin: 5px">
+            <input type="text" @bind="Symptom.SymptomName" placeholder="Symptom Name" />@*SymptomsLeadingToLifeThreatening*@
+        </div>
+        <div style="margin: 5px">
+            <input type="text" @bind="Symptom.SymptomDescription" placeholder="Symptom Description" />
+        </div>
+        <button type="submit" @onclick="ButtonToAddSymptom">Add Symptom</button>
+        <br />
+
+        @foreach (Symptom item in Symptoms) @*Temp: to see list behavior*@
+        {
+            <li>
+                @item
+            </li>
+        }
     }
-}
-<div style="margin: 5px">
-    <input type="checkbox" @bind="Allergy.IngestionOnly" />@*Ingestion only?*@
-    Ingestion Only
-</div>
-<div style="margin: 5px">
-    <input type="checkbox" @bind="Allergy.ConfirmedTestedAlgyType"> Allergy Tested @*ConfirmedTestedAlgyType*@
-</div>
-<div style="margin: 5px">
-    <input type="checkbox" @bind="Allergy.EpiPenRequired" /> EpiPen Required @*EpiPenRequired*@
-</div>
-<div style="margin: 5px">
-    <input type="checkbox" @bind="Allergy.CPRRequired" /> CPR Required @*CPRRequired*@
-</div>
-<div style="margin: 5px">
-    <input type="checkbox" @bind="Allergy.Call911" /> Call 911 @*Call911*@
-</div>
+    <div style="margin: 5px">
+        <input type="checkbox" @bind="Allergy.IngestionOnly" />@*Ingestion only?*@
+        Ingestion Only
+    </div>
+    <div style="margin: 5px">
+        <input type="checkbox" @bind="Allergy.ConfirmedTestedAlgyType"> Allergy Tested @*ConfirmedTestedAlgyType*@
+    </div>
+    <div style="margin: 5px">
+        <input type="checkbox" @bind="Allergy.EpiPenRequired" /> EpiPen Required @*EpiPenRequired*@
+    </div>
+    <div style="margin: 5px">
+        <input type="checkbox" @bind="Allergy.CPRRequired" /> CPR Required @*CPRRequired*@
+    </div>
+    <div style="margin: 5px">
+        <input type="checkbox" @bind="Allergy.Call911" /> Call 911 @*Call911*@
+    </div>
 
 
-@*IF medicine is required pop-up GetMedicine with the List in case of multiple medicines*@
-<div style="margin: 5px">
-    <input type="checkbox" @bind="Allergy.TreatmentRequired" /> Medicine Required  @*TreatmentRequired*@
-</div>
-@*If TreatmentRequired, it will show GetMedicine Component along with a submit button binded to a method.
+    @*IF medicine is required pop-up GetMedicine with the List in case of multiple medicines*@
+    <div style="margin: 5px">
+        <input type="checkbox" @bind="Allergy.TreatmentRequired" /> Medicine Required  @*TreatmentRequired*@
+    </div>
+    @*If TreatmentRequired, it will show GetMedicine Component along with a submit button binded to a method.
     The method will check for duplicates through the medicine names then submit the input into a list of Medicine (AlgyTreatmentMedication) used for or against the Allergy.
     Then add/update that list into the current patient's Allergy.AlgyTreatmentMedication.
-*@
-@if (Allergy.TreatmentRequired == true)
-{
-    <GetMedicine @bind-Medicine="AlgyMed" />
+    *@
+    @if (Allergy.TreatmentRequired == true)
+    {
+        <GetMedicine @bind-Medicine="AlgyMed" />
+        <br />
+        <button type="submit" @onclick="ButtonToAddAllergyMedicine">Add</button>
+        @foreach (Medicine item in AlgyMedicines) @*this is temporary, to see list behavior*@
+        {
+            <li>@item</li>
+        }
+    }
     <br />
-    <button type="submit" @onclick="ButtonToAddAllergyMedicine">Add</button>
-    @foreach (Medicine item in AlgyMedicines) @*this is temporary, to see list behavior*@
+    <br />
+
+    <button type="submit" @onclick="ButtonToSubmitAllergy">Submit Allergy</button>
+
+    @foreach (Allergy item in Data.CurrentPatient.Allergies)
     {
         <li>@item</li>
     }
-}
-<br />
-<br />
-
-<button type="submit" @onclick="ButtonToSubmitAllergy">Submit Allergy</button>
-
-@foreach (Allergy item in Data.CurrentPatient.Allergies)
-{
-    <li>@item</li>
-}
+</div>
 
 @code {
     [Parameter]

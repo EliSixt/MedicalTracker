@@ -1,44 +1,46 @@
-﻿
-<h3>GetGeneralInfo</h3>
+﻿<div style="border:solid 3px purple">
 
-<div style="margin: 5px">
-    <GetName @bind-NamesValue="GeneralInfo.Name" />
-</div>
-<div style="margin: 5px">
-    Date of Birth:
-    <input type="date" @bind="GeneralInfo.DateOfBirth" /> @*Birthday*@
-</div>
-<div style="margin: 5px">
-    Weight:
-    <input type="number" @bind="GeneralInfo.Weight" placeholder="Weight" /> @*Weight*@
-</div>
-<div style="margin: 5px">
-    Height:
-    <input type="number" @bind="GeneralInfo.Height" placeholder="Height" /> @*Height*@
-</div>
-<div style="margin: 5px">
-    <input type="text" @bind="GeneralInfo.Languages" placeholder="Languages" />@*languages*@
-</div>
-<div style="margin: 5px">
-    <input type="text" @bind="GeneralInfo.Ethnicity" placeholder="Ethnicity" />@*Ethnicity*@
-</div>
-<div style="margin: 5px">
-    <input type="text" @bind="GeneralInfo.Race" placeholder="Race" />@*race*@
-</div>
-<div style="margin: 5px">
-    <input type="text" @bind="GeneralInfo.Gender" placeholder="Gender" />@*gender*@
-</div>
-<div style="margin: 5px">
-    <input type="text" @bind="GeneralInfo.SexAtBirth" placeholder="Sex at Birth" />@*SexAtBirth*@
-</div>
-@*<div style="margin: 5px">
+    <h3>GetGeneralInfo</h3>
+
+    <div style="margin: 5px">
+        <GetName @bind-NamesValue="GeneralInfo.Name" />
+    </div>
+    <div style="margin: 5px">
+        Date of Birth:
+        <input type="date" @bind="GeneralInfo.DateOfBirth" /> @*Birthday*@
+    </div>
+    <div style="margin: 5px">
+        Weight:
+        <input type="number" @bind="GeneralInfo.Weight" placeholder="Weight" /> @*Weight*@
+    </div>
+    <div style="margin: 5px">
+        Height:
+        <input type="number" @bind="GeneralInfo.Height" placeholder="Height" /> @*Height*@
+    </div>
+    <div style="margin: 5px">
+        <input type="text" @bind="GeneralInfo.Languages" placeholder="Languages" />@*languages*@
+    </div>
+    <div style="margin: 5px">
+        <input type="text" @bind="GeneralInfo.Ethnicity" placeholder="Ethnicity" />@*Ethnicity*@
+    </div>
+    <div style="margin: 5px">
+        <input type="text" @bind="GeneralInfo.Race" placeholder="Race" />@*race*@
+    </div>
+    <div style="margin: 5px">
+        <input type="text" @bind="GeneralInfo.Gender" placeholder="Gender" />@*gender*@
+    </div>
+    <div style="margin: 5px">
+        <input type="text" @bind="GeneralInfo.SexAtBirth" placeholder="Sex at Birth" />@*SexAtBirth*@
+    </div>
+    @*<div style="margin: 5px">
     <GetContactInfo @bind-Contact="GeneralInfo.ContactInfo" />
-</div>*@
-<button @onclick="SaveButtonForGeneralInfo">Submit General Info</button>
+    </div>*@
+    <button @onclick="SaveButtonForGeneralInfo">Submit General Info</button>
 
 
     General Info: @GeneralInfo.
 
+</div>
 
 @code {
     [Parameter]

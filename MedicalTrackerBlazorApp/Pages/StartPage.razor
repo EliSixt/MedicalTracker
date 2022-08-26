@@ -13,15 +13,25 @@
 @*<EditForm Model="Data.CurrentPatient.GeneralInfo">*@
 @*<DataAnnotationsValidator></DataAnnotationsValidator>*@
 
-<ListOfSavedPatients></ListOfSavedPatients>
-
+<div style="padding:10px">
+    <ListOfSavedPatients></ListOfSavedPatients>
+</div>
 <button @onclick="CreatePatient">Create Patient</button>
 @if (CreatingANewPatient)
 {
-    <GetGeneralInfo @bind-GeneralInfo="Data.CurrentPatient.GeneralInfo"></GetGeneralInfo>
-    <GetContactInfo @bind-Contact="Data.CurrentPatient.ContactInfoOfPatient"></GetContactInfo>
-    <GetDailyMedicines></GetDailyMedicines>
-    <GetAllergy></GetAllergy>
+    <div style="padding:10px">
+        <GetGeneralInfo @bind-GeneralInfo="Data.CurrentPatient.GeneralInfo"></GetGeneralInfo>
+    </div>
+    <div style="padding:10px">
+
+        <GetContactInfo @bind-Contact="Data.CurrentPatient.ContactInfoOfPatient"></GetContactInfo>
+    </div>
+    <div style="padding:10px">
+        <GetDailyMedicines></GetDailyMedicines>
+    </div>
+    <div style="padding:10px">
+        <GetAllergy></GetAllergy>
+    </div>
                 //future components
     <br />
     <br />

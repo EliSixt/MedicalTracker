@@ -1,31 +1,35 @@
-﻿<h3>GetContactInfo</h3>
+﻿<div style="border:solid 3px orange">
+    <h3>GetContactInfo</h3>
 
-<div style="margin: 5px">
-    <input type="text" @bind="Contact.TitleOrRelationship" placeholder="Title or relationship" />
-</div>
-<div>
-    <GetName @bind-NamesValue="Contact.Name" />
-</div>
-<div style="margin: 5px">
-    <input type="text" @bind="Contact.MobilePhoneNum" placeholder="Mobile Number" />
-</div>
-<div style="margin: 5px">
-    <input type="text" @bind="Contact.HomePhoneNum" placeholder="Home number" />
+    <div style="margin: 5px">
+        <input type="text" @bind="Contact.TitleOrRelationship" placeholder="Title or relationship" />
+    </div>
+    <div style="margin: 5px">
+        <div>
+            <GetName @bind-NamesValue="Contact.Name" />
+        </div>
+    </div>
+    <div style="margin: 5px">
+        <input type="text" @bind="Contact.MobilePhoneNum" placeholder="Mobile Number" />
+    </div>
+    <div style="margin: 5px">
+        <input type="text" @bind="Contact.HomePhoneNum" placeholder="Home number" />
 
-</div>
-<div style="margin: 5px">
-    <input type="text" @bind="Contact.WorkPhoneNum" placeholder="Work number" />
+    </div>
+    <div style="margin: 5px">
+        <input type="text" @bind="Contact.WorkPhoneNum" placeholder="Work number" />
 
-</div>
-<div style="margin: 5px">
-    <input type="text" @bind="Contact.WorkPhoneNum" placeholder="Work number" />
+    </div>
+    <div style="margin: 5px">
+        <input type="text" @bind="Contact.WorkPhoneNum" placeholder="Work number" />
 
-</div>
-<div style="margin: 5px">
-    <input type="email" @bind="Contact.Email" placeholder="Email" />
-</div>
-<div>
-    <GetAddress @bind-AddressValue="Contact.Address" />
+    </div>
+    <div style="margin: 5px">
+        <input type="email" @bind="Contact.Email" placeholder="Email" />
+    </div>
+    <div style="margin: 5px">
+        <GetAddress @bind-AddressValue="Contact.Address" />
+    </div>
 </div>
 
 

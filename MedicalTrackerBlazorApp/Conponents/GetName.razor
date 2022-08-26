@@ -1,15 +1,19 @@
-﻿<h3>GetName</h3>
+﻿<div style="border:solid 2px black">
 
-<div style="margin: 5px">
-    <input type="text" @bind="NamesValue.FirstName" placeholder="First Name" />
+    <h3>GetName</h3>
+
+    <div style="margin: 5px">
+        <input type="text" @bind="NamesValue.FirstName" placeholder="First Name" />
+    </div>
+    <div style="margin: 5px">
+        <input type="text" @bind="NamesValue.MiddleName" placeholder="Middle Name" />
+    </div>
+    <div style="margin: 5px">
+        <input type="text" @bind="NamesValue.LastName" placeholder="Last Name" />
+    </div>
+    The name is: @NamesValue.FirstName @NamesValue.MiddleName @NamesValue.LastName!!!
 </div>
-<div style="margin: 5px">
-    <input type="text" @bind="NamesValue.MiddleName" placeholder="Middle Name" />
-</div>
-<div style="margin: 5px">
-    <input type="text" @bind="NamesValue.LastName" placeholder="Last Name" />
-</div>
-The name is: @NamesValue.FirstName @NamesValue.MiddleName @NamesValue.LastName!!!
+
 
 @code {
     [Parameter]
