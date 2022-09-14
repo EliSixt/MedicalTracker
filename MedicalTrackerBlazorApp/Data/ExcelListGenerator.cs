@@ -140,8 +140,7 @@ namespace MedicalTrackerBlazorApp.Data
                     excelList.Conditions.Add(condition);
                     //conditionsList.Add(condition);
                 }
-                XmlWriter(excelList.Conditions, filePathConditions);
-                XmlWriter(excelList.Symptoms, filePathSymptoms);
+
                 //create new line
                 Console.Write("\r\n");
                 //for (int j = 1; j <= colCount; j++)
@@ -152,6 +151,9 @@ namespace MedicalTrackerBlazorApp.Data
                 //        Console.Write(excelRange.Cells[i, j].Value2.ToString() + "\t");
                 //}
             }
+
+            XmlWriter(excelList.Conditions, filePathConditions);
+            XmlWriter(excelList.Symptoms, filePathSymptoms);
             //after reading, relaase the excel project
             excelApp.Quit();
             System.Runtime.InteropServices.Marshal.ReleaseComObject(excelApp);
