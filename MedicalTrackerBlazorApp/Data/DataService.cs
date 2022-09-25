@@ -23,21 +23,13 @@ namespace MedicalTrackerBlazorApp.Data
             }
         }
 
-        public bool flag = false; //switch/flag for currentPatient set accessibility. Second look at the naming of flag, rename something better.
+        //public bool flag = false; //switch/flag for currentPatient set accessibility. Second look at the naming of flag, rename something better.
 
         private Patient _currentPatient { get; set; } = new();
-        public Patient CurrentPatient
+        private Patient CurrentPatient
         {
             get => _currentPatient;
-            //protected set => _currentPatient = value;
-            protected internal set
-            {
-                if (flag)
-                {
-                    _currentPatient = value;
-                    flag = false;
-                }
-            }
+            set => SetCurrentPatient(value);
         }
 
         private List<Patient> _patients = new();
@@ -54,11 +46,15 @@ namespace MedicalTrackerBlazorApp.Data
         /// </summary>
         /// <param name="changedPatient"></param>
         /// <returns></returns>
-        public void SetCurrentPatient(Patient changedPatient)
+        public bool SetCurrentPatient(Patient changedPatient)
         {
-            flag = true;
-            CurrentPatient = new(changedPatient);
+            _currentPatient = changedPatient;
+            if (_currentPatient == changedPatient) //maybe run checks here???
+            {
+                return true;
+            }
 
+            return false;
         }
         /// <summary>
         /// Makes and returns a copy of a Patient object.
