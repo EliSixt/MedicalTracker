@@ -23,7 +23,7 @@
     <button @onclick="ButtonToAddDailyMedication">Add Medication</button>
     <br />
 
-    @foreach (DailyMedicine item in Data.CurrentPatient.DailyMedication) //Temp
+    @foreach (DailyMedicine item in Data.GetCopyCurrentPatient().DailyMedication) //Temp
     {
         <li>@item</li>
     }
@@ -61,7 +61,7 @@
     /// </summary>
     public void ButtonToAddDailyMedication()
     {
-        if (Data.AddDailyMedication(Data.CurrentPatient.DailyMedication, DailyMed))
+        if (Data.AddDailyMedication(Data.GetCopyCurrentPatient().DailyMedication, DailyMed))
         {
             DailyMed = new();
         }

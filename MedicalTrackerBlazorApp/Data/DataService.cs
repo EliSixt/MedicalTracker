@@ -10,7 +10,7 @@ namespace MedicalTrackerBlazorApp.Data
         public DataService()
         {
             SetupUp();
-            ExcelObjectGenerator(xlsxFile, filePathConditions, filePathSymptoms);
+            //ExcelObjectGenerator(xlsxFile, filePathConditions, filePathSymptoms);
         }
 
 
@@ -23,13 +23,17 @@ namespace MedicalTrackerBlazorApp.Data
             }
         }
 
-        //public bool flag = false; //switch/flag for currentPatient set accessibility. Second look at the naming of flag, rename something better.
+        public bool currentPatientSetControl = false; //switch/flag for currentPatient set accessibility. Second look at the naming of flag, rename something better.
 
         private Patient _currentPatient { get; set; } = new();
         private Patient CurrentPatient
         {
             get => _currentPatient;
-            set => SetCurrentPatient(value);
+            set
+            {
+                if (currentPatientSetControl)
+                { _currentPatient = value; }
+            }
         }
 
         private List<Patient> _patients = new();
@@ -48,6 +52,7 @@ namespace MedicalTrackerBlazorApp.Data
         /// <returns></returns>
         public bool SetCurrentPatient(Patient changedPatient)
         {
+            currentPatientSetControl = true;
             _currentPatient = changedPatient;
             if (_currentPatient == changedPatient) //maybe run checks here???
             {
@@ -56,6 +61,8 @@ namespace MedicalTrackerBlazorApp.Data
 
             return false;
         }
+
+
         /// <summary>
         /// Makes and returns a copy of a Patient object.
         /// </summary>

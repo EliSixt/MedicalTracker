@@ -20,11 +20,11 @@
 @if (CreatingANewPatient)
 {
     <div style="padding:10px">
-        <GetGeneralInfo @bind-GeneralInfo="Data.CurrentPatient.GeneralInfo"></GetGeneralInfo>
+        <GetGeneralInfo @bind-GeneralInfo="Data.GetCopyCurrentPatient().GeneralInfo"></GetGeneralInfo>
     </div>
     <div style="padding:10px">
 
-        <GetContactInfo @bind-Contact="Data.CurrentPatient.ContactInfoOfPatient"></GetContactInfo>
+        <GetContactInfo @bind-Contact="Data.GetCopyCurrentPatient().ContactInfoOfPatient"></GetContactInfo>
     </div>
     <div style="padding:10px">
         <GetDailyMedicines></GetDailyMedicines>

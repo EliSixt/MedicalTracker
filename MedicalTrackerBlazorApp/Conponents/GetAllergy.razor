@@ -78,7 +78,7 @@
 
     <button type="submit" @onclick="ButtonToSubmitAllergy">Submit Allergy</button>
 
-    @foreach (Allergy item in Data.CurrentPatient.Allergies)
+    @foreach (Allergy item in Data.GetCopyCurrentPatient().Allergies)
     {
         <li>@item</li>
     }
