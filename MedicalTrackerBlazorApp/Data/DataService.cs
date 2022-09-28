@@ -11,6 +11,7 @@ namespace MedicalTrackerBlazorApp.Data
         {
             SetupUp();
             //ExcelObjectGenerator(xlsxFile, filePathConditions, filePathSymptoms);
+            ListSetup(wordList);
         }
 
 
@@ -99,18 +100,22 @@ namespace MedicalTrackerBlazorApp.Data
         public static string fileStoreDirectory = @"C:\Users\Elias\OneDrive\TMP\";
         public static string fileNamePatients = @"patientsList.xml";
 
+        public static string fileNameWordList = @"usa2.txt";
+        public static string fileNameEnglishWordList = @"englishWordList.xml";
         public static string fileNameSymptoms = @"symptomsData.xml";
         public static string fileNameCondition = @"conditionsData.xml";
         public string xlsxFile = @"C:\Users\elias\OneDrive\Documents\PeoplewithSymptomsAndConditions.xlsx";
         public string filePathConditions = $"{fileStoreDirectory}{fileNameCondition}";
         public string filePathSymptoms = $"{fileStoreDirectory}{fileNameSymptoms}";
+        public static string filePathWordList = $"{fileStoreDirectory}{fileNameWordList}";
+        public static string filePathEnglishWordList = $"{fileStoreDirectory}{fileNameEnglishWordList}";
         //string filePathPatientsList = @"C:\Users\Elias\OneDrive\TMP\patientsList.xml";
         //string testFilePath = @"C:\TMP\testFile.xml";
 
         List<Condition> conditionsList = new();
         List<Symptom> symptomsList = new();
         List<Condition> conditionsWithSymptoms = new();
-
+        List<string> wordList = new();
 
         //This a test for serializing to a local file
         //Directory.CreateDirectory(@"C:\TMP");
@@ -124,6 +129,25 @@ namespace MedicalTrackerBlazorApp.Data
 
         //ExcelLists excelLists = new ExcelLists();
         //excelLists = ExcelObjectGenerator(xlsxFile, filePathConditions, filePathSymptoms);
+
+
+        public static void ListSetup(List<string> strings)
+        {
+            //var filepath = fileNameWordList;
+            //using (StreamWriter writer = new StreamWriter(new FileStream(filepath,
+            //FileMode.Create, FileAccess.Write)))
+            //{
+            //    writer.WriteLine("sep=,");
+            //    writer.WriteLine("Hello, Goodbye");
+            //}
+            string[] lines = File.ReadAllLines(filePathWordList);
+            foreach (string line in lines)
+            {
+                strings.Add(line);
+            }
+            XmlWriter(strings, filePathEnglishWordList);
+        }
+
 
 
         /// <summary>
@@ -574,4 +598,3 @@ namespace MedicalTrackerBlazorApp.Data
         }
     }
 }
-
