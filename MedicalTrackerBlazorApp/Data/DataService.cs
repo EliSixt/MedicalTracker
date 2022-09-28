@@ -10,8 +10,7 @@ namespace MedicalTrackerBlazorApp.Data
         public DataService()
         {
             SetupUp();
-            //ExcelObjectGenerator(xlsxFile, filePathConditions, filePathSymptoms);
-            ListSetup(wordList);
+            //oneTimeSetup();
         }
 
 
@@ -129,9 +128,26 @@ namespace MedicalTrackerBlazorApp.Data
 
         //ExcelLists excelLists = new ExcelLists();
         //excelLists = ExcelObjectGenerator(xlsxFile, filePathConditions, filePathSymptoms);
+        
+        
+        /// <summary>
+        /// A one time setup, creates a string list from a textfile and extracts data from an Excel file,
+        /// then saves both processes/lists into some local xml files.
+        /// </summary>
+        public void oneTimeSetup()
+        {
+            ExcelObjectGenerator(xlsxFile, filePathConditions, filePathSymptoms);
+            ListSetup(wordList, filePathWordList);
+        }
 
-
-        public static void ListSetup(List<string> strings)
+     /// <summary>
+     /// Takes in a textfile of strings and a List<string>, 
+     /// separates the textfile into strings saving each one into the List provided,
+     /// then saves the string list into a local xml file.
+     /// </summary>
+     /// <param name="strings"></param>
+     /// <param name="filePathTextFile"></param>
+        public void ListSetup(List<string> strings, string filePathTextFile)
         {
             //var filepath = fileNameWordList;
             //using (StreamWriter writer = new StreamWriter(new FileStream(filepath,
@@ -140,7 +156,7 @@ namespace MedicalTrackerBlazorApp.Data
             //    writer.WriteLine("sep=,");
             //    writer.WriteLine("Hello, Goodbye");
             //}
-            string[] lines = File.ReadAllLines(filePathWordList);
+            string[] lines = File.ReadAllLines(filePathTextFile);
             foreach (string line in lines)
             {
                 strings.Add(line);
