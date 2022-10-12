@@ -114,7 +114,7 @@ namespace MedicalTrackerBlazorApp.Data
         List<Condition> conditionsList = new();
         List<Symptom> symptomsList = new();
         List<Condition> conditionsWithSymptoms = new();
-        List<string> wordList = new();
+        public readonly List<string> wordList = new();
 
         //This a test for serializing to a local file
         //Directory.CreateDirectory(@"C:\TMP");
@@ -128,8 +128,8 @@ namespace MedicalTrackerBlazorApp.Data
 
         //ExcelLists excelLists = new ExcelLists();
         //excelLists = ExcelObjectGenerator(xlsxFile, filePathConditions, filePathSymptoms);
-        
-        
+
+
         /// <summary>
         /// A one time setup, creates a string list from a textfile and extracts data from an Excel file,
         /// then saves both processes/lists into some local xml files.
@@ -140,13 +140,13 @@ namespace MedicalTrackerBlazorApp.Data
             ListSetup(wordList, filePathWordList);
         }
 
-     /// <summary>
-     /// Takes in a textfile of strings and a List<string>, 
-     /// separates the textfile into strings saving each one into the List provided,
-     /// then saves the string list into a local xml file.
-     /// </summary>
-     /// <param name="strings"></param>
-     /// <param name="filePathTextFile"></param>
+        /// <summary>
+        /// Takes in a textfile of strings and a List<string>, 
+        /// separates the textfile into strings saving each one into the List provided,
+        /// then saves the string list into a local xml file.
+        /// </summary>
+        /// <param name="strings"></param>
+        /// <param name="filePathTextFile"></param>
         public void ListSetup(List<string> strings, string filePathTextFile)
         {
             //var filepath = fileNameWordList;

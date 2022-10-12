@@ -1,0 +1,29 @@
+﻿<h3>AutoComplete</h3>
+
+<form>
+
+    <input type="text" autocomplete="on" placeholder="Search" list="newWordlist" @bind="newWord" />
+    <datalist>
+        @if (newWordList != null)
+        {
+            @foreach (var item in newWordList)
+            {
+                <option value="@item"></option>
+            }
+        }
+    </datalist>
+    <button>Submit</button>
+</form>
+
+@code {
+    string newWord = "";
+    List<string> newWordList = new List<string>();
+
+    public void cloneList()
+    {
+        foreach (var item in Data.wordList)
+        {
+            newWordList.Add(item);
+        }
+    }
+}
