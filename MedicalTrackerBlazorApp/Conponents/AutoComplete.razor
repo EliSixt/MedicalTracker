@@ -1,6 +1,6 @@
 ﻿<h3>AutoComplete</h3>
 
-<form>
+@*<form>
 
     <input type="text" autocomplete="on" placeholder="Search" list="newWordlist" @bind="newWord" />
     <datalist>
@@ -13,17 +13,48 @@
         }
     </datalist>
     <button>Submit</button>
-</form>
+</form>*@
+
+<input type="text" @onkeydown="() => filteredListGenerator(autoCompleteSuggestions, clonedWordList, userInput)" @bind="userInput" />
+@if (userInput != null)
+{
+
+    @foreach (var item in autoCompleteSuggestions)//displays a list, keeps adding to that list without earsing the old list. Bind the item/button to something.
+    {
+        <li>
+            @item
+        </li>
+    }
+}
+
+
 
 @code {
-    string newWord = "";
-    List<string> newWordList = new List<string>();
+    public string userInput = "";
+
+    List<string> clonedWordList = new();
+    List<string> autoCompleteSuggestions = new();
 
     public void cloneList()
     {
         foreach (var item in Data.wordList)
         {
-            newWordList.Add(item);
+            clonedWordList.Add(item);
+        }
+    }
+
+    public void filteredListGenerator(List<string> filteredList, List<string> wordList, string input)
+    {
+        cloneList(); //find this method a better spot to run once
+        List<string> list = new();
+        list = wordList.Where(x => x.ToLower().StartsWith(input.ToLower())).ToList(); //work on this its sorta not filtering the way it's anticipated
+        if (list.Count > 0)
+        {
+
+            for (var i = 0; i < 8; i++)
+            {
+                filteredList.Add(list[i]);
+            }
         }
     }
 }

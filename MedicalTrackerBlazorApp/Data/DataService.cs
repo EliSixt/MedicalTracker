@@ -86,6 +86,8 @@ namespace MedicalTrackerBlazorApp.Data
                 _ = Directory.CreateDirectory(fileStoreDirectory);
             }
 
+            ListSetup(wordList, filePathWordList);
+
             LoadExistingPatients();
         }
 
