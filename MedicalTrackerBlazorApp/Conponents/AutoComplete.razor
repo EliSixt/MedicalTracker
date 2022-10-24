@@ -15,9 +15,7 @@
     <button>Submit</button>
 </form>*@
 
-<input type="text" @onkeydown="() => filteredListGenerator(autoCompleteSuggestions, clonedWordList, userInput)" @bind="userInput" />
-@if (userInput != null)
-{
+<input type="text" @oninput="(e => OnInput(e))"  />
 
     @foreach (var item in autoCompleteSuggestions)//displays a list, keeps adding to that list without earsing the old list. Bind the item/button to something.
     {
@@ -25,16 +23,31 @@
             @item
         </li>
     }
-}
+
 
 
 
 @code {
-    public string userInput = "";
+    //private string _userInput ="";
+
+    //public string UserInput
+    //{
+    //    get
+    //    {
+    //        return _userInput;
+    //    }
+    //    set
+    //    {
+    //        _userInput = value;
+    //    }
+    //}
+
 
     List<string> clonedWordList = new();
     List<string> autoCompleteSuggestions = new();
 
+
+    
     public void cloneList()
     {
         foreach (var item in Data.wordList)
@@ -43,17 +56,27 @@
         }
     }
 
-    public void filteredListGenerator(List<string> filteredList, List<string> wordList, string input)
+    
+    private void OnInput(ChangeEventArgs args)
     {
+        var inputText = args.Value as string;
+        filteredListGenerator(Data.wordList, inputText);
+    }
+
+    
+
+    public void filteredListGenerator(List<string> wordList, string input)
+    {
+        autoCompleteSuggestions.Clear();
         cloneList(); //find this method a better spot to run once
         List<string> list = new();
-        list = wordList.Where(x => x.ToLower().StartsWith(input.ToLower())).ToList(); //work on this its sorta not filtering the way it's anticipated
+        list = wordList.Where(x => x.ToLower().StartsWith(input.ToLower())).Take(8).ToList(); //work on this its sorta not filtering the way it's anticipated
         if (list.Count > 0)
         {
-
+            //TODO foreach instead 
             for (var i = 0; i < 8; i++)
             {
-                filteredList.Add(list[i]);
+                autoCompleteSuggestions.Add(list[i]);
             }
         }
     }
