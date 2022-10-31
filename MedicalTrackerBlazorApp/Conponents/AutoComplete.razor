@@ -2,21 +2,42 @@
 
 <input type="text" @oninput="(e => OnInput(e))" />
 
+
 @foreach (var item in autoCompleteSuggestions)//displays a list, keeps adding to that list without earsing the old list. Bind the item/button to something.
 {
-    <li>
-        @item
-    </li>
-}
 
+    <br />
+    <button @onclick="@(() => autoCompleteReturnValue(@item))">@item</button>
+}
+<h1>@selectedChoice</h1> @*temporary*@
 
 
 
 @code {
 
-    List<string> clonedWordList = new();
-    List<string> autoCompleteSuggestions = new();
+    private List<string> _words;
+    [Parameter]
+    public List<string> Words
+    {
+        get { return _words; }
+        set { _words = value; }
+    }
 
+    private string _selectedWord;
+    [Parameter]
+    public string SelectedWord
+    {
+        get { return _selectedWord; }
+        set { _selectedWord = value; }
+    }
+
+
+
+    List<string> wordList = new();//question: how can i enter a specific list where/when i use this component, or do i have to create new components with that list being used inside.
+    List<string> autoCompleteSuggestions = new();
+    string selectedChoice = ""; //bind this string to the user's choice.
+
+    //question:xml definition with the "///" isnt working
     private void OnInput(ChangeEventArgs args)
     {
         var inputText = args.Value as string;
@@ -29,9 +50,20 @@
         List<string> list = new();
         list = wordList.Where(x => x.ToLower().StartsWith(input.ToLower())).Take(8).ToList();
 
-        foreach (var item in list)
+        if (input.Length > 0)
         {
-            autoCompleteSuggestions.Add(item);
+            foreach (var item in list)
+            {
+                autoCompleteSuggestions.Add(item);
+            }
         }
+    }
+
+
+    public void autoCompleteReturnValue(string value)
+    {
+        //this will return a value to it's corresponding destination.
+        //question: this ties in to the first question above, have to figure out how to 'mold' this to different places
+        selectedChoice = value; //temporary
     }
 }
