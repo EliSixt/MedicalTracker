@@ -1,56 +1,60 @@
 ﻿<h3>AutoComplete</h3>
 
-<input type="text" @oninput="(e => OnInput(e))" />
+<input type="text" @oninput="(e => OnInput(e))" value="@SelectedWord" /> @*TODO: What if the user deletes what they wrote, then it wouldnt be onInput, it would make sense to have "onChange", but it only gets called whenever it's out of focus*@
 
 
-@foreach (var item in autoCompleteSuggestions)//displays a list, keeps adding to that list without earsing the old list. Bind the item/button to something.
+@foreach (var item in autoCompleteSuggestions)
 {
 
     <br />
-    <button @onclick="@(() => autoCompleteReturnValue(@item))">@item</button>
+    <button @onclick="@(() => AutoCompleteReturnValue(@item))">@item</button>
 }
-<h1>@selectedChoice</h1> @*temporary*@
+<h1>@SelectedWord</h1> @*Temp: Delete*@
 
 
 
 @code {
 
-    private List<string> _words;
+    private List<string>? _words;
     [Parameter]
-    public List<string> Words
+    public List<string>? WordList
     {
         get { return _words; }
         set { _words = value; }
     }
 
-    private string _selectedWord;
+    private string? _selectedWord;
     [Parameter]
-    public string SelectedWord
+    public string? SelectedWord
     {
         get { return _selectedWord; }
         set { _selectedWord = value; }
     }
 
-
-
-    List<string> wordList = new();//question: how can i enter a specific list where/when i use this component, or do i have to create new components with that list being used inside.
+    [Parameter]
+    public EventCallback<string> SelectedWordChanged { get; set; }
+    //string UserInput = "";
     List<string> autoCompleteSuggestions = new();
-    string selectedChoice = ""; //bind this string to the user's choice.
 
-    //question:xml definition with the "///" isnt working
+    //question:xml definition with the "///" isnt working, tried changing the settings tool>options>textEditor>C#>advanced>commments>Generate XML comments
     private void OnInput(ChangeEventArgs args)
     {
         var inputText = args.Value as string;
-        filteredListGenerator(Data.wordList, inputText);
+        if (inputText != null && WordList != null)
+        {
+            FilteredListGenerator(WordList, inputText);
+        }
     }
 
-    public void filteredListGenerator(List<string> wordList, string input)
+
+    public void FilteredListGenerator(List<string> stringList, string input)
     {
         autoCompleteSuggestions.Clear();
+        string LastWord = input.Split(' ').Last();
         List<string> list = new();
-        list = wordList.Where(x => x.ToLower().StartsWith(input.ToLower())).Take(8).ToList();
+        list = stringList.Where(x => x.ToLower().StartsWith(LastWord.ToLower())).Take(8).ToList();
 
-        if (input.Length > 0)
+        if (LastWord.Length > 0)
         {
             foreach (var item in list)
             {
@@ -59,11 +63,21 @@
         }
     }
 
-
-    public void autoCompleteReturnValue(string value)
+    async Task AutoCompleteReturnValue(string value/*, ChangeEventArgs args*/)
     {
-        //this will return a value to it's corresponding destination.
-        //question: this ties in to the first question above, have to figure out how to 'mold' this to different places
-        selectedChoice = value; //temporary
+        if (string.IsNullOrEmpty(SelectedWord))
+        {
+            SelectedWord = value;
+            //args.Value = SelectedWord;
+            //UserInput = SelectedWord;
+            await SelectedWordChanged.InvokeAsync(value);
+        }
+        else
+        {
+            SelectedWord += ' ' + value;
+            //args.Value = SelectedWord;
+            //UserInput = SelectedWord;
+            await SelectedWordChanged.InvokeAsync(value);
+        }
     }
 }
