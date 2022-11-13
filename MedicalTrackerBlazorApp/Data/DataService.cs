@@ -10,7 +10,7 @@ namespace MedicalTrackerBlazorApp.Data
         public DataService()
         {
             SetupUp();
-            //oneTimeSetup();
+            oneTimeSetup();
         }
 
 
@@ -85,8 +85,12 @@ namespace MedicalTrackerBlazorApp.Data
             {
                 _ = Directory.CreateDirectory(fileStoreDirectory);
             }
+            FileStartUpCheck(filePathConditions);
+            FileStartUpCheck(filePathSymptoms);
+            FileStartUpCheck(filePathWordList);
+            FileStartUpCheck(filePathEnglishWordList);
 
-            ListSetup(wordList, filePathWordList);
+            //ListSetup(wordList, filePathWordList); TODO: temporarily commented out
 
             LoadExistingPatients();
         }
@@ -98,40 +102,26 @@ namespace MedicalTrackerBlazorApp.Data
 
 
         public string filePathPatientsList = $"{fileStoreDirectory}{fileNamePatients}"; //TODO: Find all references and replace them
-        public static string fileStoreDirectory = @"C:\Users\Elias\OneDrive\TMP\";
+        public static string fileStoreDirectory = @"G:\Medical Tracker\";
         public static string fileNamePatients = @"patientsList.xml";
 
         public static string fileNameWordList = @"usa2.txt";
         public static string fileNameEnglishWordList = @"englishWordList.xml";
         public static string fileNameSymptoms = @"symptomsData.xml";
         public static string fileNameCondition = @"conditionsData.xml";
-        public string xlsxFile = @"C:\Users\elias\OneDrive\Documents\PeoplewithSymptomsAndConditions.xlsx";
+        public string xlsxFile = @"G:\Medical Tracker\DataSet of people with symptoms and conditions.xlsx";
         public string filePathConditions = $"{fileStoreDirectory}{fileNameCondition}";
         public string filePathSymptoms = $"{fileStoreDirectory}{fileNameSymptoms}";
         public static string filePathWordList = $"{fileStoreDirectory}{fileNameWordList}";
         public static string filePathEnglishWordList = $"{fileStoreDirectory}{fileNameEnglishWordList}";
-        //string filePathPatientsList = @"C:\Users\Elias\OneDrive\TMP\patientsList.xml";
-        //string testFilePath = @"C:\TMP\testFile.xml";
+        
 
         List<Condition> conditionsList = new();
         List<Symptom> symptomsList = new();
         List<Condition> conditionsWithSymptoms = new();
         public readonly List<string> wordList = new();
 
-        //This a test for serializing to a local file
-        //Directory.CreateDirectory(@"C:\TMP");
-        //List<string> testFile = new List<string>();
-        //testFile.Add("This is a test to make sure i dont get a directory access denied exception.");
-
-
-        ////Copies information from a specific excelSheet and adds it onto an object of ExcelList,
-        ////returned 2 lists through excelList, and serializes those lists into separate files.
-        //string xlsxFile = @"C:\Users\elias\OneDrive\Documents\PeoplewithSymptomsAndConditions.xlsx";
-
-        //ExcelLists excelLists = new ExcelLists();
-        //excelLists = ExcelObjectGenerator(xlsxFile, filePathConditions, filePathSymptoms);
-
-
+       
         /// <summary>
         /// A one time setup, creates a string list from a textfile and extracts data from an Excel file,
         /// then saves both processes/lists into some local xml files.
@@ -139,7 +129,20 @@ namespace MedicalTrackerBlazorApp.Data
         public void oneTimeSetup()
         {
             ExcelObjectGenerator(xlsxFile, filePathConditions, filePathSymptoms);
-            ListSetup(wordList, filePathWordList);
+            //ListSetup(wordList, filePathWordList); TODO: this is just a temporary wordlist of english words replace with symptoms and conditions 
+        }
+
+        /// <summary>
+        /// Checks to see if a file exists in a filePath, if it doesn't it gets created. 
+        /// </summary>
+        /// <param name="filePath">file path of the file being checked.</param>
+        public void FileStartUpCheck(string filePath)
+        {
+            if (File.Exists(filePath))
+            {
+                return;
+            }
+            File.Create(filePath);
         }
 
         /// <summary>
