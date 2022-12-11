@@ -1,7 +1,15 @@
 ﻿<h3>AutoComplete</h3>
 
-<input type="text" @oninput="(e => OnInput(e))" value="@SelectedWord" /> @*TODO: What if the user deletes what they wrote, then it wouldnt be onInput, it would make sense to have "onChange", but it only gets called whenever it's out of focus*@
+@*<input type="text" @onkeyup="e => OnInput(e)" value="@UserSelection" />*@
 
+
+<input type="text" @oninput="e => OnInput(e)" @bind-value="@UserSelection" />
+US: @UserSelection
+@*TODO: What if the user deletes what they wrote, then it wouldnt be onInput, it would make sense to have "onChange", but it only gets called whenever it's out of focus*@
+@*<input type="text" @bind="UserSelection" @onchange="e => OnInput(e)" />
+*@
+
+@*<input type="text" @bind="UserSelection" @bind:event="OnInput" />*@
 
 @foreach (var item in autoCompleteSuggestions)
 {
@@ -9,7 +17,7 @@
     <br />
     <button @onclick="@(() => AutoCompleteReturnValue(@item))">@item</button>
 }
-<h1>@SelectedWord</h1> @*Temp: Delete*@
+<h1>@SelectedSentence</h1> @*Temp: Delete*@
 
 
 
@@ -23,12 +31,21 @@
         set { _words = value; }
     }
 
-    private string? _selectedWord;
-    [Parameter]
-    public string? SelectedWord
+    private string? _userSelection;
+
+    public string? UserSelection
     {
-        get { return _selectedWord; }
-        set { _selectedWord = value; }
+        get { return _userSelection; }
+        set { _userSelection = value; }
+    }
+
+
+    private string? _selectedSentence;
+    [Parameter]
+    public string? SelectedSentence
+    {
+        get { return _selectedSentence; }
+        set { _selectedSentence = value; }
     }
 
     [Parameter]
@@ -36,7 +53,21 @@
     //string UserInput = "";
     List<string> autoCompleteSuggestions = new();
 
-    //question:xml definition with the "///" isnt working, tried changing the settings tool>options>textEditor>C#>advanced>commments>Generate XML comments
+
+    //private void OnInput(KeyboardEventArgs args)
+    //{
+    //    var inputKey = args.Key;
+
+    //    if (inputKey == "Delete")
+    //    {
+    //        var inputText = args.Key as string;
+    //        if (inputText != null && WordList != null)
+    //        {
+    //            FilteredListGenerator(WordList, inputText);
+    //        }
+    //    }
+    //}
+
     private void OnInput(ChangeEventArgs args)
     {
         var inputText = args.Value as string;
@@ -47,37 +78,61 @@
     }
 
 
-    public void FilteredListGenerator(List<string> stringList, string input)
-    {
-        autoCompleteSuggestions.Clear();
-        string LastWord = input.Split(' ').Last();
-        List<string> list = new();
-        list = stringList.Where(x => x.ToLower().StartsWith(LastWord.ToLower())).Take(8).ToList();
+    //public void OnKeyUpInput(string userInput)
+    //{
+    //    if (userInput != null && WordList != null)
+    //    {
+    //        FilteredListGenerator(WordList, userInput);
+    //    }
+    //}
 
-        if (LastWord.Length > 0)
+
+    /// <summary>
+    /// Creates an eight word suggestion's list, from a given dataset string list, depending on the beginning instance of the last string of the UserInput.
+    /// </summary>
+    /// <param name="stringList">List of strings, to base suggestions off of.</param>
+    /// <param name="userInput">The string of the user's input.</param>
+    public void FilteredListGenerator(List<string> stringList, string userInput)
+    {
+        if (userInput == null || stringList == null)
         {
-            foreach (var item in list)
+            //return new List<string>();
+            return;
+        }
+
+        //var suggestions = new List<string>();
+        autoCompleteSuggestions.Clear();
+        string lastWord = userInput.Split(' ').Last();
+        List<string> filteredList = new();
+        filteredList = stringList.Where(x => x.ToLower().StartsWith(lastWord.ToLower())).Take(8).ToList();
+        autoCompleteSuggestions.Clear();
+        //if (userInput.Split(" ").Length > 1)
+        //{
+        //    var newSentence = userInput.Split(" ");
+        //    for (int i = 0; i < newSentence.Length - 1; i++)
+        //    {
+        //        SelectedSentence.Concat(newSentence[i]);
+        //    }
+        //}
+        if (lastWord.Length > 0)
+        {
+            foreach (var item in filteredList)
             {
-                autoCompleteSuggestions.Add(item);
+                autoCompleteSuggestions.Add(string.Join(SelectedSentence, " ", item));
             }
         }
+
+        //return suggestions;
     }
 
-    async Task AutoCompleteReturnValue(string value/*, ChangeEventArgs args*/)
+
+    /// <summary>
+    /// Used in the user interface, when called with a value inside, it assigns that value to a selected sentence that then gets saved.
+    /// </summary>
+    /// <param name="value">Value that gets assigned to SelectedSentence.</param>
+    void AutoCompleteReturnValue(string value/*, ChangeEventArgs args*/)
     {
-        if (string.IsNullOrEmpty(SelectedWord))
-        {
-            SelectedWord = value;
-            //args.Value = SelectedWord;
-            //UserInput = SelectedWord;
-            await SelectedWordChanged.InvokeAsync(value);
-        }
-        else
-        {
-            SelectedWord += ' ' + value;
-            //args.Value = SelectedWord;
-            //UserInput = SelectedWord;
-            await SelectedWordChanged.InvokeAsync(value);
-        }
+        SelectedSentence = value; //I only add values i dont delete them. Here is the problem.
+        SelectedWordChanged.InvokeAsync(value);
     }
 }
