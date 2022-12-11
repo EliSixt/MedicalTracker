@@ -10,7 +10,8 @@ namespace MedicalTrackerBlazorApp.Data
         public DataService()
         {
             SetupUp();
-            oneTimeSetup();
+            ListSetup(EnglishWordList, filePathWordList); //TODO: this is just a temporary wordlist of english words replace with symptoms and conditions
+            //oneTimeSetup();
         }
 
 
@@ -95,21 +96,17 @@ namespace MedicalTrackerBlazorApp.Data
             LoadExistingPatients();
         }
 
-        //public void GenerateExcelList()
-        //{
-        //TODO: Insert all the steps to make the symptom and condition lists from the excel file here so they can be stored.
-        //}
 
 
         public string filePathPatientsList = $"{fileStoreDirectory}{fileNamePatients}"; //TODO: Find all references and replace them
         public static string fileStoreDirectory = @"G:\Medical Tracker\";
         public static string fileNamePatients = @"patientsList.xml";
 
-        public static string fileNameWordList = @"usa2.txt";
+        public static string fileNameWordList = @"english_words_479k.txt";
         public static string fileNameEnglishWordList = @"englishWordList.xml";
         public static string fileNameSymptoms = @"symptomsData.xml";
         public static string fileNameCondition = @"conditionsData.xml";
-        public string xlsxFile = @"G:\Medical Tracker\DataSet of people with symptoms and conditions.xlsx";
+        public string xlsxFile = $"{fileStoreDirectory}DataSet of people with symptoms and conditions.xlsx";
         public string filePathConditions = $"{fileStoreDirectory}{fileNameCondition}";
         public string filePathSymptoms = $"{fileStoreDirectory}{fileNameSymptoms}";
         public static string filePathWordList = $"{fileStoreDirectory}{fileNameWordList}";
@@ -119,7 +116,7 @@ namespace MedicalTrackerBlazorApp.Data
         List<Condition> conditionsList = new();
         List<Symptom> symptomsList = new();
         List<Condition> conditionsWithSymptoms = new();
-        public readonly List<string> wordList = new();
+        public readonly List<string> EnglishWordList = new();
 
        
         /// <summary>
@@ -129,7 +126,7 @@ namespace MedicalTrackerBlazorApp.Data
         public void oneTimeSetup()
         {
             ExcelObjectGenerator(xlsxFile, filePathConditions, filePathSymptoms);
-            //ListSetup(wordList, filePathWordList); TODO: this is just a temporary wordlist of english words replace with symptoms and conditions 
+            //ListSetup(wordList, filePathWordList); //TODO: this is just a temporary wordlist of english words replace with symptoms and conditions
         }
 
         /// <summary>
