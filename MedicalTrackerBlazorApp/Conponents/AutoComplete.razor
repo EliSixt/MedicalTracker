@@ -137,13 +137,13 @@ US: @UserSelection
 
 
     /// <summary>
-    /// Used in the user interface, when called with a value inside, it assigns that value to a selected sentence that then gets saved.
+    /// Used in the user interface, when called with a value inside, it assigns that value to a SelectedSentence and UserSelection then gets saved.
     /// </summary>
     /// <param name="value">Value that gets assigned to SelectedSentence.</param>
     void AutoCompleteReturnValue(string value/*, ChangeEventArgs args*/)
     {
-        SelectedSentence = new(value); //I only add values i dont delete them. Here is the problem.
-        UserSelection = new(value);
+        SelectedSentence = new(value); //whenever the user presses on an autocomplete suggestion "this" gets updated
+        UserSelection = new(value); //whenever the user presses on an autocomplete suggestion "this" gets updated
         SelectedWordChanged.InvokeAsync(value);
     }
 }
