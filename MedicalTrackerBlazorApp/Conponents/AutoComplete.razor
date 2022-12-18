@@ -39,7 +39,12 @@
     public EventCallback<string> SelectedWordChanged { get; set; }
     List<string> autoCompleteSuggestions = new();
 
-
+    /// <summary>
+    /// Assigns the value of the Value property of the args parameter to a variable named inputText, and casts it to a string type.
+    /// The second and third lines create new instances of two types, UserSelection and SelectedSentence, and pass the value of inputText.
+    ///The method then has an if statement that checks whether inputText is not null and WordList is not null. If true, the method calls named FilteredListGenerator and passes it WordList and inputText as arguments.
+    /// </summary>
+    /// <param name="args"></param>
     private void OnInput(ChangeEventArgs args)
     {
         var inputText = args.Value as string;
