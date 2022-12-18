@@ -71,6 +71,9 @@ US: @UserSelection
     private void OnInput(ChangeEventArgs args)
     {
         var inputText = args.Value as string;
+        UserSelection = new(inputText); //This fixed it!!!
+        SelectedSentence = new(inputText); //This fixed it!!!
+
         if (inputText != null && WordList != null)
         {
             FilteredListGenerator(WordList, inputText);
