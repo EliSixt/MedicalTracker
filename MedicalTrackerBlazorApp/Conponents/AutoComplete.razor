@@ -1,15 +1,4 @@
-﻿<h3>AutoComplete</h3>
-
-@*<input type="text" @onkeyup="e => OnInput(e)" value="@UserSelection" />*@
-
-
-<input type="text" @oninput="e => OnInput(e)" @bind-value="@UserSelection" />
-US: @UserSelection
-@*TODO: What if the user deletes what they wrote, then it wouldnt be onInput, it would make sense to have "onChange", but it only gets called whenever it's out of focus*@
-@*<input type="text" @bind="UserSelection" @onchange="e => OnInput(e)" />
-*@
-
-@*<input type="text" @bind="UserSelection" @bind:event="OnInput" />*@
+﻿<input type="text" @oninput="e => OnInput(e)" @bind-value="@UserSelection" />
 
 @foreach (var item in autoCompleteSuggestions)
 {
@@ -17,8 +6,6 @@ US: @UserSelection
     <br />
     <button @onclick="@(() => AutoCompleteReturnValue(@item))">@item</button>
 }
-<h1>@SelectedSentence</h1> @*Temp: Delete*@
-
 
 
 @code {
@@ -50,23 +37,8 @@ US: @UserSelection
 
     [Parameter]
     public EventCallback<string> SelectedWordChanged { get; set; }
-    //string UserInput = "";
     List<string> autoCompleteSuggestions = new();
 
-
-    //private void OnInput(KeyboardEventArgs args)
-    //{
-    //    var inputKey = args.Key;
-
-    //    if (inputKey == "Delete")
-    //    {
-    //        var inputText = args.Key as string;
-    //        if (inputText != null && WordList != null)
-    //        {
-    //            FilteredListGenerator(WordList, inputText);
-    //        }
-    //    }
-    //}
 
     private void OnInput(ChangeEventArgs args)
     {
@@ -81,15 +53,6 @@ US: @UserSelection
     }
 
 
-    //public void OnKeyUpInput(string userInput)
-    //{
-    //    if (userInput != null && WordList != null)
-    //    {
-    //        FilteredListGenerator(WordList, userInput);
-    //    }
-    //}
-
-
     /// <summary>
     /// Creates an eight word suggestion's list, from a given dataset string list, depending on the beginning instance of the last string of the UserInput.
     /// </summary>
@@ -99,12 +62,9 @@ US: @UserSelection
     {
         if (userInput == null || stringList == null)
         {
-            //return new List<string>();
             return;
         }
 
-        //var suggestions = new List<string>();
-        //autoCompleteSuggestions.Clear();
         string lastWord = userInput.Split(' ').Last();
         string stringMinusLastWord = "";
         if (userInput.LastIndexOf(" ") > 0)
@@ -115,24 +75,13 @@ US: @UserSelection
         filteredList = stringList.Where(x => x.ToLower().StartsWith(lastWord.ToLower())).Take(8).ToList();
         autoCompleteSuggestions.Clear();
 
-        //if (userInput.Split(" ").Length > 1)
-        //{
-        //    var newSentence = userInput.Split(" ");
-        //    for (int i = 0; i < newSentence.Length - 1; i++)
-        //    {
-        //        SelectedSentence.Concat(newSentence[i]);
-        //    }
-        //}
-
         if (lastWord.Length > 0)
         {
             foreach (var item in filteredList)
             {
-                autoCompleteSuggestions.Add(string.Join(" ", /*SelectedSentence*/ stringMinusLastWord, item));
+                autoCompleteSuggestions.Add(string.Join(" ", stringMinusLastWord, item));
             }
         }
-
-        //return suggestions;
     }
 
 
