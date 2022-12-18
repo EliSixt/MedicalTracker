@@ -104,11 +104,17 @@ US: @UserSelection
         }
 
         //var suggestions = new List<string>();
-        autoCompleteSuggestions.Clear();
+        //autoCompleteSuggestions.Clear();
         string lastWord = userInput.Split(' ').Last();
+        string stringMinusLastWord = "";
+        if (userInput.LastIndexOf(" ") > 0)
+        {
+            stringMinusLastWord = userInput.Substring(0, userInput.LastIndexOf(" "));
+        }
         List<string> filteredList = new();
         filteredList = stringList.Where(x => x.ToLower().StartsWith(lastWord.ToLower())).Take(8).ToList();
         autoCompleteSuggestions.Clear();
+
         //if (userInput.Split(" ").Length > 1)
         //{
         //    var newSentence = userInput.Split(" ");
@@ -117,11 +123,12 @@ US: @UserSelection
         //        SelectedSentence.Concat(newSentence[i]);
         //    }
         //}
+
         if (lastWord.Length > 0)
         {
             foreach (var item in filteredList)
             {
-                autoCompleteSuggestions.Add(string.Join(" ", SelectedSentence, item));
+                autoCompleteSuggestions.Add(string.Join(" ", /*SelectedSentence*/ stringMinusLastWord, item));
             }
         }
 
