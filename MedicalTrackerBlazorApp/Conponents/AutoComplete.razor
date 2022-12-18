@@ -142,7 +142,8 @@ US: @UserSelection
     /// <param name="value">Value that gets assigned to SelectedSentence.</param>
     void AutoCompleteReturnValue(string value/*, ChangeEventArgs args*/)
     {
-        SelectedSentence = value; //I only add values i dont delete them. Here is the problem.
+        SelectedSentence = new(value); //I only add values i dont delete them. Here is the problem.
+        UserSelection = new(value);
         SelectedWordChanged.InvokeAsync(value);
     }
 }
