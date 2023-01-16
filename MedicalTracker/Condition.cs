@@ -4,6 +4,7 @@ namespace MedicalTracker
 {
     public class Condition
     {
+        public string ConditionName { get; set; }
         public List<Symptom> Symptoms { get; set; }//symptoms associated with this condition
         public string UserID { get; set; }
         public string Sex { get; set; }
@@ -12,7 +13,6 @@ namespace MedicalTracker
         public string Severity { get; set; }
         public double Date { get; set; }
         //public string TrackableType { get; set; }
-        public string ConditionName { get; set; }
 
         /// <summary>
         /// Overrides string for Condition.
