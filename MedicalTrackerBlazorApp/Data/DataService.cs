@@ -98,27 +98,44 @@ namespace MedicalTrackerBlazorApp.Data
 
 
 
-        public string filePathPatientsList = $"{fileStoreDirectory}{fileNamePatients}"; //TODO: Find all references and replace them
+        public string filePathPatientsList = $"{fileStoreDirectory}{fileNamePatients}";
         public static string fileStoreDirectory = @"G:\Medical Tracker\";
         public static string fileNamePatients = @"patientsList.xml";
+
 
         public static string fileNameWordList = @"english_words_479k.txt";
         public static string fileNameEnglishWordList = @"englishWordList.xml";
         public static string fileNameSymptoms = @"symptomsData.xml";
         public static string fileNameCondition = @"conditionsData.xml";
+
         public string xlsxFile = $"{fileStoreDirectory}DataSet of people with symptoms and conditions.xlsx";
         public string filePathConditions = $"{fileStoreDirectory}{fileNameCondition}";
         public string filePathSymptoms = $"{fileStoreDirectory}{fileNameSymptoms}";
         public static string filePathWordList = $"{fileStoreDirectory}{fileNameWordList}";
         public static string filePathEnglishWordList = $"{fileStoreDirectory}{fileNameEnglishWordList}";
-        
+
 
         List<Condition> conditionsList = new();
         List<Symptom> symptomsList = new();
         List<Condition> conditionsWithSymptoms = new();
         public readonly List<string> EnglishWordList = new();
 
-       
+
+        //**Here are all the lists/Data needed throughout the website**
+
+        //list of allergies
+        readonly List<Allergy> allergyList = new();
+        //list of symptoms
+        readonly List<Symptom> symptoms1 = new();
+        //list of conditions
+        readonly List<Condition> conditions1 = new();
+        //list of condition definitions
+        readonly List<Condition> conditionDefinitions = new();
+        //list of people, age,  region, correlating the dates for symptoms and conditions.
+        readonly List<Patient> patientDataList = new();
+
+
+
         /// <summary>
         /// A one time setup, creates a string list from a textfile and extracts data from an Excel file,
         /// then saves both processes/lists into some local xml files.

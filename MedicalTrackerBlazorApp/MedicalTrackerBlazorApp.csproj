@@ -1,10 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="Conponents\ClippyDiagnosisHelper.razor" />
+  </ItemGroup>
 
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Interop.Excel">
@@ -48,6 +52,18 @@
 
   <ItemGroup>
     <PackageReference Include="Blazored.Typeahead" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Conponents\ClippyDiagnosisHelper.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Conponents\ClippyDiagnosisHelper.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Conponents\ClippyDiagnosisHelper.razor" />
   </ItemGroup>
 
 </Project>
