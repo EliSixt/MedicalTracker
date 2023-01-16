@@ -11,7 +11,7 @@ namespace MedicalTracker
         public double Age { get; set; }
         public string Country { get; set; }
         public string Severity { get; set; }
-        public double Date { get; set; }
+        public double Date { get; set; } //date of the condition
         //public string TrackableType { get; set; }
 
         /// <summary>

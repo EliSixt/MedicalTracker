@@ -5,7 +5,7 @@
         public string UserID { get; set; }
         public string SymptomName { get; set; }
         public double Date { get; set; }
-        public string Severity { get; set; }
+        public string Severity { get; set; } //gotta add some sort of gauge for discomfort/pain. Like 0-10
         public string SymptomDescription { get; set; }
 
         /// <summary>
