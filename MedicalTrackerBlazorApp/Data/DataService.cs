@@ -10,7 +10,7 @@ namespace MedicalTrackerBlazorApp.Data
         public DataService()
         {
             SetupUp();
-            ListSetup(EnglishWordList, filePathWordList); //TODO: this is just a temporary wordlist of english words replace with symptoms and conditions
+            StringListSetup(EnglishWordList, filePathWordList); //TODO: this is just a temporary wordlist of english words replace with symptoms and conditions
             //oneTimeSetup();
         }
 
@@ -115,22 +115,22 @@ namespace MedicalTrackerBlazorApp.Data
         public static string filePathEnglishWordList = $"{fileStoreDirectory}{fileNameEnglishWordList}";
 
 
-        List<Condition> conditionsList = new();
-        List<Symptom> symptomsList = new();
-        List<Condition> conditionsWithSymptoms = new();
-        public readonly List<string> EnglishWordList = new();
+        //List<Condition> conditionsList = new();
+        //List<Symptom> symptomsList = new();
+        //List<Condition> conditionsWithSymptoms = new();
 
 
         //**Here are all the lists/Data needed throughout the website**
-
+        //List of English words
+        public readonly List<string> EnglishWordList = new();
         //list of allergies
         readonly List<Allergy> allergyList = new();
         //list of symptoms
         readonly List<Symptom> symptoms1 = new();
-        //list of conditions
+        //List of conditions and their symptoms
         readonly List<Condition> conditions1 = new();
         //list of condition definitions
-        readonly List<Condition> conditionDefinitions = new();
+        readonly List<Condition> diseasesDefinitions = new();
         //list of people, age,  region, correlating the dates for symptoms and conditions.
         readonly List<Patient> patientDataList = new();
 
@@ -166,7 +166,7 @@ namespace MedicalTrackerBlazorApp.Data
         /// </summary>
         /// <param name="strings"></param>
         /// <param name="filePathTextFile"></param>
-        public void ListSetup(List<string> strings, string filePathTextFile)
+        public void StringListSetup(List<string> strings, string filePathTextFile)
         {
             //var filepath = fileNameWordList;
             //using (StreamWriter writer = new StreamWriter(new FileStream(filepath,
@@ -216,6 +216,29 @@ namespace MedicalTrackerBlazorApp.Data
             return null;
         }
 
+        /*I have a couple of excel tables that i need to convert the data to CSV files, to manage the data easier.
+         3 lists with different information*/
+
+        //list of diseases and their associated symptoms
+        public static void ExcelListConverter1()
+        {
+
+        }
+
+        //List of diseases and their description
+        public static void ExcelListConverter2()
+        {
+
+        }
+
+        //list of diseases and their precautions
+        public static void ExcelListConverter3()
+        {
+
+        }
+
+        //Redo the method ExcelObjectGenerator() it's too slow and the data is too big. It tackles the data of user-IDS, age, sex, country, checkin date, 
+        //trackable ID (symptom, condition, tag?, food, weather), trackable name (condition, symptom), trackable value (dosage amount of medicine or something).
 
         /// <summary>
         /// Takes in a specific Excelsheet, reads it, and filters feeds that data into an ExcelLists object with the 2 list properties.
