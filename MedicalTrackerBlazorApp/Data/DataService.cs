@@ -216,29 +216,26 @@ namespace MedicalTrackerBlazorApp.Data
             return null;
         }
 
-        /*I have a couple of excel tables that i need to convert the data to CSV files, to manage the data easier.
+        /*I have one excel table that i need to convert the data to CSV files, to manage the data easier.
          3 lists with different information*/
 
-        //list of diseases and their associated symptoms
-        public static void ExcelListConverter1()
-        {
 
-        }
+        //public string xlsxFile = $"{fileStoreDirectory}DataSet of people with symptoms and conditions.xlsx"; <- i need to convert this to csv
+
+        //list of diseases and their associated symptoms
+        string ExcelFilePathDiseasesWithSymptoms = $"{fileStoreDirectory}List of diseases with multiple symptoms.csv";
 
         //List of diseases and their description
-        public static void ExcelListConverter2()
-        {
+        string ExcelFilePathDiseasesWithDescriptions = $"{fileStoreDirectory}Disease explanations and definitions.csv";
 
-        }
+        //list of diseases and their treatments and cures
+        string ExcelFilePathDiseasesWithTreatmentsAndCures = $"{fileStoreDirectory}Diseases treatments and cures.csv";
 
-        //list of diseases and their precautions
-        public static void ExcelListConverter3()
-        {
 
-        }
 
         //Redo the method ExcelObjectGenerator() it's too slow and the data is too big. It tackles the data of user-IDS, age, sex, country, checkin date, 
         //trackable ID (symptom, condition, tag?, food, weather), trackable name (condition, symptom), trackable value (dosage amount of medicine or something).
+        //It is under: public string xlsxFile = $"{fileStoreDirectory}DataSet of people with symptoms and conditions.xlsx";
 
         /// <summary>
         /// Takes in a specific Excelsheet, reads it, and filters feeds that data into an ExcelLists object with the 2 list properties.
