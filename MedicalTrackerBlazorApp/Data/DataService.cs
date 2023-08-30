@@ -2,6 +2,8 @@
 using System.Xml.Serialization;
 using Microsoft.Office.Interop.Excel;
 using Range = Microsoft.Office.Interop.Excel.Range;
+using Microsoft.VisualBasic.FileIO;
+using System.Runtime.CompilerServices;
 
 namespace MedicalTrackerBlazorApp.Data
 {
@@ -108,12 +110,30 @@ namespace MedicalTrackerBlazorApp.Data
         public static string fileNameSymptoms = @"symptomsData.xml";
         public static string fileNameCondition = @"conditionsData.xml";
 
-        public string xlsxFile = $"{fileStoreDirectory}DataSet of people with symptoms and conditions.xlsx";
+
         public string filePathConditions = $"{fileStoreDirectory}{fileNameCondition}";
         public string filePathSymptoms = $"{fileStoreDirectory}{fileNameSymptoms}";
         public static string filePathWordList = $"{fileStoreDirectory}{fileNameWordList}";
         public static string filePathEnglishWordList = $"{fileStoreDirectory}{fileNameEnglishWordList}";
 
+
+        //Big list of people, dates, region, sex, dates, symptoms, conditions, age.
+        string FilePathPeopleDataSet = $"{fileStoreDirectory}Copy of DataSet of people with symptoms and conditions.xlsx";
+
+        //list of diseases and their associated symptoms
+        string FilePathDiseasesWithTheirSymptoms = $"{fileStoreDirectory}List of diseases with multiple symptoms.csv";
+
+        //List of diseases and their description
+        string FilePathDiseasesWithDescriptions = $"{fileStoreDirectory}Disease explanations and definitions.csv";
+
+        //list of diseases and their treatments and cures
+        string FilePathDiseasesWithTreatmentsAndCures = $"{fileStoreDirectory}Diseases treatments and cures.csv";
+
+
+
+        //Redo the method ExcelObjectGenerator() it's too slow and the data is too big. It tackles the data of user-IDS, age, sex, country, checkin date, 
+        //trackable ID (symptom, condition, tag?, food, weather), trackable name (condition, symptom), trackable value (dosage amount of medicine or something).
+        //It is under: public string xlsxFile = $"{fileStoreDirectory}DataSet of people with symptoms and conditions.xlsx";
 
         //List<Condition> conditionsList = new();
         //List<Symptom> symptomsList = new();
@@ -134,6 +154,27 @@ namespace MedicalTrackerBlazorApp.Data
         //list of people, age,  region, correlating the dates for symptoms and conditions.
         readonly List<Patient> patientDataList = new();
 
+        /// <summary>
+        /// This is a csv reader specifically made to read and sort a dataset of People with and symptoms and conditions.
+        /// </summary>
+        /// <param name="filePath">FilePath for the file "Copy of DataSet of people with symptoms and conditions.xlsx"</param>
+        public void CSVReader(string filePath)
+        {
+            using (TextFieldParser parser = new TextFieldParser(filePath))
+            {
+                parser.TextFieldType = FieldType.Delimited;
+                parser.SetDelimiters(",");
+
+                //if I want to skip the row with column names
+                //parser.ReadLine();
+
+                while (!parser.EndOfData)
+                {
+                    //process for storing into a list
+                }
+            }
+        }
+
 
 
         /// <summary>
@@ -142,7 +183,7 @@ namespace MedicalTrackerBlazorApp.Data
         /// </summary>
         public void oneTimeSetup()
         {
-            ExcelObjectGenerator(xlsxFile, filePathConditions, filePathSymptoms);
+            ExcelObjectGenerator(FilePathPeopleDataSet, filePathConditions, filePathSymptoms);
             //ListSetup(wordList, filePathWordList); //TODO: this is just a temporary wordlist of english words replace with symptoms and conditions
         }
 
@@ -216,26 +257,6 @@ namespace MedicalTrackerBlazorApp.Data
             return null;
         }
 
-        /*I have one excel table that i need to convert the data to CSV files, to manage the data easier.
-         3 lists with different information*/
-
-
-        //public string xlsxFile = $"{fileStoreDirectory}DataSet of people with symptoms and conditions.xlsx"; <- i need to convert this to csv
-
-        //list of diseases and their associated symptoms
-        string ExcelFilePathDiseasesWithSymptoms = $"{fileStoreDirectory}List of diseases with multiple symptoms.csv";
-
-        //List of diseases and their description
-        string ExcelFilePathDiseasesWithDescriptions = $"{fileStoreDirectory}Disease explanations and definitions.csv";
-
-        //list of diseases and their treatments and cures
-        string ExcelFilePathDiseasesWithTreatmentsAndCures = $"{fileStoreDirectory}Diseases treatments and cures.csv";
-
-
-
-        //Redo the method ExcelObjectGenerator() it's too slow and the data is too big. It tackles the data of user-IDS, age, sex, country, checkin date, 
-        //trackable ID (symptom, condition, tag?, food, weather), trackable name (condition, symptom), trackable value (dosage amount of medicine or something).
-        //It is under: public string xlsxFile = $"{fileStoreDirectory}DataSet of people with symptoms and conditions.xlsx";
 
         /// <summary>
         /// Takes in a specific Excelsheet, reads it, and filters feeds that data into an ExcelLists object with the 2 list properties.
