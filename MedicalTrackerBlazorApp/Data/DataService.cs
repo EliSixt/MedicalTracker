@@ -170,15 +170,24 @@ namespace MedicalTrackerBlazorApp.Data
 
                 //if I want to skip the row with column names
                 //parser.ReadLine();
+
                 while (!parser.EndOfData)
                 {
-                    string[] RowData = new string[0];
-                    if (parser.ReadFields() != null)
+
+                    //string[] RowData = new string[0];
+                    //if (parser.ReadFields().Length > RowData.Length)
+                    //{
+                    //    RowData = parser.ReadFields();
+                    //    PeopleDataList.Add(RowData);
+                    //}
+
+                    string[]? RowData = parser.ReadFields();
+
+                    if (RowData != null)
                     {
-                        RowData = parser.ReadFields();
+                        PeopleDataList.Add(RowData);
                     }
-                    
-                    PeopleDataList.Add(RowData);
+
                 }
 
                 return PeopleDataList;
