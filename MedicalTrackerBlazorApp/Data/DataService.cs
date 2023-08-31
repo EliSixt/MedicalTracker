@@ -117,6 +117,7 @@ namespace MedicalTrackerBlazorApp.Data
         public static string filePathEnglishWordList = $"{fileStoreDirectory}{fileNameEnglishWordList}";
 
 
+
         //Big list of people, dates, region, sex, dates, symptoms, conditions, age.
         string FilePathPeopleDataSet = $"{fileStoreDirectory}Copy of DataSet of people with symptoms and conditions.xlsx";
 
@@ -158,8 +159,10 @@ namespace MedicalTrackerBlazorApp.Data
         /// This is a csv reader specifically made to read and sort a dataset of People with and symptoms and conditions.
         /// </summary>
         /// <param name="filePath">FilePath for the file "Copy of DataSet of people with symptoms and conditions.xlsx"</param>
-        public void CSVReader(string filePath)
+        public List<string[]> CSVReader(string filePath)
         {
+            //string[] PeopleDataSet = new string[0];
+            List<string[]> PeopleDataList = new List<string[]>();
             using (TextFieldParser parser = new TextFieldParser(filePath))
             {
                 parser.TextFieldType = FieldType.Delimited;
@@ -167,11 +170,18 @@ namespace MedicalTrackerBlazorApp.Data
 
                 //if I want to skip the row with column names
                 //parser.ReadLine();
-
                 while (!parser.EndOfData)
                 {
-                    //process for storing into a list
+                    string[] RowData = new string[0];
+                    if (parser.ReadFields() != null)
+                    {
+                        RowData = parser.ReadFields();
+                    }
+                    
+                    PeopleDataList.Add(RowData);
                 }
+
+                return PeopleDataList;
             }
         }
 
