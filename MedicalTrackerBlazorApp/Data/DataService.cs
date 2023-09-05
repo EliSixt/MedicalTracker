@@ -168,6 +168,14 @@ namespace MedicalTrackerBlazorApp.Data
         /// <exception cref="ArgumentNullException">when the file path is null</exception>
         public List<string[]> CSVReader(string filePath)
         {
+            if (!File.Exists(filePath))
+            {
+                throw new ArgumentException("CSVReader: The specified path does not exist.", nameof(filePath));
+            }
+            if (filePath == null)
+            {
+                throw new ArgumentNullException("CSVReader: The specified path is null.", nameof(filePath));
+            }
             //string[] PeopleDataSet = new string[0];
             List<string[]> DataList = new List<string[]>();
             using (TextFieldParser parser = new TextFieldParser(filePath))
@@ -220,6 +228,15 @@ namespace MedicalTrackerBlazorApp.Data
         }
 
         /// <summary>
+        /// This method is designed for initial setup, specifically to extract word lists from data.
+        /// </summary>
+        public void AutoCompleteWordListInitialSetup()
+        {
+            //check to see if lists exists already or if their empty or null first. If they dont pass, override them with these methods.
+            SymptomWordListSetup(CSVFilePathPeopleDataSet, symptomsWordList);
+            //TODO: make a conditions word list too
+        }
+
 
         /// <summary>
         /// Reads data from a CSV file, specifically looking for rows where the 7th column contains the word "symptom" (case-insensitive). 
@@ -231,6 +248,8 @@ namespace MedicalTrackerBlazorApp.Data
         public List<string> SymptomWordListSetup(string filePath, List<string> wordlist)
         {
             List<string> StringList = new List<string>();
+            try
+            {
                 List<string[]> data = new(CSVReader(filePath));
 
                 foreach (string[] row in data)
@@ -247,6 +266,20 @@ namespace MedicalTrackerBlazorApp.Data
                     }
                 }
             }
+
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine($"SymptomWordListSetup: The file '{filePath}' was not found.");
+            }
+            catch (IOException message)
+            {
+                Console.WriteLine($"SymptomWordListSetup: An error occurred while reading the file '{filePath}': {message.Message}.");
+            }
+            catch (Exception message)
+            {
+                Console.WriteLine($"SymptomWordListSetup: Unexpected error  ocurred: {message.Message}.");
+            }
+
 
             //add something to remove all doubles before returning the stringlist
             return StringList;
@@ -313,6 +346,9 @@ namespace MedicalTrackerBlazorApp.Data
         }
 
 
+
+        //Too Slow, problem is that it opens and closes this program (excel) for every patient data. There's a couple second delay whenever it opens and closes.
+        //There's millions of userss.
         /// <summary>
         /// Takes in a specific Excelsheet, reads it, and filters feeds that data into an ExcelLists object with the 2 list properties.
         /// Then serializes those lists into separate xml files.
