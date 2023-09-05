@@ -113,6 +113,7 @@ namespace MedicalTrackerBlazorApp.Data
 
         public string filePathConditions = $"{fileStoreDirectory}{fileNameCondition}";
         public string filePathSymptoms = $"{fileStoreDirectory}{fileNameSymptoms}";
+
         public static string filePathWordList = $"{fileStoreDirectory}{fileNameWordList}";
         public static string filePathEnglishWordList = $"{fileStoreDirectory}{fileNameEnglishWordList}";
 
@@ -120,6 +121,7 @@ namespace MedicalTrackerBlazorApp.Data
 
         //Big list of people, dates, region, sex, dates, symptoms, conditions, age.
         string FilePathPeopleDataSet = $"{fileStoreDirectory}Copy of DataSet of people with symptoms and conditions.xlsx";
+        string CSVFilePathPeopleDataSet = $"{fileStoreDirectory}Copy of DataSet of people with symptoms and conditions.csv";
 
         //list of diseases and their associated symptoms
         string FilePathDiseasesWithTheirSymptoms = $"{fileStoreDirectory}List of diseases with multiple symptoms.csv";
@@ -148,6 +150,7 @@ namespace MedicalTrackerBlazorApp.Data
         readonly List<Allergy> allergyList = new();
         //list of symptoms
         readonly List<Symptom> symptoms1 = new();
+        readonly List<string> symptomsWordList = new();
         //List of conditions and their symptoms
         readonly List<Condition> conditions1 = new();
         //list of condition definitions
@@ -155,14 +158,18 @@ namespace MedicalTrackerBlazorApp.Data
         //list of people, age,  region, correlating the dates for symptoms and conditions.
         readonly List<Patient> patientDataList = new();
 
+
         /// <summary>
-        /// This is a csv reader specifically made to read and sort a dataset of People with and symptoms and conditions.
+        ///  Reads data from a CSV file, performs necessary checks for file existence and null arguments, and returns the data as a list of string arrays based on the rows.
         /// </summary>
-        /// <param name="filePath">FilePath for the file "Copy of DataSet of people with symptoms and conditions.xlsx"</param>
+        /// <param name="filePath">FilePath for a CSV file.</param>
+        /// <returns> List<string>[] string arrays of words </returns>
+        /// <exception cref="ArgumentException">when file path does not exist</exception>
+        /// <exception cref="ArgumentNullException">when the file path is null</exception>
         public List<string[]> CSVReader(string filePath)
         {
             //string[] PeopleDataSet = new string[0];
-            List<string[]> PeopleDataList = new List<string[]>();
+            List<string[]> DataList = new List<string[]>();
             using (TextFieldParser parser = new TextFieldParser(filePath))
             {
                 parser.TextFieldType = FieldType.Delimited;
@@ -173,25 +180,17 @@ namespace MedicalTrackerBlazorApp.Data
 
                 while (!parser.EndOfData)
                 {
-
-                    //string[] RowData = new string[0];
-                    //if (parser.ReadFields().Length > RowData.Length)
-                    //{
-                    //    RowData = parser.ReadFields();
-                    //    PeopleDataList.Add(RowData);
-                    //}
-
                     string[]? RowData = parser.ReadFields();
 
                     if (RowData != null)
                     {
-                        PeopleDataList.Add(RowData);
+                        DataList.Add(RowData);
                     }
-
                 }
 
-                return PeopleDataList;
+                return DataList;
             }
+
         }
 
 
@@ -202,7 +201,8 @@ namespace MedicalTrackerBlazorApp.Data
         /// </summary>
         public void oneTimeSetup()
         {
-            ExcelObjectGenerator(FilePathPeopleDataSet, filePathConditions, filePathSymptoms);
+
+            //ExcelObjectGenerator(FilePathPeopleDataSet, filePathConditions, filePathSymptoms);
             //ListSetup(wordList, filePathWordList); //TODO: this is just a temporary wordlist of english words replace with symptoms and conditions
         }
 
@@ -220,6 +220,42 @@ namespace MedicalTrackerBlazorApp.Data
         }
 
         /// <summary>
+
+        /// <summary>
+        /// Reads data from a CSV file, specifically looking for rows where the 7th column contains the word "symptom" (case-insensitive). 
+        /// It extracts the 8th's column information and adds it to a string list. 
+        /// </summary>
+        /// <param name="filePath">filepath of the CSV file for People DataSet</param>
+        /// <param name="wordlist">A string list to store the symptoms word list</param>
+        /// <returns>List<string> of symptoms</returns>
+        public List<string> SymptomWordListSetup(string filePath, List<string> wordlist)
+        {
+            List<string> StringList = new List<string>();
+                List<string[]> data = new(CSVReader(filePath));
+
+                foreach (string[] row in data)
+                {
+                    if (row.Length != 0 || row != null)
+                    {
+                        for (int i = 0; i < row.Length; i++)
+                        {
+                            if (string.Equals("symptom", row[7], StringComparison.CurrentCultureIgnoreCase))
+                            {
+                                StringList.Add(row[8]);
+                            }
+                        }
+                    }
+                }
+            }
+
+            //add something to remove all doubles before returning the stringlist
+            return StringList;
+        }
+
+
+
+        /// <summary>
+        /// TEMPORARY TEST
         /// Takes in a textfile of strings and a List<string>, 
         /// separates the textfile into strings saving each one into the List provided,
         /// then saves the string list into a local xml file.
