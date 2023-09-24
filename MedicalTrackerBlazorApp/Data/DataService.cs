@@ -155,6 +155,7 @@ namespace MedicalTrackerBlazorApp.Data
         readonly List<Condition> conditions1 = new();
         //list of condition definitions
         readonly List<Condition> diseasesDefinitions = new();
+        readonly List<string> conditionWordList = new();
         //list of people, age,  region, correlating the dates for symptoms and conditions.
         readonly List<Patient> patientDataList = new();
 
@@ -235,6 +236,7 @@ namespace MedicalTrackerBlazorApp.Data
             //check to see if lists exists already or if their empty or null first. If they dont pass, override them with these methods.
             SymptomWordListSetup(CSVFilePathPeopleDataSet, symptomsWordList);
             //TODO: make a conditions word list too
+            ConditionWordListSetup(CSVFilePathPeopleDataSet, conditionWordList);
         }
 
 
@@ -244,10 +246,10 @@ namespace MedicalTrackerBlazorApp.Data
         /// </summary>
         /// <param name="filePath">filepath of the CSV file for People DataSet</param>
         /// <param name="wordlist">A string list to store the symptoms word list</param>
-        /// <returns>List<string> of symptoms</returns>
+        /// <returns>List<string>list of symptoms</returns>
         public List<string> SymptomWordListSetup(string filePath, List<string> wordlist)
         {
-            List<string> StringList = new List<string>();
+            HashSet<string> Stringhashset = new HashSet<string>();
             try
             {
                 List<string[]> data = new(CSVReader(filePath));
@@ -260,7 +262,7 @@ namespace MedicalTrackerBlazorApp.Data
                         {
                             if (string.Equals("symptom", row[7], StringComparison.CurrentCultureIgnoreCase))
                             {
-                                StringList.Add(row[8]);
+                                Stringhashset.Add(row[8]);
                             }
                         }
                     }
@@ -280,11 +282,58 @@ namespace MedicalTrackerBlazorApp.Data
                 Console.WriteLine($"SymptomWordListSetup: Unexpected error  ocurred: {message.Message}.");
             }
 
-
-            //add something to remove all doubles before returning the stringlist
+            //TODO: add something to remove all doubles before returning the stringlist
+            List<string> StringList = Stringhashset.ToList();
             return StringList;
         }
 
+
+        /// <summary>
+        /// Reads data from a CSV file, specifically looking for rows where the 7th column contains the word "condition" (case-insensitive). 
+        /// It extracts the 8th's column information and adds it to a string list. 
+        /// </summary>
+        /// <param name="filePath">filepath of the CSV file for People DataSet</param>
+        /// <param name="wordlist">A string list to store the condtion word list</param>
+        /// <returns>List<string>list of conditions</returns>
+        public List<string> ConditionWordListSetup(string filePath, List<string> wordlist)
+        {
+            HashSet<string> StringHashSet = new HashSet<string>();
+            try
+            {
+                List<string[]> data = new(CSVReader(filePath));
+
+                foreach (string[] row in data)
+                {
+                    if (row.Length != 0 || row != null)
+                    {
+                        for (int i = 0; i < row.Length; i++)
+                        {
+                            if (string.Equals("condition", row[7], StringComparison.CurrentCultureIgnoreCase))
+                            {
+                                StringHashSet.Add(row[8]);
+                            }
+                        }
+                    }
+                }
+            }
+
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine($"SymptomWordListSetup: The file '{filePath}' was not found.");
+            }
+            catch (IOException message)
+            {
+                Console.WriteLine($"SymptomWordListSetup: An error occurred while reading the file '{filePath}': {message.Message}.");
+            }
+            catch (Exception message)
+            {
+                Console.WriteLine($"SymptomWordListSetup: Unexpected error  ocurred: {message.Message}.");
+            }
+
+            //TODO: add something to remove all doubles before returning the stringlist
+            List<string> StringList = StringHashSet.ToList();
+            return StringList;
+        }
 
 
         /// <summary>
