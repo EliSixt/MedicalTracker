@@ -150,10 +150,12 @@ namespace MedicalTrackerBlazorApp.Data
         readonly List<Allergy> allergyList = new();
         //list of symptoms
         readonly List<Symptom> symptoms1 = new();
+        readonly List<string> symptomsWordList = new(); //for Autocomplete
         //List of conditions and their symptoms
         readonly List<Condition> conditions1 = new();
         //list of condition definitions
         readonly List<Condition> diseasesDefinitions = new();
+        readonly List<string> conditionWordList = new(); //for Autocomplete
         //list of people, age,  region, correlating the dates for symptoms and conditions.
         readonly List<Patient> patientDataList = new();
 
@@ -182,6 +184,8 @@ namespace MedicalTrackerBlazorApp.Data
                 parser.TextFieldType = FieldType.Delimited;
                 parser.SetDelimiters(",");
 
+                //To skip the row with column names
+                parser.ReadLine();
 
                 while (!parser.EndOfData)
                 {
@@ -230,6 +234,9 @@ namespace MedicalTrackerBlazorApp.Data
         public void AutoCompleteWordListInitialSetup()
         {
             //check to see if lists exists already or if their empty or null first. If they dont pass, override them with these methods.
+            SymptomWordListSetup(CSVFilePathPeopleDataSet, symptomsWordList); //For use within autocomplete
+            ConditionWordListSetup(CSVFilePathPeopleDataSet, conditionWordList); //For use within autocomplete
+            //List of Diseases for use in autocomplete
         }
 
 
@@ -276,6 +283,8 @@ namespace MedicalTrackerBlazorApp.Data
             }
 
             //TODO: add something to remove all doubles before returning the stringlist
+            //List<string> StringList = Stringhashset.ToList();
+            return Stringhashset.ToList();
         }
 
 
