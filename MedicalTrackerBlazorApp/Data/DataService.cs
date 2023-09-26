@@ -150,12 +150,10 @@ namespace MedicalTrackerBlazorApp.Data
         readonly List<Allergy> allergyList = new();
         //list of symptoms
         readonly List<Symptom> symptoms1 = new();
-        readonly List<string> symptomsWordList = new();
         //List of conditions and their symptoms
         readonly List<Condition> conditions1 = new();
         //list of condition definitions
         readonly List<Condition> diseasesDefinitions = new();
-        readonly List<string> conditionWordList = new();
         //list of people, age,  region, correlating the dates for symptoms and conditions.
         readonly List<Patient> patientDataList = new();
 
@@ -184,8 +182,6 @@ namespace MedicalTrackerBlazorApp.Data
                 parser.TextFieldType = FieldType.Delimited;
                 parser.SetDelimiters(",");
 
-                //if I want to skip the row with column names
-                //parser.ReadLine();
 
                 while (!parser.EndOfData)
                 {
@@ -234,9 +230,6 @@ namespace MedicalTrackerBlazorApp.Data
         public void AutoCompleteWordListInitialSetup()
         {
             //check to see if lists exists already or if their empty or null first. If they dont pass, override them with these methods.
-            SymptomWordListSetup(CSVFilePathPeopleDataSet, symptomsWordList);
-            //TODO: make a conditions word list too
-            ConditionWordListSetup(CSVFilePathPeopleDataSet, conditionWordList);
         }
 
 
@@ -283,8 +276,6 @@ namespace MedicalTrackerBlazorApp.Data
             }
 
             //TODO: add something to remove all doubles before returning the stringlist
-            List<string> StringList = Stringhashset.ToList();
-            return StringList;
         }
 
 
@@ -319,20 +310,83 @@ namespace MedicalTrackerBlazorApp.Data
 
             catch (FileNotFoundException)
             {
-                Console.WriteLine($"SymptomWordListSetup: The file '{filePath}' was not found.");
+                Console.WriteLine($"ConditionWordListSetup: The file '{filePath}' was not found.");
             }
             catch (IOException message)
             {
-                Console.WriteLine($"SymptomWordListSetup: An error occurred while reading the file '{filePath}': {message.Message}.");
+                Console.WriteLine($"ConditionWordListSetup: An error occurred while reading the file '{filePath}': {message.Message}.");
             }
             catch (Exception message)
             {
-                Console.WriteLine($"SymptomWordListSetup: Unexpected error  ocurred: {message.Message}.");
+                Console.WriteLine($"ConditionWordListSetup: Unexpected error  ocurred: {message.Message}.");
             }
 
-            //TODO: add something to remove all doubles before returning the stringlist
-            List<string> StringList = StringHashSet.ToList();
-            return StringList;
+            //List<string> StringList = StringHashSet.ToList();
+            return StringHashSet.ToList();
+        }
+
+        /// <summary>
+        /// Reads data from two CSV files, gathers the titles of the diseases. Creates one list, without duplicates, intended to be used for autocomplete component. 
+        /// </summary>
+        /// <param name="filePath">CSV file of Diseases and their definitions</param>
+        /// <param name="filePath2">CSV file of Diseases and their precautions</param>
+        /// <param name="wordlist">Used to temporarily store the diseases word list</param>
+        /// <returns>list<string> of diseases</returns>
+        public List<string> DiseasesWordListSetup(string filePath, string filepath2, List<string> wordlist)
+        {
+            HashSet<string> DiseaseHashList = new HashSet<string>();
+            try
+            {
+                List<string[]> data = new(CSVReader(filePath));
+
+                foreach (string[] row in data)
+                {
+                    if (row.Length != 0 || row != null)
+                    {
+                        DiseaseHashList.Add(row[1]);
+                    }
+                }
+            }
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine($"DiseaseWordListSetup: The file '{filePath}' was not found.");
+            }
+            catch (IOException message)
+            {
+                Console.WriteLine($"DiseaseWordListSetup: An error occurred while reading the file '{filePath}': {message.Message}.");
+            }
+            catch (Exception message)
+            {
+                Console.WriteLine($"DiseaseWordListSetup: Unexpected error  ocurred: {message.Message}.");
+            }
+
+
+            try
+            {
+                List<string[]> data = new(CSVReader(filepath2));
+
+                foreach (string[] row in data)
+                {
+                    if (row.Length != 0 || row != null)
+                    {
+                        DiseaseHashList.Add(row[1]);
+                    }
+                }
+            }
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine($"DiseaseWordListSetup: The file '{filepath2}' was not found.");
+            }
+            catch (IOException message)
+            {
+                Console.WriteLine($"DiseaseWordListSetup: An error occurred while reading the file '{filepath2}': {message.Message}.");
+            }
+            catch (Exception message)
+            {
+                Console.WriteLine($"DiseaseWordListSetup: Unexpected error  ocurred: {message.Message}.");
+            }
+
+            return DiseaseHashList.ToList();
         }
 
 

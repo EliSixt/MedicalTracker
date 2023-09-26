@@ -17,7 +17,7 @@ namespace MedicalTracker
         public string Gender { get; set; }
         [Required]
         public string SexAtBirth { get; set; }
-        //public ContactInfo ContactInfo { get; set; } = new(); //Already have PatientInfo in the Patient class. Dont need this.
+        public string Country { get; set; }
 
         /// <summary>
         /// Overrides string for GeneralInfo.
@@ -26,7 +26,7 @@ namespace MedicalTracker
         public override string ToString()
         {
             return $"DateOfBirth:{DateOfBirth}, Age:{Age}, Weight:{Weight}, Height:{Height}, Languages:{Languages}" +
-                $"Ethnicity:{Ethnicity}, Race:{Race}, Gender:{Gender}, SexAtBirth:{SexAtBirth}.";
+                $"Ethnicity:{Ethnicity}, Race:{Race}, Gender:{Gender}, SexAtBirth:{SexAtBirth}, Country{Country}.";
         }
 
         /// <summary>
@@ -148,6 +148,7 @@ namespace MedicalTracker
             Gender = originalGeneralInfo.Gender;
             Race = originalGeneralInfo.Race;
             SexAtBirth = originalGeneralInfo.SexAtBirth;
+            Country = originalGeneralInfo.Country;
         }
 
         public GeneralInfo()
