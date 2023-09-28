@@ -231,10 +231,17 @@ namespace MedicalTrackerBlazorApp.Data
 
         /// <summary>
         /// This method is designed for initial setup, specifically to extract word lists from data.
+        /// This method is designed for initial setup, specifically to extract word lists from data for AutoComplete.
         /// </summary>
         public void AutoCompleteWordListInitialSetup()
         {
             //check to see if lists exists already or if their empty or null first. If they dont pass, override them with these methods.
+
+            //TODO: Save it to an XML file< whenever and wherever that list/file is needed just refer to the xml file instead of regular variables.
+
+            //TODO: Check if the Lists exist or not null -> if true = create them and override them with the methods below. Add exception handling.
+            //REMINDER: These word-lists are intended to be used for the autocomplete method. THEY CAN BE NULL if all else fails.
+
             SymptomWordListSetup(CSVFilePathPeopleDataSet, symptomsWordList); //For use within autocomplete
             ConditionWordListSetup(CSVFilePathPeopleDataSet, conditionWordList); //For use within autocomplete
             DiseasesWordListSetup(FilePathDiseasesWithDescriptions, FilePathDiseasesWithTreatmentsAndCures, FilePathDiseasesWithTheirSymptoms, diseasesWordList); //For use within autocomplete
