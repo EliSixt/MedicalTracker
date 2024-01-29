@@ -277,11 +277,53 @@ namespace MedicalTrackerBlazorApp.Data
         public void AutoCompleteWordListInitialSetup()
         {
             //check to see if lists exists already or if their empty or null first. If they dont pass, override them with these methods.
+            FileStartUpCheck(filePathSymptomsWordList);
+            FileStartUpCheck(filePathDiseasesWordList);
+            FileStartUpCheck(filePathConditionsWordList);
+            FileStartUpCheck(filePathEnglishWordList);
 
-            //TODO: Save it to an XML file< whenever and wherever that list/file is needed just refer to the xml file instead of regular variables.
+            //TODO: Save it to an XML file< whenever and wherever that list/file is needed just refer to the xml file instead of regular variables. //!!!!!!!!!!!!!!! I LEFT HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+            //Checks if the file exists and is not Null
+            if (File.Exists(filePathSymptomsWordList) && MedicalTracker.Program.XmlReader<List<string>>(filePathSymptomsWordList) != null)
+            {
+                //if it is Null or doesnt exist, it gets made by the list creater method
+                ModifySymptomsWordList(MedicalTracker.Program.XmlReader<List<string>>(fileNameSymptomsWordList));
+            }
+            else
+            {
+                //If it isnt null and does exist in the local storage then it gets loaded from there.
+                ModifySymptomsWordList(SymptomWordListSetup(CSVFilePathPeopleDataSet));
+            }
+
+            if (File.Exists(filePathConditionsWordList) && MedicalTracker.Program.XmlReader<List<string>>(filePathConditionsWordList) != null)
+            {
+                ModifyConditionWordList(MedicalTracker.Program.XmlReader<List<string>>(filePathConditionsWordList));
+            }
+            else
+            {
+                ModifyConditionWordList(ConditionWordListSetup(CSVFilePathPeopleDataSet));
+            }
+
+            if (File.Exists(filePathDiseasesWordList) && MedicalTracker.Program.XmlReader<List<string>>(filePathDiseasesWordList) != null)
+            {
+                ModifyDiseasesWordList(MedicalTracker.Program.XmlReader<List<string>>(filePathDiseasesWordList));
+            }
+            else
+            {
+                ModifyDiseasesWordList(DiseasesWordListSetup(FilePathDiseasesWithDescriptions, FilePathDiseasesWithTreatmentsAndCures, FilePathDiseasesWithTheirSymptoms));
+            }
+
+
+            // TODO: Check if the Lists exist or not null -> if true = create them and override them with the methods below. Add exception handling.
             //REMINDER: These word-lists are intended to be used for the autocomplete method. THEY CAN BE NULL if all else fails.
 
+
+
+            //This bottom portion is to create them if they dont exist.
+            //SymptomWordListSetup(CSVFilePathPeopleDataSet); //For use within autocomplete
+            //ConditionWordListSetup(CSVFilePathPeopleDataSet, conditionWordList); //For use within autocomplete
+            //DiseasesWordListSetup(FilePathDiseasesWithDescriptions, FilePathDiseasesWithTreatmentsAndCures, FilePathDiseasesWithTheirSymptoms, diseasesWordList); //For use within autocomplete
         }
 
 
@@ -290,7 +332,6 @@ namespace MedicalTrackerBlazorApp.Data
         /// It extracts the 8th's column information and adds it to a string list. 
         /// </summary>
         /// <param name="filePath">filepath of the CSV file for People DataSet</param>
-        /// <param name="wordlist">A string list to store the symptoms word list</param>
         /// <returns>List<string>list of symptoms</returns>
         public List<string> SymptomWordListSetup(string filePath)
         {
@@ -338,7 +379,6 @@ namespace MedicalTrackerBlazorApp.Data
         /// It extracts the 8th's column information and adds it to a string list. 
         /// </summary>
         /// <param name="filePath">filepath of the CSV file for People DataSet</param>
-        /// <param name="wordlist">A string list to store the condtion word list</param>
         /// <returns>List<string>list of conditions</returns>
         public List<string> ConditionWordListSetup(string filePath)
         {
