@@ -106,13 +106,22 @@ namespace MedicalTrackerBlazorApp.Data
 
 
         public static string fileNameWordList = @"english_words_479k.txt";
-        public static string fileNameEnglishWordList = @"englishWordList.xml";
         public static string fileNameSymptoms = @"symptomsData.xml";
         public static string fileNameCondition = @"conditionsData.xml";
 
 
         public string filePathConditions = $"{fileStoreDirectory}{fileNameCondition}";
         public string filePathSymptoms = $"{fileStoreDirectory}{fileNameSymptoms}";
+
+
+        //**These Lists below are used for AutoComplete feature**
+        public static string fileNameSymptomsWordList = @"symptomWordList.xml";
+        public static string fileNameDiseasesWordList = @"diseasesWordList.xml";
+        public static string fileNameConditionsWordList = @"conditionWordList.xml";
+        public static string fileNameEnglishWordList = @"englishWordList.xml";
+        public static string filePathSymptomsWordList = $"{fileStoreDirectory}{fileNameSymptomsWordList}";
+        public static string filePathDiseasesWordList = $"{fileStoreDirectory}{fileNameDiseasesWordList}";
+        public static string filePathConditionsWordList = $"{fileStoreDirectory}{fileNameConditionsWordList}";
 
         public static string filePathWordList = $"{fileStoreDirectory}{fileNameWordList}";
         public static string filePathEnglishWordList = $"{fileStoreDirectory}{fileNameEnglishWordList}";
@@ -150,13 +159,46 @@ namespace MedicalTrackerBlazorApp.Data
         readonly List<Allergy> allergyList = new();
         //list of symptoms
         readonly List<Symptom> symptoms1 = new();
-        readonly List<string> symptomsWordList = new(); //for Autocomplete
+        //readonly List<string> symptomsWordList = new(); //for Autocomplete
+
+        /// <summary>
+        /// For use in the autocomplete feature.
+        /// Made to be used as a level of control on how the property is managed and updated.
+        /// Only with the method modifySymptomsWordList can the wordlist be modified.
+        /// </summary>
+        public void ModifySymptomsWordList(List<string> words)
+        {
+            symptomsWordList = words;
+        }
+        public List<string>? symptomsWordList { get; private set; }
+
+        /// <summary>
+        /// For use in the autocomplete feature.
+        /// Made to be used as a level of control on how the property is managed and updated.
+        /// Only with the method ModifyConditionWordList can the wordlist be modified.
+        /// </summary>
+        public void ModifyConditionWordList(List<string> words)
+        {
+            conditionWordList = words;
+        }
+        public List<string>? conditionWordList { get; private set; } //for Autocomplete
+
+        /// <summary>
+        /// For use in the autocomplete feature.
+        /// Made to be used as a level of control on how the property is managed and updated.
+        /// Only with the method ModifyDiseasesWordList can the wordlist be modified.
+        /// </summary>
+        public void ModifyDiseasesWordList(List<string> words)
+        {
+            diseasesWordList = words;
+        }
+        public List<string>? diseasesWordList { get; private set; } // for AutoComplete
+
+
         //List of conditions and their symptoms
         readonly List<Condition> conditions1 = new();
         //list of condition definitions
         readonly List<Condition> diseasesDefinitions = new();
-        readonly List<string> conditionWordList = new(); //for Autocomplete
-        readonly List<string> diseasesWordList = new(); // for AutoComplete
         //list of people, age,  region, correlating the dates for symptoms and conditions.
         readonly List<Patient> patientDataList = new();
 
@@ -230,7 +272,6 @@ namespace MedicalTrackerBlazorApp.Data
         }
 
         /// <summary>
-        /// This method is designed for initial setup, specifically to extract word lists from data.
         /// This method is designed for initial setup, specifically to extract word lists from data for AutoComplete.
         /// </summary>
         public void AutoCompleteWordListInitialSetup()
@@ -239,12 +280,8 @@ namespace MedicalTrackerBlazorApp.Data
 
             //TODO: Save it to an XML file< whenever and wherever that list/file is needed just refer to the xml file instead of regular variables.
 
-            //TODO: Check if the Lists exist or not null -> if true = create them and override them with the methods below. Add exception handling.
             //REMINDER: These word-lists are intended to be used for the autocomplete method. THEY CAN BE NULL if all else fails.
 
-            SymptomWordListSetup(CSVFilePathPeopleDataSet, symptomsWordList); //For use within autocomplete
-            ConditionWordListSetup(CSVFilePathPeopleDataSet, conditionWordList); //For use within autocomplete
-            DiseasesWordListSetup(FilePathDiseasesWithDescriptions, FilePathDiseasesWithTreatmentsAndCures, FilePathDiseasesWithTheirSymptoms, diseasesWordList); //For use within autocomplete
         }
 
 
@@ -255,7 +292,7 @@ namespace MedicalTrackerBlazorApp.Data
         /// <param name="filePath">filepath of the CSV file for People DataSet</param>
         /// <param name="wordlist">A string list to store the symptoms word list</param>
         /// <returns>List<string>list of symptoms</returns>
-        public List<string> SymptomWordListSetup(string filePath, List<string> wordlist)
+        public List<string> SymptomWordListSetup(string filePath)
         {
             HashSet<string> Stringhashset = new HashSet<string>();
             try
@@ -303,7 +340,7 @@ namespace MedicalTrackerBlazorApp.Data
         /// <param name="filePath">filepath of the CSV file for People DataSet</param>
         /// <param name="wordlist">A string list to store the condtion word list</param>
         /// <returns>List<string>list of conditions</returns>
-        public List<string> ConditionWordListSetup(string filePath, List<string> wordlist)
+        public List<string> ConditionWordListSetup(string filePath)
         {
             HashSet<string> StringHashSet = new HashSet<string>();
             try
@@ -348,9 +385,8 @@ namespace MedicalTrackerBlazorApp.Data
         /// <param name="filePath">CSV file of Diseases and their definitions</param>
         /// <param name="filepath2">CSV file of Diseases and their precautions</param>
         /// <param name="filePath3">CSV file of Diseases with associated symptoms</param>
-        /// <param name="wordlist">Used to temporarily store the diseases word list</param>
         /// <returns>list<string> of diseases</returns>
-        public List<string> DiseasesWordListSetup(string filePath, string filepath2, string filePath3, List<string> wordlist)
+        public List<string> DiseasesWordListSetup(string filePath, string filepath2, string filePath3)
         {
             HashSet<string> DiseaseHashList = new HashSet<string>();
             try
